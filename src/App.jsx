@@ -737,7 +737,7 @@ export default function App() {
               {/* Powered By (Desktop Only) */}
               <div className="hidden md:flex flex-row items-center gap-2 text-[11px] font-bold text-muted uppercase tracking-[0.2em] mt-4">
                 <span>POWERED BY</span>
-                <a href="https://socialbureau.in/" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.socialbureau.in/enquiry-form" target="_blank" rel="noopener noreferrer">
                   <img
                     src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777199141/SB_LOGO_BLACK_PNG_iev5qz.png"
                     alt="SocialBureau"
