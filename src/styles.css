@@ -55,4 +55,15 @@
     @apply absolute w-[300px] md:w-[400px] h-[300px] md:h-[400px] rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 opacity-60;
     background: linear-gradient(135deg, #EDE9FF 0%, #EEF5FF 60%, #E6FFF5 100%);
   }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .animate-marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 30s linear infinite;
+  }
 }

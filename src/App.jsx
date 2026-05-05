@@ -48,9 +48,9 @@ const FeatureIcons = {
   ),
 };
 const ServiceSVGs = {
-  career: (
+  hat: (
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
+      <path d="M22 10v6M2 10l10-5 10 5-10 5z" /><path d="M6 12v5c3 3 9 3 12 0v-5" />
     </svg>
   ),
   university: (
@@ -140,6 +140,9 @@ function Header() {
             <a href="https://www.linkedin.com/in/ajinorah-maharashtra-2316413a7/" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
             </a>
+            <a href="https://wa.me/919170065003" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-[#25D366] hover:bg-[#25D366]/10 transition-colors">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.94 3.659 1.437 5.634 1.437h.005c6.558 0 11.894-5.338 11.897-11.896a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </a>
           </div>
           <a
             href="https://wa.me/919170065003"
@@ -197,16 +200,16 @@ function Hero() {
             </a>
           </div>
 
-          <div className="flex gap-6 flex-wrap pt-6 border-t border-border/50">
+          <div className="grid grid-cols-4 gap-2 md:gap-4 pt-6 border-t border-border/50 w-full">
             {[
-              { icon: FeatureIcons.guidance, label: "100% Scholarship\nFocus" },
+              { icon: FeatureIcons.guidance, label: "100%\nScholarships" },
               { icon: FeatureIcons.support, label: "End-to-End\nSupport" },
-              { icon: FeatureIcons.university, label: "Global Partner\nNetwork" },
-              { icon: FeatureIcons.visa, label: "95% Visa\nSuccess Rate" },
+              { icon: FeatureIcons.university, label: "Global\nNetwork" },
+              { icon: FeatureIcons.visa, label: "95% Visa\nSuccess" },
             ].map((f) => (
-              <div key={f.label} className="flex items-start gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-bg-soft border border-border/50 flex items-center justify-center shrink-0 text-primary">{f.icon}</div>
-                <span className="text-[11.5px] font-semibold text-dark whitespace-pre-line leading-tight">{f.label}</span>
+              <div key={f.label} className="flex flex-col xl:flex-row items-center xl:items-start text-center xl:text-left gap-1.5 md:gap-2.5">
+                <div className="w-8 h-8 md:w-9 md:h-9 rounded-lg md:rounded-xl bg-bg-soft border border-border/50 flex items-center justify-center shrink-0 text-primary">{f.icon}</div>
+                <span className="text-[9.5px] md:text-[11px] font-bold text-dark whitespace-pre-line leading-[1.2]">{f.label}</span>
               </div>
             ))}
           </div>
@@ -221,13 +224,15 @@ function Hero() {
               alt="Student"
               className="absolute top-1/2 left-0 md:left-1/2 -translate-x-24 md:-translate-x-1/2 -translate-y-1/2 w-full h-full object-contain z-10 scale-125"
             />
-            <div className="absolute bottom-[85px] md:bottom-[40px] right-6 md:-right-[10px] bg-white rounded-2xl shadow-lg p-2.5 md:p-4 flex items-center gap-3 z-20 min-w-[140px] md:min-w-[210px] border border-border/50">
-              <div className="shrink-0 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary scale-75 md:scale-100"><PlayIcon /></div>
-              <div className="flex flex-col gap-0">
-                <span className="text-[11px] md:text-[14.5px] font-bold text-dark">Join 1 Lakh+ Students</span>
-                <span className="text-[9px] md:text-[12px] text-muted">Global Network</span>
+            <a href="https://youtube.com/shorts/2rZzWat_alY?si=C0k2dHejGZflkZqq">
+              <div className="absolute bottom-[85px] md:bottom-[40px] right-6 md:-right-[10px] bg-white rounded-2xl shadow-lg p-2.5 md:p-4 flex items-center gap-3 z-20 min-w-[140px] md:min-w-[210px] border border-border/50">
+                <div className="shrink-0 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary scale-75 md:scale-100"><PlayIcon /></div>
+                <div className="flex flex-col gap-0">
+                  <span className="text-[11px] md:text-[14.5px] font-bold text-dark">Join 1 Lakh+ Students</span>
+                  <span className="text-[9px] md:text-[12px] text-muted">Global Network</span>
+                </div>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </div>
@@ -244,18 +249,25 @@ function TrustedBy() {
     { abbr: "FR", name: "France\nSchools" },
     { abbr: "UZ", name: "Uzbekistan\nAllies" },
     { abbr: "AL", name: "Albania\nNetwork" },
+    { abbr: "AE", name: "Dubai\nGlobal Hub" },
+    { abbr: "100%", name: "Scholarship\nPrograms" },
+    { abbr: "INTL", name: "Budget\nStudy Pathways" },
   ];
+
   return (
-    <section className="py-12 border-y border-border bg-[#FAFBFF]">
-      <div className="container">
-        <p className="text-center text-[11.5px] font-bold tracking-[0.12em] text-muted uppercase mb-7">OUR GLOBAL PARTNER NETWORK ACROSS 7+ COUNTRIES</p>
-        <div className="flex items-center justify-center gap-9 flex-wrap">
-          {unis.map((u, i) => (
-            <div key={i} className="flex items-center gap-2 opacity-60 transition-opacity hover:opacity-90">
-              {u.abbr && <span className="text-[22px] font-black text-dark tracking-tighter leading-none">{u.abbr}</span>}
-              <span className="text-[9.5px] font-bold text-dark uppercase tracking-[0.04em] whitespace-pre-line leading-tight">{u.name}</span>
-            </div>
-          ))}
+    <section className="py-12 border-y border-border bg-[#FAFBFF] overflow-hidden">
+      <div className="container mx-auto px-4 md:px-8">
+        <p className="text-center text-[11.5px] font-bold tracking-[0.12em] text-muted uppercase mb-10">OUR GLOBAL PARTNER NETWORK ACROSS 7+ COUNTRIES</p>
+        
+        <div className="relative flex overflow-hidden no-scrollbar">
+          <div className="animate-marquee gap-12 md:gap-20 no-scrollbar">
+            {[...unis, ...unis].map((u, i) => (
+              <div key={i} className="flex items-center gap-3 opacity-60 transition-opacity hover:opacity-100 shrink-0">
+                {u.abbr && <span className="text-[28px] md:text-[32px] font-black text-dark tracking-tighter leading-none">{u.abbr}</span>}
+                <span className="text-[10px] md:text-[11px] font-bold text-dark uppercase tracking-[0.06em] whitespace-pre-line leading-tight">{u.name}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -265,7 +277,7 @@ function TrustedBy() {
 /* ── Destinations ────────────────────────────────────────── */
 function Destinations() {
   const [showAll, setShowAll] = React.useState(false);
-  
+
   const countries = [
     {
       name: "Malaysia",
@@ -322,7 +334,7 @@ function Destinations() {
           <p className="text-[14.5px] text-muted leading-relaxed mb-6">
             Choose from the world's best countries<br />and top-ranked universities.
           </p>
-          <button 
+          <button
             onClick={() => setShowAll(!showAll)}
             className="inline-flex items-center gap-[7px] text-sm font-semibold text-primary transition-all hover:gap-[11px] justify-center md:justify-start"
           >
@@ -356,7 +368,7 @@ function Destinations() {
 /* ── Services ────────────────────────────────────────────── */
 function Services() {
   const services = [
-    { key: "scholarship", icon: ServiceSVGs.career, color: "#FFF3EC", stroke: "#FF6B35", title: "Scholarship Assistance", desc: "Specializing in 100% funded and sponsored opportunities." },
+    { key: "scholarship", icon: ServiceSVGs.hat, color: "#FFF3EC", stroke: "#FF6B35", title: "Scholarship Assistance", desc: "Specializing in 100% funded and sponsored opportunities." },
     { key: "coaching", icon: ServiceSVGs.university, color: "#FFFBEB", stroke: "#F59E0B", title: "IELTS / TOEFL Coaching", desc: "Expert training to ace your language proficiency tests." },
     { key: "counseling", icon: ServiceSVGs.application, color: "#F0FDF4", stroke: "#22C55E", title: "Abroad Study Counseling", desc: "End-to-end guidance from selection to pre-departure." },
     { key: "visa", icon: ServiceSVGs.visa, color: "#EFF6FF", stroke: "#3B82F6", title: "Visa Processing Support", desc: "High success rate with personalized visa assistance." },
@@ -379,17 +391,28 @@ function Services() {
         </div>
 
         <div className="flex flex-col gap-3.5">
-          {services.map((s) => (
-            <div key={s.key} className="bg-[linear-gradient(to_right,#fff1f2,#fef3c7,#ecfdf5,#eff6ff,#f5f3ff)] rounded-2xl p-[18px_20px] flex items-start gap-4 shadow-sm border border-white transition-all hover:shadow-md hover:-translate-y-1 group">
-              <div className="w-[50px] h-[50px] bg-white/60 backdrop-blur-sm rounded-xl flex items-center justify-center shrink-0 shadow-sm" style={{ color: s.stroke }}>
-                {s.icon}
-              </div>
-              <div>
-                <h4 className="text-[14.5px] font-bold text-dark mb-1">{s.title}</h4>
-                <p className="text-xs text-dark/70 font-medium leading-relaxed">{s.desc}</p>
-              </div>
-            </div>
-          ))}
+          {services.map((s) => {
+            const message = `Hi, I'm interested in your ${s.title} service: ${s.desc}. I'd like to know more about ${s.title} and the programs you provide.`;
+            const waLink = `https://wa.me/919170065003?text=${encodeURIComponent(message)}`;
+
+            return (
+              <a
+                key={s.key}
+                href={waLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[linear-gradient(to_right,#fff1f2,#fef3c7,#ecfdf5,#eff6ff,#f5f3ff)] rounded-2xl p-[20px] flex items-start gap-4 shadow-sm border border-white transition-all hover:shadow-md hover:-translate-y-1 group h-auto"
+              >
+                <div className="w-[50px] h-[50px] bg-white/60 backdrop-blur-sm rounded-xl flex items-center justify-center shrink-0 shadow-sm" style={{ color: s.stroke }}>
+                  {s.icon}
+                </div>
+                <div>
+                  <h4 className="text-[14.5px] font-bold text-dark mb-1">{s.title}</h4>
+                  <p className="text-xs text-dark/70 font-medium leading-relaxed">{s.desc}</p>
+                </div>
+              </a>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -596,10 +619,10 @@ export default function App() {
         <Contact />
         <CTABanner />
       </main>
-      <footer className="bg-white pt-4 md:pt-24 pb-12 border-t border-border/30">
+      <footer className="bg-white pt-6 md:pt-24 pb-6 border-t border-border/30">
         <div className="container mx-auto px-4 md:px-8">
           {/* Main Footer Content */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-0 gap-y-12 md:gap-12 mb-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-0 gap-y-10 md:gap-12 mb-4 md:mb-8">
             {/* Brand Column */}
             <div className="col-span-2 lg:col-span-1 flex flex-col gap-6">
               <img
@@ -626,26 +649,46 @@ export default function App() {
                 <a href="https://www.linkedin.com/in/ajinorah-maharashtra-2316413a7/" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-primary hover:border-primary transition-all">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                 </a>
+                <a href="https://wa.me/919170065003" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-[#25D366] hover:border-[#25D366] transition-all">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.94 3.659 1.437 5.634 1.437h.005c6.558 0 11.894-5.338 11.897-11.896a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                </a>
               </div>
             </div>
 
-            {/* Quick Links */}
-            <div className="col-span-1 flex flex-col gap-6">
-              <h4 className="text-[13px] font-bold text-dark uppercase tracking-[0.15em]">Quick Links</h4>
-              <nav className="flex flex-col gap-4">
-                {["Home", "About Us", "Destinations", "Contact"].map((link) => (
-                  <a
-                    key={link}
-                    href={`#${link.toLowerCase().replace(" ", "")}`}
-                    className="text-[14px] text-muted hover:text-primary transition-colors w-fit"
-                  >
-                    {link}
-                  </a>
-                ))}
-              </nav>
+            {/* Contact Info & Powered By (Mobile Only) */}
+            <div className="col-span-2 md:col-span-1 flex flex-col gap-8 md:gap-6">
+              <div className="flex flex-col items-start text-left gap-6">
+                <div className="flex flex-col gap-1 w-full">
+                  <h4 className="text-[13px] font-bold text-dark uppercase tracking-[0.15em]">Get in Touch</h4>
+                  <div className="flex flex-col gap-5 mt-2">
+                    <div className="flex flex-col gap-1">
+                      <span className="text-[10px] font-bold text-primary uppercase tracking-wider">Email Us</span>
+                      <a href="mailto:info@ajinorahmaharashtra.com" className="text-[14px] text-dark font-medium hover:text-primary transition-colors break-all">
+                        info@ajinorahmaharashtra.com
+                      </a>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <span className="text-[10px] font-bold text-primary uppercase tracking-wider">Call Us</span>
+                      <a href="tel:+919170065003" className="text-[14px] text-dark font-medium hover:text-primary transition-colors">
+                        +91 91700 65003
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Powered By (Mobile Only) */}
+                <div className="flex md:hidden flex-row items-center gap-2 text-[10px] font-bold text-muted uppercase tracking-[0.2em] mt-2">
+                  <span>POWERED BY</span>
+                  <img
+                    src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777199141/SB_LOGO_BLACK_PNG_iev5qz.png"
+                    alt="SocialBureau"
+                    className="h-9 w-auto"
+                  />
+                </div>
+              </div>
             </div>
 
-            {/* Services */}
+            {/* Services (Column 3) */}
             <div className="hidden md:flex col-span-1 flex-col gap-6">
               <h4 className="text-[13px] font-bold text-dark uppercase tracking-[0.15em]">Our Services</h4>
               <nav className="flex flex-col gap-4">
@@ -666,42 +709,39 @@ export default function App() {
               </nav>
             </div>
 
-            {/* Contact Info */}
-            <div className="col-span-1 flex flex-col gap-6 -ml-6 md:ml-0">
-              <h4 className="text-[13px] font-bold text-dark uppercase tracking-[0.15em]">Get in Touch</h4>
-              <div className="flex flex-col gap-5">
-                <div className="flex flex-col gap-1">
-                  <span className="text-[10px] font-bold text-primary uppercase tracking-wider">Email Us</span>
-                  <a href="mailto:info@ajinorahmaharashtra.com" className="text-[14px] text-dark font-medium hover:text-primary transition-colors">
-                    info@ajinorahmaharashtra.com
+            {/* Quick Links (Column 4) */}
+            <div className="col-span-1 flex flex-col items-start gap-6 text-left">
+              <h4 className="hidden md:block text-[13px] font-bold text-dark uppercase tracking-[0.15em]">Quick Links</h4>
+              <nav className="hidden md:flex flex-col gap-4">
+                {["Home", "About Us", "Destinations", "Contact"].map((link) => (
+                  <a
+                    key={link}
+                    href={`#${link.toLowerCase().replace(" ", "")}`}
+                    className="text-[14px] text-muted hover:text-primary transition-colors w-fit"
+                  >
+                    {link}
                   </a>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <span className="text-[10px] font-bold text-primary uppercase tracking-wider">Call Us</span>
-                  <a href="tel:+919170065003" className="text-[14px] text-dark font-medium hover:text-primary transition-colors">
-                    +91 91 7006 5003
-                  </a>
-                </div>
+                ))}
+              </nav>
+
+              {/* Powered By (Desktop Only) */}
+              <div className="hidden md:flex flex-row items-center gap-2 text-[11px] font-bold text-muted uppercase tracking-[0.2em] mt-4">
+                <span>POWERED BY</span>
+                <img
+                  src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777199141/SB_LOGO_BLACK_PNG_iev5qz.png"
+                  alt="SocialBureau"
+                  className="h-12 w-auto"
+                />
               </div>
             </div>
           </div>
 
           {/* Bottom Bar */}
-          <div className="pt-6 border-t border-border/30 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+          <div className="pt-3 md:pt-6 border-t border-border/10 flex items-center justify-start">
             {/* Copyright */}
-            <p className="text-sm text-muted font-medium order-2 md:order-1">
+            <p className="text-sm text-muted font-medium">
               © {new Date().getFullYear()} Ajinorah Maharashtra. All rights reserved.
             </p>
-
-            {/* Powered By */}
-            <div className="flex flex-col md:flex-row items-center gap-1 text-[12px] md:text-[13px] font-bold text-muted uppercase tracking-[0.2em] order-1 md:order-2">
-              <span>POWERED BY</span>
-              <img
-                src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777199141/SB_LOGO_BLACK_PNG_iev5qz.png"
-                alt="SocialBureau"
-                className="h-16 md:h-24 w-auto scale-110"
-              />
-            </div>
           </div>
         </div>
       </footer>
