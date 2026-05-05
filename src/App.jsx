@@ -91,12 +91,12 @@ function Header() {
     <header className="sticky top-0 z-[100] bg-white/90 backdrop-blur-md border-b border-border/40 h-[100px] flex items-center overflow-visible">
       <div className="container mx-auto px-4 md:px-8 flex items-center justify-between w-full h-full">
         {/* Brand */}
-        <div className="flex items-center shrink-0 w-[200px] md:w-[450px] h-full relative">
+        <div className="flex items-center shrink-0 w-[240px] md:w-[450px] h-full relative">
           <a href="#home" className="block absolute top-[40%] -translate-y-1/2 left-0 z-50">
             <img
               src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777557258/images/osrzkwmrt33dlpzyofze.png"
               alt="Ajinorah"
-              className="h-[200px] md:h-[400px] w-auto block transition-all hover:scale-105 object-contain object-left drop-shadow-2xl"
+              className="h-[220px] md:h-[400px] w-auto block transition-all hover:scale-105 object-contain object-left scale-[1.6] md:scale-100 origin-left"
             />
           </a>
         </div>
@@ -141,7 +141,7 @@ function Header() {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
             </a>
             <a href="https://wa.me/919170065003" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-[#25D366] hover:bg-[#25D366]/10 transition-colors">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.94 3.659 1.437 5.634 1.437h.005c6.558 0 11.894-5.338 11.897-11.896a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.94 3.659 1.437 5.634 1.437h.005c6.558 0 11.894-5.338 11.897-11.896a11.821 11.821 0 00-3.48-8.413z" /></svg>
             </a>
           </div>
           <a
@@ -258,7 +258,7 @@ function TrustedBy() {
     <section className="py-12 border-y border-border bg-[#FAFBFF] overflow-hidden">
       <div className="container mx-auto px-4 md:px-8">
         <p className="text-center text-[11.5px] font-bold tracking-[0.12em] text-muted uppercase mb-10">OUR GLOBAL PARTNER NETWORK ACROSS 7+ COUNTRIES</p>
-        
+
         <div className="relative flex overflow-hidden no-scrollbar">
           <div className="animate-marquee gap-12 md:gap-20 no-scrollbar">
             {[...unis, ...unis].map((u, i) => (
@@ -345,7 +345,13 @@ function Destinations() {
         <div className="relative">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {displayedCountries.map((c) => (
-              <div key={c.name} className="bg-white rounded-xl shadow-sm overflow-hidden border border-border transition-all hover:-translate-y-1 hover:shadow-md group">
+              <a
+                key={c.name}
+                href={`https://wa.me/919170065003?text=${encodeURIComponent(`Hello, I'm interested in studying in ${c.name}. ${c.desc}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white rounded-xl shadow-sm overflow-hidden border border-border transition-all hover:-translate-y-1 hover:shadow-md group block"
+              >
                 <div className="h-[140px] overflow-hidden">
                   <img src={c.img} alt={c.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 </div>
@@ -354,9 +360,11 @@ function Destinations() {
                     <span className="text-[13.5px] font-bold text-dark">{c.name}</span>
                   </div>
                   <p className="text-[12px] text-muted leading-relaxed mb-2.5">{c.desc}</p>
-                  <button className="w-7 h-7 rounded-full bg-bg-soft border border-border flex items-center justify-center text-primary text-[13px] transition-colors hover:bg-primary hover:text-white hover:border-primary"><ArrowRightIcon size={14} /></button>
+                  <div className="w-7 h-7 rounded-full bg-bg-soft border border-border flex items-center justify-center text-primary text-[13px] transition-colors group-hover:bg-primary group-hover:text-white group-hover:border-primary">
+                    <ArrowRightIcon size={14} />
+                  </div>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>
@@ -650,7 +658,7 @@ export default function App() {
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                 </a>
                 <a href="https://wa.me/919170065003" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-[#25D366] hover:border-[#25D366] transition-all">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.94 3.659 1.437 5.634 1.437h.005c6.558 0 11.894-5.338 11.897-11.896a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.94 3.659 1.437 5.634 1.437h.005c6.558 0 11.894-5.338 11.897-11.896a11.821 11.821 0 00-3.48-8.413z" /></svg>
                 </a>
               </div>
             </div>
@@ -679,11 +687,13 @@ export default function App() {
                 {/* Powered By (Mobile Only) */}
                 <div className="flex md:hidden flex-row items-center gap-2 text-[10px] font-bold text-muted uppercase tracking-[0.2em] mt-2">
                   <span>POWERED BY</span>
-                  <img
-                    src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777199141/SB_LOGO_BLACK_PNG_iev5qz.png"
-                    alt="SocialBureau"
-                    className="h-9 w-auto"
-                  />
+                  <a href="https://www.socialbureau.in/enquiry-form" target="_blank" rel="noopener noreferrer">
+                    <img
+                      src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777199141/SB_LOGO_BLACK_PNG_iev5qz.png"
+                      alt="SocialBureau"
+                      className="h-15 w-auto"
+                    />
+                  </a>
                 </div>
               </div>
             </div>
@@ -727,11 +737,13 @@ export default function App() {
               {/* Powered By (Desktop Only) */}
               <div className="hidden md:flex flex-row items-center gap-2 text-[11px] font-bold text-muted uppercase tracking-[0.2em] mt-4">
                 <span>POWERED BY</span>
-                <img
-                  src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777199141/SB_LOGO_BLACK_PNG_iev5qz.png"
-                  alt="SocialBureau"
-                  className="h-12 w-auto"
-                />
+                <a href="https://socialbureau.in/" target="_blank" rel="noopener noreferrer">
+                  <img
+                    src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777199141/SB_LOGO_BLACK_PNG_iev5qz.png"
+                    alt="SocialBureau"
+                    className="h-12 w-auto"
+                  />
+                </a>
               </div>
             </div>
           </div>
