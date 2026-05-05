@@ -264,6 +264,8 @@ function TrustedBy() {
 
 /* ── Destinations ────────────────────────────────────────── */
 function Destinations() {
+  const [showAll, setShowAll] = React.useState(false);
+  
   const countries = [
     {
       name: "Malaysia",
@@ -309,6 +311,8 @@ function Destinations() {
     },
   ];
 
+  const displayedCountries = showAll ? countries : countries.slice(0, 3);
+
   return (
     <section id="destinations" className="py-20 bg-white">
       <div className="container mx-auto px-4 md:px-8 grid md:grid-cols-[280px_1fr] items-start gap-12">
@@ -318,12 +322,17 @@ function Destinations() {
           <p className="text-[14.5px] text-muted leading-relaxed mb-6">
             Choose from the world's best countries<br />and top-ranked universities.
           </p>
-          <a href="#" className="inline-flex items-center gap-[7px] text-sm font-semibold text-primary transition-all hover:gap-[11px] justify-center md:justify-start">View All Countries <ArrowRightIcon /></a>
+          <button 
+            onClick={() => setShowAll(!showAll)}
+            className="inline-flex items-center gap-[7px] text-sm font-semibold text-primary transition-all hover:gap-[11px] justify-center md:justify-start"
+          >
+            {showAll ? "Show Less" : "View All Countries"} <ArrowRightIcon />
+          </button>
         </div>
 
         <div className="relative">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {countries.map((c) => (
+            {displayedCountries.map((c) => (
               <div key={c.name} className="bg-white rounded-xl shadow-sm overflow-hidden border border-border transition-all hover:-translate-y-1 hover:shadow-md group">
                 <div className="h-[140px] overflow-hidden">
                   <img src={c.img} alt={c.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
@@ -337,10 +346,6 @@ function Destinations() {
                 </div>
               </div>
             ))}
-          </div>
-          <div className="flex gap-2 justify-end mt-4">
-            <button className="w-9 h-9 rounded-full bg-white border-[1.5px] border-border text-xl flex items-center justify-center transition-all hover:bg-primary hover:text-white hover:border-primary">‹</button>
-            <button className="w-9 h-9 rounded-full bg-white border-[1.5px] border-border text-xl flex items-center justify-center transition-all hover:bg-primary hover:text-white hover:border-primary">›</button>
           </div>
         </div>
       </div>
