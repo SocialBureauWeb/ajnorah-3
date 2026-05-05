@@ -123,7 +123,24 @@ function Header() {
         </nav>
 
         {/* Actions */}
-        <div className="flex items-center gap-4 ml-4">
+        <div className="flex items-center gap-3 lg:gap-4 ml-4">
+          <div className="hidden xl:flex items-center gap-2 mr-2">
+            <a href="https://x.com/Ajinorah_Maha" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+            </a>
+            <a href="https://www.facebook.com/people/Ajinorah-Maharashtra/61586724492187/" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            </a>
+            <a href="https://www.instagram.com/ajinorahmaharashtra/" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="https://www.youtube.com/@ajinorahmaharashtra" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/ajinorah-maharashtra-2316413a7/" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>
+          </div>
           <a
             href="https://wa.me/919170065003"
             target="_blank"
@@ -272,6 +289,24 @@ function Destinations() {
       desc: "Low-cost education with world-class engineering.",
       img: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&h=220&fit=crop&q=80",
     },
+    {
+      name: "Dubai",
+      flag: "🇦🇪",
+      desc: "Modern hub for global business and innovation.",
+      img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400&h=220&fit=crop&q=80",
+    },
+    {
+      name: "Albania",
+      flag: "🇦🇱",
+      desc: "Emerging destination with affordable medical programs.",
+      img: "https://plus.unsplash.com/premium_photo-1697730104948-43575659bf0a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YWxiYW5pYXxlbnwwfHwwfHx8MA%3D%3D",
+    },
+    {
+      name: "Uzbekistan",
+      flag: "🇺🇿",
+      desc: "Excellent opportunities for medical and technical studies.",
+      img: "https://images.unsplash.com/photo-1670514535515-e7af911bdadb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fFV6YmVraXN0YW58ZW58MHx8MHx8fDA%3D",
+    },
   ];
 
   return (
@@ -340,13 +375,13 @@ function Services() {
 
         <div className="flex flex-col gap-3.5">
           {services.map((s) => (
-            <div key={s.key} className="bg-white rounded-xl p-[18px_20px] flex items-start gap-4 shadow-sm border border-border transition-all hover:shadow-md hover:translate-x-1">
-              <div className="w-[50px] h-[50px] rounded-xl flex items-center justify-center shrink-0" style={{ background: s.color, color: s.stroke }}>
+            <div key={s.key} className="bg-[linear-gradient(to_right,#fff1f2,#fef3c7,#ecfdf5,#eff6ff,#f5f3ff)] rounded-2xl p-[18px_20px] flex items-start gap-4 shadow-sm border border-white transition-all hover:shadow-md hover:-translate-y-1 group">
+              <div className="w-[50px] h-[50px] bg-white/60 backdrop-blur-sm rounded-xl flex items-center justify-center shrink-0 shadow-sm" style={{ color: s.stroke }}>
                 {s.icon}
               </div>
               <div>
                 <h4 className="text-[14.5px] font-bold text-dark mb-1">{s.title}</h4>
-                <p className="text-xs text-muted leading-relaxed">{s.desc}</p>
+                <p className="text-xs text-dark/70 font-medium leading-relaxed">{s.desc}</p>
               </div>
             </div>
           ))}
@@ -386,32 +421,60 @@ function CTABanner() {
 /* ── About Section ───────────────────────────────────────── */
 function About() {
   return (
-    <section id="about" className="py-20">
-      <div className="container mx-auto px-4 md:px-8 grid md:grid-cols-2 gap-16 items-center">
+    <section id="about" className="py-20 relative overflow-hidden bg-[linear-gradient(135deg,#ffb3ba_0%,#ffdfba_20%,#ffffba_40%,#baffc9_60%,#bae1ff_80%,#cbaacb_100%)]">
+      {/* Decorative Blur Orbs */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-white/40 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-white/30 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none" />
+
+      <div className="container mx-auto px-4 md:px-8 grid md:grid-cols-2 gap-16 items-center relative z-10">
         <div className="text-center md:text-left">
           <p className="text-[11px] font-bold tracking-[0.14em] text-teal uppercase mb-3.5">WHO WE ARE</p>
           <h2 className="text-4xl font-extrabold text-dark leading-snug mb-4 tracking-tight">Your Gateway to<br />Global Education</h2>
           <div className="w-10 h-[3px] bg-orange rounded-sm mb-[18px] mx-auto md:mx-0" />
-          <p className="text-[14.5px] text-muted leading-relaxed mb-6">
+          <p className="text-[14.5px] text-dark/80 font-medium leading-relaxed mb-6">
             Ajinorah Maharashtra is a global education consultancy dedicated to helping students access high-quality international education through <strong>fully funded and sponsored opportunities</strong>.
+          </p>
+          <p className="text-[14.5px] text-dark/70 leading-relaxed mb-6">
+            With a strong network of partner institutions in <strong>Malaysia, Mauritius, Albania, Uzbekistan, Dubai, Germany, and France</strong>, we provide end-to-end guidance from university selection and admissions to visa assistance and pre-departure support.
           </p>
         </div>
         <div className="flex flex-col gap-8">
-          <p className="text-muted leading-relaxed text-center md:text-left">
-            Our core mission is to make studying abroad affordable and accessible by connecting students with 100% scholarship programs, sponsorships, and budget-friendly study pathways across multiple countries.
-          </p>
-          <div className="grid grid-cols-3 gap-4 md:gap-6 mt-4">
-            <div className="bg-white p-4 md:p-6 rounded-xl border border-border text-center transition-transform hover:-translate-y-1 shadow-sm">
-              <span className="block text-2xl font-extrabold text-primary mb-1">95%</span>
-              <span className="text-[10px] md:text-xs font-semibold text-muted uppercase">Visa Success</span>
+          <div className="bg-white/60 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-white/50 shadow-sm">
+            <h3 className="text-xl font-bold text-dark mb-4">Unique Selling Proposition (USP)</h3>
+            <p className="text-[14.5px] text-dark/80 leading-relaxed mb-4">
+              Our biggest differentiator is our strong focus on 100% scholarship and sponsorship-based education opportunities, which significantly reduces or completely eliminates the financial burden on students. Unlike traditional consultancies, we:
+            </p>
+            <ul className="space-y-3 mb-6">
+              {[
+                "Prioritize fully funded and low-cost education options",
+                "Offer access to emerging and high-opportunity countries",
+                "Provide personalized guidance instead of a one-size-fits-all approach",
+                "Maintain transparent processes with high success rates",
+                "Focus on career-oriented programs and long-term outcomes, not just admissions"
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-3 text-[14px] text-dark/80 leading-relaxed text-left">
+                  <span className="text-primary mt-1 shrink-0"><ArrowRightIcon size={16} /></span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p className="text-[14.5px] text-dark/80 font-bold leading-relaxed text-left">
+              We position ourselves not just as consultants, but as education partners committed to making global opportunities accessible to every deserving student.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-3 gap-4 md:gap-6 mt-2">
+            <div className="bg-white/70 backdrop-blur-sm p-4 md:p-6 rounded-xl border border-white text-center transition-transform hover:-translate-y-1 shadow-sm">
+              <span className="block text-2xl md:text-3xl font-extrabold text-primary mb-1">95%</span>
+              <span className="text-[10px] md:text-xs font-bold text-dark/70 uppercase tracking-wide">Visa Success</span>
             </div>
-            <div className="bg-white p-4 md:p-6 rounded-xl border border-border text-center transition-transform hover:-translate-y-1 shadow-sm">
-              <span className="block text-2xl font-extrabold text-primary mb-1">100k+</span>
-              <span className="text-[10px] md:text-xs font-semibold text-muted uppercase">Students Guided</span>
+            <div className="bg-white/70 backdrop-blur-sm p-4 md:p-6 rounded-xl border border-white text-center transition-transform hover:-translate-y-1 shadow-sm">
+              <span className="block text-2xl md:text-3xl font-extrabold text-primary mb-1">1 Lakh+</span>
+              <span className="text-[10px] md:text-xs font-bold text-dark/70 uppercase tracking-wide">Students</span>
             </div>
-            <div className="bg-white p-4 md:p-6 rounded-xl border border-border text-center transition-transform hover:-translate-y-1 shadow-sm">
-              <span className="block text-2xl font-extrabold text-primary mb-1">500+</span>
-              <span className="text-[10px] md:text-xs font-semibold text-muted uppercase">Partner Unis</span>
+            <div className="bg-white/70 backdrop-blur-sm p-4 md:p-6 rounded-xl border border-white text-center transition-transform hover:-translate-y-1 shadow-sm">
+              <span className="block text-2xl md:text-3xl font-extrabold text-primary mb-1">100%</span>
+              <span className="text-[10px] md:text-xs font-bold text-dark/70 uppercase tracking-wide">Scholarships</span>
             </div>
           </div>
         </div>
@@ -542,6 +605,23 @@ export default function App() {
               <p className="text-[14px] text-muted leading-relaxed max-w-[260px]">
                 Empowering students to achieve their global education dreams through fully funded scholarships and expert guidance.
               </p>
+              <div className="flex items-center gap-3 mt-4">
+                <a href="https://x.com/Ajinorah_Maha" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-primary hover:border-primary transition-all">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                </a>
+                <a href="https://www.facebook.com/people/Ajinorah-Maharashtra/61586724492187/" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-primary hover:border-primary transition-all">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                </a>
+                <a href="https://www.instagram.com/ajinorahmaharashtra/" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-primary hover:border-primary transition-all">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
+                <a href="https://www.youtube.com/@ajinorahmaharashtra" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-primary hover:border-primary transition-all">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/ajinorah-maharashtra-2316413a7/" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-primary hover:border-primary transition-all">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+              </div>
             </div>
 
             {/* Quick Links */}
