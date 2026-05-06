@@ -29,6 +29,57 @@ app.use(
 
 app.use(express.json({ limit: "10kb" }));
 
+// Use MongoDB-backed auth controllers if MONGO_URL is provided
+if (process.env.MONGO_URL) {
+  const { register, login, me } = require('./controllers/authController');
+  app.post('/api/auth/register', register);
+  app.post('/api/auth/login', login);
+  app.get('/api/auth/me', me);
+} else {
+  // fallback: simple file-based auth (kept for compatibility)
+  if (!fs.existsSync(USERS_FILE)) {
+    fs.writeFileSync(USERS_FILE, JSON.stringify([], null, 2), 'utf8');
+  }
+
+  const bcrypt = require('bcryptjs');
+  const jwt = require('jsonwebtoken');
+  const JWT_SECRET = process.env.JWT_SECRET || 'change_this_secret';
+
+  function readUsers() {
+    try { return JSON.parse(fs.readFileSync(USERS_FILE, 'utf8')); } catch { return []; }
+  }
+  function writeUsers(users) { fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2), 'utf8'); }
+
+  app.post('/api/auth/register', async (req, res) => {
+    const { name, email, password } = req.body || {};
+    if (!name || !email || !password) return res.status(400).json({ error: 'Name, email and password are required.' });
+    const users = readUsers();
+    const existing = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    if (existing) return res.status(400).json({ error: 'Email already registered.' });
+    const hash = await bcrypt.hash(password, 10);
+    const role = users.length === 0 ? 'admin' : 'user';
+    const user = { id: Date.now(), name: String(name).slice(0,100), email: String(email).toLowerCase().slice(0,254), passwordHash: hash, role, createdAt: new Date().toISOString() };
+    users.push(user);
+    try { writeUsers(users); const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: '7d' }); return res.status(201).json({ token, user: { id: user.id, name: user.name, email: user.email, role: user.role } }); } catch (err) { console.error(err); return res.status(500).json({ error: 'Could not create user.' }); }
+  });
+
+  app.post('/api/auth/login', async (req, res) => {
+    const { email, password } = req.body || {};
+    if (!email || !password) return res.status(400).json({ error: 'Email and password are required.' });
+    const users = readUsers();
+    const user = users.find(u => u.email.toLowerCase() === String(email).toLowerCase());
+    if (!user) return res.status(400).json({ error: 'Invalid email or password.' });
+    const ok = await bcrypt.compare(password, user.passwordHash || ''); if (!ok) return res.status(400).json({ error: 'Invalid email or password.' });
+    const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
+    return res.json({ token, user: { id: user.id, name: user.name, email: user.email, role: user.role } });
+  });
+
+  app.get('/api/auth/me', (req, res) => {
+    const auth = req.headers.authorization || ''; const parts = auth.split(' '); if (parts.length !== 2 || parts[0] !== 'Bearer') return res.status(401).json({ error: 'Unauthorized' });
+    try { const decoded = jwt.verify(parts[1], JWT_SECRET); const users = readUsers(); const user = users.find(u => u.id === decoded.id); if (!user) return res.status(404).json({ error: 'User not found' }); return res.json({ id: user.id, name: user.name, email: user.email, role: user.role }); } catch (err) { return res.status(401).json({ error: 'Invalid token' }); }
+  });
+}
+
 // ── Ensure leads file exists ───────────────────────────────
 if (!fs.existsSync(LEADS_FILE)) {
   fs.writeFileSync(LEADS_FILE, JSON.stringify([], null, 2), "utf8");
@@ -87,6 +138,15 @@ app.get("/api/leads", (req, res) => {
 app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
 
 // ── Start ─────────────────────────────────────────────────
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Backend running on http://localhost:${PORT}`);
+});
+
+server.on('error', (err) => {
+  if (err && err.code === 'EADDRINUSE') {
+    console.error(`Port ${PORT} is already in use. Stop the conflicting process or set a different PORT.`);
+    process.exit(1);
+  }
+  console.error('Server error:', err);
+  process.exit(1);
 });

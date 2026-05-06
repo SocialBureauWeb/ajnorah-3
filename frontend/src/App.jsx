@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Auth from "./Auth";
 
 /* ── Logo Icon ─────────────────────────────────────────── */
 
@@ -78,6 +79,18 @@ const ServiceSVGs = {
 /* ── Header ─────────────────────────────────────────────── */
 function Header() {
   const [open, setOpen] = useState(false);
+  const [authOpen, setAuthOpen] = useState(false);
+  const [user, setUser] = useState(() => {
+    try { return JSON.parse(localStorage.getItem("auth_user") || "null"); } catch { return null; }
+  });
+
+  useEffect(() => {
+    const handler = () => {
+      try { setUser(JSON.parse(localStorage.getItem("auth_user") || "null")); } catch { setUser(null); }
+    };
+    window.addEventListener("authChange", handler);
+    return () => window.removeEventListener("authChange", handler);
+  }, []);
 
   const navLinks = [
     { label: "Home", href: "#home" },
@@ -88,6 +101,7 @@ function Header() {
   ];
 
   return (
+    <>
     <header className="sticky top-0 z-[100] bg-white/90 backdrop-blur-md border-b border-border/40 h-[100px] flex items-center overflow-visible">
       <div className="container mx-auto px-4 md:px-8 flex items-center justify-between w-full h-full">
         {/* Brand */}
@@ -120,6 +134,17 @@ function Header() {
               <span className="hidden md:block absolute bottom-1.5 left-4 right-4 h-0.5 bg-primary origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
             </a>
           ))}
+          {/* Mobile-only auth action inside the collapsed menu */}
+          {user ? (
+            <div className="md:hidden px-4 py-3 border-t border-border/10 flex items-center justify-between">
+              <span className="font-medium">Hello, {user.name}</span>
+              <button onClick={() => { localStorage.removeItem("auth_token"); localStorage.removeItem("auth_user"); window.dispatchEvent(new Event("authChange")); setOpen(false); }} className="text-sm text-red-500">Logout</button>
+            </div>
+          ) : (
+            <div className="md:hidden px-4 py-3 border-t border-border/10">
+              <button onClick={() => { setAuthOpen(true); setOpen(false); }} className="w-full bg-primary text-white py-2 rounded-lg font-semibold">Login / Register</button>
+            </div>
+          )}
         </nav>
 
         {/* Actions */}
@@ -152,6 +177,16 @@ function Header() {
           >
             Enquire Now <ArrowRightIcon size={16} />
           </a>
+          <div className="hidden md:flex items-center gap-2">
+            {user ? (
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-medium">Hello, {user.name}</span>
+                <button onClick={() => { localStorage.removeItem("auth_token"); localStorage.removeItem("auth_user"); window.dispatchEvent(new Event("authChange")); }} className="text-sm text-red-500">Logout</button>
+              </div>
+            ) : (
+              <button onClick={() => setAuthOpen(true)} className="bg-primary text-white px-4 py-2 rounded-full text-sm font-semibold">Login</button>
+            )}
+          </div>
           <button
             className="p-2.5 rounded-xl md:hidden transition-all text-black border border-border/50 hover:bg-bg-soft"
             onClick={() => setOpen(!open)}
@@ -168,6 +203,8 @@ function Header() {
         </div>
       </div>
     </header>
+    {authOpen && <Auth open={true} onClose={() => setAuthOpen(false)} />}
+    </>
   );
 }
 
