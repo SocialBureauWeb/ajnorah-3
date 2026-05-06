@@ -527,17 +527,40 @@ function Contact() {
     destination: "Select Destination",
     message: ""
   });
+  const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitting(true);
+    setSubmitError("");
     const phone = "919170065003";
-    const text = `*New Enquiry from Website*%0A%0A*Name:* ${formData.name}%0A*Email:* ${formData.email}%0A*Destination:* ${formData.destination}%0A*Message:* ${formData.message}`;
-    window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
+    const waText = `*New Enquiry from Website*%0A%0A*Name:* ${formData.name}%0A*Email:* ${formData.email}%0A*Destination:* ${formData.destination}%0A*Message:* ${formData.message}`;
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+        window.open(`https://wa.me/${phone}?text=${waText}`, "_blank");
+      } else {
+        const data = await res.json();
+        setSubmitError(data.error || "Something went wrong. Please try again.");
+      }
+    } catch {
+      // Network error – fall back to WhatsApp directly
+      window.open(`https://wa.me/${phone}?text=${waText}`, "_blank");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -565,6 +588,21 @@ function Contact() {
         </div>
 
         <div className="bg-white p-6 md:p-10 rounded-[24px] shadow-lg border border-border/50">
+          {submitted ? (
+            <div className="flex flex-col items-center justify-center gap-4 py-10 text-center">
+              <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+              </div>
+              <h3 className="text-xl font-bold text-dark">Enquiry Sent!</h3>
+              <p className="text-[14px] text-muted">Thank you, we'll be in touch shortly. Check WhatsApp for your message confirmation.</p>
+              <button
+                onClick={() => { setSubmitted(false); setFormData({ name: "", email: "", destination: "Select Destination", message: "" }); }}
+                className="mt-2 text-sm font-semibold text-primary underline underline-offset-2"
+              >
+                Send another enquiry
+              </button>
+            </div>
+          ) : (
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <input
               type="text"
@@ -605,8 +643,18 @@ function Contact() {
               value={formData.message}
               onChange={handleChange}
             ></textarea>
-            <button type="submit" className="bg-primary text-white w-full py-4 rounded-xl font-bold text-base shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all">Send to WhatsApp</button>
+            {submitError && (
+              <p className="text-sm text-red-500 font-medium">{submitError}</p>
+            )}
+            <button
+              type="submit"
+              disabled={submitting}
+              className="bg-primary text-white w-full py-4 rounded-xl font-bold text-base shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {submitting ? "Sending…" : "Send to WhatsApp"}
+            </button>
           </form>
+          )}
         </div>
       </div>
     </section>
