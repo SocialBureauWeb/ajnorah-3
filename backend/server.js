@@ -23,7 +23,7 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   })
 );
 
@@ -133,6 +133,14 @@ app.get("/api/leads", (req, res) => {
     return res.json([]);
   }
 });
+
+// ── Admin routes ─────────────────────────────────────────
+const adminRouter = require('./routes/admin');
+app.use('/api/admin', adminRouter);
+
+// ── Public content routes (read-only)
+const publicRouter = require('./routes/public');
+app.use('/api', publicRouter);
 
 // ── Health check ──────────────────────────────────────────
 app.get("/api/health", (_req, res) => res.json({ status: "ok" }));

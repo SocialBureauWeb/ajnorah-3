@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Auth from "./Auth";
+import AdminApp from "./admin/AdminApp";
+import PublicCourses from "./PublicCourses";
+import PublicFAQ from "./PublicFAQ";
+import PublicTestimonials from "./PublicTestimonials";
+import { apiFetch } from "./admin/useAdminApi";
 
 /* ── Logo Icon ─────────────────────────────────────────── */
 
@@ -181,6 +186,9 @@ function Header() {
             {user ? (
               <div className="flex items-center gap-3">
                 <span className="text-sm font-medium">Hello, {user.name}</span>
+                {user.role === 'admin' && (
+                  <a href="#/admin/dashboard" className="text-sm text-primary border border-primary/30 rounded-lg px-3 py-1.5 hover:bg-primary/5 font-medium">Admin</a>
+                )}
                 <button onClick={() => { localStorage.removeItem("auth_token"); localStorage.removeItem("auth_user"); window.dispatchEvent(new Event("authChange")); }} className="text-sm text-red-500">Logout</button>
               </div>
             ) : (
@@ -464,6 +472,47 @@ function Services() {
   );
 }
 
+/* ── Blogs ───────────────────────────────────────────────── */
+function Blogs() {
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    let mounted = true;
+    fetch('/api/blogs')
+      .then((res) => res.ok ? res.json() : [])
+      .then((data) => { if (mounted) setBlogs(Array.isArray(data) ? data : []); })
+      .catch(() => { if (mounted) setBlogs([]); });
+    return () => { mounted = false; };
+  }, []);
+
+  if (!blogs || blogs.length === 0) return null;
+
+  return (
+    <section id="blogs" className="py-20 bg-white">
+      <div className="container mx-auto px-4 md:px-8">
+        <p className="text-center text-[11.5px] font-bold tracking-[0.12em] text-teal uppercase mb-4">FROM OUR BLOG</p>
+        <h2 className="text-3xl md:text-4xl font-extrabold text-dark text-center mb-8">Latest Articles & News</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {blogs.map((b) => (
+            <article key={b.id} className="bg-white rounded-xl border border-border shadow-sm overflow-hidden">
+              {b.coverImage && (
+                <div className="h-44 w-full overflow-hidden">
+                  <img src={b.coverImage} alt={b.title} className="w-full h-full object-cover" />
+                </div>
+              )}
+              <div className="p-4">
+                <h3 className="text-lg font-bold text-dark mb-2">{b.title}</h3>
+                <p className="text-sm text-muted mb-3">{b.excerpt}</p>
+                <a href={`#/blog/${b.slug || b.id}`} className="text-sm font-semibold text-primary">Read more →</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ── CTA Banner ──────────────────────────────────────────── */
 function CTABanner() {
   return (
@@ -577,24 +626,20 @@ function Contact() {
     e.preventDefault();
     setSubmitting(true);
     setSubmitError("");
-    const phone = "919170065003";
-    const waText = `*New Enquiry from Website*%0A%0A*Name:* ${formData.name}%0A*Email:* ${formData.email}%0A*Destination:* ${formData.destination}%0A*Message:* ${formData.message}`;
     try {
-      const res = await fetch("/api/contact", {
+      const response = await fetch("/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-      if (res.ok) {
-        setSubmitted(true);
-        window.open(`https://wa.me/${phone}?text=${waText}`, "_blank");
-      } else {
-        const data = await res.json();
-        setSubmitError(data.error || "Something went wrong. Please try again.");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to submit lead.");
       }
-    } catch {
-      // Network error – fall back to WhatsApp directly
-      window.open(`https://wa.me/${phone}?text=${waText}`, "_blank");
+      setSubmitted(true);
+      setFormData({ name: "", email: "", destination: "Select Destination", message: "" });
+    } catch (error) {
+      setSubmitError(error.message);
     } finally {
       setSubmitting(false);
     }
@@ -631,7 +676,7 @@ function Contact() {
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
               </div>
               <h3 className="text-xl font-bold text-dark">Enquiry Sent!</h3>
-              <p className="text-[14px] text-muted">Thank you, we'll be in touch shortly. Check WhatsApp for your message confirmation.</p>
+              <p className="text-[14px] text-muted">Thank you, we'll be in touch shortly.</p>
               <button
                 onClick={() => { setSubmitted(false); setFormData({ name: "", email: "", destination: "Select Destination", message: "" }); }}
                 className="mt-2 text-sm font-semibold text-primary underline underline-offset-2"
@@ -688,7 +733,7 @@ function Contact() {
               disabled={submitting}
               className="bg-primary text-white w-full py-4 rounded-xl font-bold text-base shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {submitting ? "Sending…" : "Send to WhatsApp"}
+              {submitting ? "Sending…" : "Send"}
             </button>
           </form>
           )}
@@ -698,8 +743,141 @@ function Contact() {
   );
 }
 
+/* ── Lead Form ───────────────────────────────────────────── */
+function LeadForm() {
+  const [formData, setFormData] = useState({ name: '', email: '', destination: '', message: '' });
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await apiFetch('/leads', {
+        method: 'POST',
+        body: JSON.stringify(formData),
+      });
+      setSuccess(true);
+      setFormData({ name: '', email: '', destination: '', message: '' });
+    } catch (e) {
+      setError(e.message);
+    }
+  };
+
+  return (
+    <div>
+      <h2>Submit a Lead</h2>
+      {success && <p className="text-green-500">Lead submitted successfully!</p>}
+      {error && <p className="text-red-500">{error}</p>}
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="destination"
+          placeholder="Destination"
+          value={formData.destination}
+          onChange={handleChange}
+        />
+        <textarea
+          name="message"
+          placeholder="Message"
+          value={formData.message}
+          onChange={handleChange}
+        />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
+}
+
 /* ── App ─────────────────────────────────────────────────── */
 export default function App() {
+  const [isAdmin, setIsAdmin] = useState(() => window.location.hash.startsWith('#/admin'));
+  const [adminUser, setAdminUser] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('auth_user') || 'null'); } catch { return null; }
+  });
+
+  useEffect(() => {
+    const check = () => {
+      const onAdminRoute = window.location.hash.startsWith('#/admin');
+      setIsAdmin(onAdminRoute);
+      try { setAdminUser(JSON.parse(localStorage.getItem('auth_user') || 'null')); } catch { setAdminUser(null); }
+    };
+    window.addEventListener('hashchange', check);
+    window.addEventListener('authChange', check);
+    return () => { window.removeEventListener('hashchange', check); window.removeEventListener('authChange', check); };
+  }, []);
+
+  const handleAdminLogout = () => {
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('auth_user');
+    window.dispatchEvent(new Event('authChange'));
+    window.location.hash = '';
+    setIsAdmin(false);
+    setAdminUser(null);
+  };
+
+  // Show admin panel if on #/admin route and user is admin
+  if (isAdmin) {
+    if (!adminUser) {
+      return (
+        <div className="min-h-screen flex flex-col items-center justify-center bg-bg-soft gap-4 font-sans">
+          <div className="bg-white rounded-2xl border border-border shadow-sm p-8 w-full max-w-sm text-center">
+            <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center mx-auto mb-4">
+              <span className="text-white font-bold text-xl">A</span>
+            </div>
+            <h2 className="text-xl font-bold text-dark mb-1">Admin Access</h2>
+            <p className="text-sm text-muted mb-4">Please log in with an admin account to continue.</p>
+            <Auth
+              open={true}
+              onClose={() => {
+                try { setAdminUser(JSON.parse(localStorage.getItem('auth_user') || 'null')); } catch { setAdminUser(null); }
+              }}
+            />
+            <button
+              onClick={() => { window.location.hash = ''; setIsAdmin(false); }}
+              className="mt-4 text-sm text-muted hover:text-dark"
+            >
+              ← Back to site
+            </button>
+          </div>
+        </div>
+      );
+    }
+    if (adminUser.role !== 'admin') {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-bg-soft font-sans">
+          <div className="bg-white rounded-2xl border border-border shadow-sm p-8 text-center max-w-sm">
+            <p className="text-2xl mb-2">🔒</p>
+            <h2 className="font-bold text-dark text-lg mb-2">Access Denied</h2>
+            <p className="text-sm text-muted mb-4">Your account does not have admin privileges.</p>
+            <button onClick={handleAdminLogout} className="text-sm text-primary underline">Logout & go back</button>
+          </div>
+        </div>
+      );
+    }
+    return <AdminApp user={adminUser} onLogout={handleAdminLogout} />;
+  }
+
   return (
     <div className="overflow-x-hidden font-sans bg-white selection:bg-primary/10 selection:text-primary">
       <Header />
@@ -709,6 +887,10 @@ export default function App() {
         <About />
         <Destinations />
         <Services />
+        <Blogs />
+        <PublicCourses />
+        <PublicTestimonials />
+        <PublicFAQ />
         <Contact />
         <CTABanner />
       </main>
