@@ -643,24 +643,49 @@ button { font-family: inherit; cursor: pointer; border: none; }
 /* ── Footer ─────────────────────────────────────────────── */
 .site-footer {
   border-top: 1px solid var(--border);
-  padding: 28px 0;
+  padding: 24px 0;
   background: var(--bg);
 }
 .footer-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 2rem;
   flex-wrap: wrap;
 }
 .footer-brand {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
+}
+.footer-brand img {
+  max-width: 140px;
+  height: auto;
+}
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 .footer-copy {
   font-size: 13px;
   color: var(--muted);
+  margin: 0;
+}
+.footer-powered {
+  font-size: 13px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+.footer-powered img {
+  max-width: 90px;
+  height: auto;
 }
 
 /* ── Responsive ─────────────────────────────────────────── */
@@ -709,4 +734,12 @@ button { font-family: inherit; cursor: pointer; border: none; }
   .uni-logos { gap: 20px; }
   .hero-features { gap: 14px; }
   .cta-heading { font-size: 26px; }
+  /* Footer Responsive */
+  .site-footer { padding: 16px 0; }
+  .footer-inner { flex-direction: column; align-items: center; justify-content: center; gap: 12px; width: 100%; }
+  .footer-brand { width: 100%; }
+  .footer-brand img { max-width: 120px; height: auto; }
+  .footer-content { flex-direction: column; align-items: center; justify-content: center; gap: 8px; width: 100%; }
+  .footer-copy, .footer-powered { font-size: 12px; margin: 0; text-align: center; }
+  .footer-powered img { max-width: 90px; height: auto; }
 }

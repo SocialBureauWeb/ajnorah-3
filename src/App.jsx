@@ -353,10 +353,11 @@ export default function App() {
         <div className="container footer-inner">
           <div className="footer-brand">
             <img src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777722355/ajinorah_fjyuxs.webp" alt="Ajinorah" className="brand-logo" />
-            
           </div>
-          <p className="footer-copy">© {new Date().getFullYear()} Ajinorah. All rights reserved.</p>
-          <p>POWERED BY <img src="https://www.socialbureau.in/assets/socialbureau.png" alt="SocialBureau" className="brand-logo" /></p>
+          <div className="footer-content">
+            <p className="footer-copy">© {new Date().getFullYear()} Ajinorah. All rights reserved.</p>
+            <p className="footer-powered">POWERED BY <img src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777199141/SB_LOGO_BLACK_PNG_iev5qz.png" alt="SocialBureau" className="brand-logo" /></p>
+          </div>
         </div>
       </footer>
     </div>
