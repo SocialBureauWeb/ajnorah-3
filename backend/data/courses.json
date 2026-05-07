@@ -1,14 +1,1 @@
-[
-  {
-    "id": 1,
-    "title": "course 1",
-    "description": "description",
-    "duration": "2 months",
-    "level": "Intermediate",
-    "price": "10k",
-    "coverImage": "https://res.cloudinary.com/daqirpbbl/image/upload/v1776862116/juoxlzhu99gj2t0eepoh_dslrpw.png",
-    "published": true,
-    "createdAt": "2026-05-06T12:33:55.130Z",
-    "updatedAt": "2026-05-06T12:34:12.813Z"
-  }
-]
+[]
