@@ -23,6 +23,13 @@ export default function PublicTestimonials() {
                 </div>
               </div>
               <p className="text-sm text-muted">{t.content}</p>
+              <div className="flex items-center mt-3">
+                {[...Array(5)].map((_, i) => (
+                  <span key={i} className={`text-yellow-500 ${i < t.rating ? 'text-yellow-500' : 'text-gray-300'}`}>
+                    ★
+                  </span>
+                ))}
+              </div>
             </div>
           ))}
         </div>

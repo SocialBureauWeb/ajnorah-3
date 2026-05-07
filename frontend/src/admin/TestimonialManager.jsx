@@ -107,7 +107,7 @@ export default function TestimonialManager() {
             <Field label="Avatar URL (optional)">
               <Input value={form.avatar} onChange={e => set('avatar', e.target.value)} placeholder="https://..." />
             </Field>
-            <Toggle label="Published" checked={form.published} onChange={v => set('published', v)} />
+            <Toggle label="Publish" checked={form.published} onChange={v => set('published', v)} />
             <div className="flex gap-3 pt-2">
               <ActionBtn onClick={save} disabled={saving}>{saving ? 'Saving...' : 'Save Testimonial'}</ActionBtn>
               <ActionBtn variant="ghost" onClick={closeModal}>Cancel</ActionBtn>

@@ -103,7 +103,7 @@ export default function BlogManager() {
             <Field label="Tags (comma-separated)">
               <Input value={form.tags} onChange={e => set('tags', e.target.value)} placeholder="study abroad, visa, tips" />
             </Field>
-            <Toggle label="Published" checked={form.published} onChange={v => set('published', v)} />
+            <Toggle label="Publish" checked={form.published} onChange={v => set('published', v)} />
             <div className="flex gap-3 pt-2">
               <ActionBtn onClick={save} disabled={saving}>{saving ? 'Saving...' : 'Save Post'}</ActionBtn>
               <ActionBtn variant="ghost" onClick={closeModal}>Cancel</ActionBtn>

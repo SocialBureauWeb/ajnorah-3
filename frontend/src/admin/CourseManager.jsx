@@ -108,7 +108,7 @@ export default function CourseManager() {
             <Field label="Cover Image URL">
               <Input value={form.coverImage} onChange={e => set('coverImage', e.target.value)} placeholder="https://..." />
             </Field>
-            <Toggle label="Published" checked={form.published} onChange={v => set('published', v)} />
+            <Toggle label="Publish" checked={form.published} onChange={v => set('published', v)} />
             <div className="flex gap-3 pt-2">
               <ActionBtn onClick={save} disabled={saving}>{saving ? 'Saving...' : 'Save Course'}</ActionBtn>
               <ActionBtn variant="ghost" onClick={closeModal}>Cancel</ActionBtn>

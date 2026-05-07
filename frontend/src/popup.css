@@ -1,0 +1,24 @@
+.popup-overlay{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,0.4);
+  z-index:9999;
+}
+.popup{
+  background:#fff;
+  padding:20px;
+  border-radius:8px;
+  max-width:90%;
+  box-shadow:0 8px 24px rgba(0,0,0,0.2);
+}
+.popup-message{margin-bottom:12px;}
+.popup-ok{padding:8px 14px;border-radius:6px;border:none;background:#1976d2;color:#fff;cursor:pointer}
+.popup-ok:hover{opacity:0.95}
+
+.popup-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+.popup-confirm{padding:8px 14px;border-radius:6px;border:none;background:#d32f2f;color:#fff;cursor:pointer}
+.popup-cancel{padding:8px 14px;border-radius:6px;border:1px solid #ccc;background:transparent;color:#333;cursor:pointer}
+

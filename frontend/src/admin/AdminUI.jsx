@@ -96,6 +96,7 @@ export function ActionBtn({ onClick, variant = 'primary', children, disabled }) 
   };
   return (
     <button
+      type="button"
       onClick={onClick}
       disabled={disabled}
       className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 ${styles[variant]}`}
