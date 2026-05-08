@@ -101,21 +101,21 @@ function Header() {
     { label: "Home", href: "#home" },
     { label: "About Us", href: "#about" },
     { label: "Services", href: "#services" },
-    { label: "Destinations", href: "#destinations" },
+    // { label: "Destinations", href: "#destinations" },
     { label: "Contact", href: "#contact" },
   ];
 
   return (
     <>
     <header className="sticky top-0 z-[100] bg-white/90 backdrop-blur-md border-b border-border/40 h-[100px] flex items-center overflow-visible">
-      <div className="container mx-auto px-4 md:px-8 flex items-center justify-between w-full h-full">
+      <div className="container mx-auto px-4 md:pr-8 flex items-center justify-between w-full h-full">
         {/* Brand */}
-        <div className="flex items-center shrink-0 w-[240px] md:w-[450px] h-full relative">
-          <a href="#home" className="block absolute top-[40%] -translate-y-1/2 left-0 z-50">
+        <div className="flex items-center shrink-0 w-[180px] md:w-[260px] h-full relative overflow-hidden">
+          <a href="#home" className="block absolute top-1/2 -translate-y-1/2 left-0 z-50">
             <img
               src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777557258/images/osrzkwmrt33dlpzyofze.png"
               alt="Ajinorah"
-              className="h-[220px] md:h-[400px] w-auto block transition-all hover:scale-105 object-contain object-left scale-[1.6] md:scale-100 origin-left"
+              className="h-[60px] md:h-[810px] w-auto block transition-all hover:scale-105 object-contain object-left origin-left"
             />
           </a>
         </div>
@@ -125,7 +125,7 @@ function Header() {
           ${open ? "translate-y-0 opacity-100 pointer-events-auto" : "-translate-y-4 opacity-0 pointer-events-none"} 
           flex md:flex md:translate-y-0 md:opacity-100 md:pointer-events-auto 
           absolute md:static left-0 right-0 top-[100px] bg-white md:bg-transparent 
-          p-4 md:p-0 flex-col md:flex-row items-stretch md:items-center gap-0 md:gap-1 md:ml-16 md:mr-auto z-50 
+          p-4 md:p-0 flex-col md:flex-row items-stretch md:items-center gap-0 md:gap-1 md:flex-1 md:mx-6 z-50 
           shadow-xl md:shadow-none border-b md:border-none border-border/20 transition-all duration-300 ease-in-out
         `}>
           {navLinks.map((link) => (
@@ -153,7 +153,7 @@ function Header() {
         </nav>
 
         {/* Actions */}
-        <div className="flex items-center gap-3 lg:gap-4 ml-4">
+        <div className="flex items-center gap-3 lg:gap-4 ml-4 shrink-0 pr-2">
           <div className="hidden xl:flex items-center gap-2 mr-2">
             <a href="https://x.com/Ajinorah_Maha" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
@@ -178,14 +178,13 @@ function Header() {
             href="https://wa.me/919170065003"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-primary text-white px-7 py-3 rounded-full font-bold text-[13.5px] shadow-[0_10px_25px_-5px_rgba(107,71,220,0.3)] hover:shadow-[0_15px_30px_-5px_rgba(107,71,220,0.4)] hover:-translate-y-0.5 transition-all hidden md:inline-flex items-center gap-2"
+            className="bg-primary text-white px-5 py-3 rounded-full font-bold text-[13.5px] shadow-[0_10px_25px_-5px_rgba(107,71,220,0.3)] hover:shadow-[0_15px_30px_-5px_rgba(107,71,220,0.4)] hover:-translate-y-0.5 transition-all hidden md:inline-flex items-center gap-2"
           >
             Enquire Now <ArrowRightIcon size={16} />
           </a>
           <div className="hidden md:flex items-center gap-2">
             {user ? (
               <div className="flex items-center gap-3">
-                <span className="text-sm font-medium">Hello, {user.name}</span>
                 {user.role === 'admin' && (
                   <a href="#/admin/dashboard" className="text-sm text-primary border border-primary/30 rounded-lg px-3 py-1.5 hover:bg-primary/5 font-medium">Admin</a>
                 )}
