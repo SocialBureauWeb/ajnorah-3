@@ -129,16 +129,20 @@ app.use('/api', publicRouter);
 // ── Health check ──────────────────────────────────────────
 app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
 
-// ── Start ─────────────────────────────────────────────────
-const server = app.listen(PORT, () => {
-  console.log(`Backend running on http://localhost:${PORT}`);
-});
-
-server.on('error', (err) => {
-  if (err && err.code === 'EADDRINUSE') {
-    console.error(`Port ${PORT} is already in use. Stop the conflicting process or set a different PORT.`);
+// ── Start (local dev only) ────────────────────────────────
+if (process.env.NODE_ENV !== 'production') {
+  const server = app.listen(PORT, () => {
+    console.log(`Backend running on http://localhost:${PORT}`);
+  });
+  server.on('error', (err) => {
+    if (err && err.code === 'EADDRINUSE') {
+      console.error(`Port ${PORT} is already in use.`);
+      process.exit(1);
+    }
+    console.error('Server error:', err);
     process.exit(1);
-  }
-  console.error('Server error:', err);
-  process.exit(1);
-});
+  });
+}
+
+// Required for Vercel serverless
+module.exports = app;
