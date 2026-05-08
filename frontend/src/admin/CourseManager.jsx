@@ -29,10 +29,23 @@ export default function CourseManager() {
     if (!form.title || !form.description) { setError('Title and description are required.'); return; }
     setSaving(true); setError('');
     try {
-      if (modal === 'add') {
-        await apiFetch('/courses', { method: 'POST', body: JSON.stringify(form) });
+      if (form.coverFile) {
+        const fd = new FormData();
+        fd.append('title', form.title);
+        fd.append('description', form.description);
+        fd.append('duration', form.duration || '');
+        fd.append('level', form.level || 'Beginner');
+        fd.append('price', form.price || '');
+        fd.append('published', form.published ? 'true' : '');
+        fd.append('coverImage', form.coverFile);
+        if (modal === 'add') await apiFetch('/courses', { method: 'POST', body: fd });
+        else await apiFetch(`/courses/${modal.id}`, { method: 'PUT', body: fd });
       } else {
-        await apiFetch(`/courses/${modal.id}`, { method: 'PUT', body: JSON.stringify(form) });
+        if (modal === 'add') {
+          await apiFetch('/courses', { method: 'POST', body: JSON.stringify(form) });
+        } else {
+          await apiFetch(`/courses/${modal.id}`, { method: 'PUT', body: JSON.stringify(form) });
+        }
       }
       await load(); closeModal();
     } catch (e) { setError(e.message); }
@@ -107,6 +120,9 @@ export default function CourseManager() {
             </Field>
             <Field label="Cover Image URL">
               <Input value={form.coverImage} onChange={e => set('coverImage', e.target.value)} placeholder="https://..." />
+            </Field>
+            <Field label="Cover Image File">
+              <input type="file" accept="image/*,video/*" onChange={e => set('coverFile', e.target.files && e.target.files[0])} />
             </Field>
             <Toggle label="Publish" checked={form.published} onChange={v => set('published', v)} />
             <div className="flex gap-3 pt-2">

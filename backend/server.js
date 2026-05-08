@@ -135,6 +135,14 @@ app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
 // If this file is executed directly (e.g. `node server.js`) start
 // a listening HTTP server. When imported (serverless platforms)
 // the exported `app` can be used without starting a listener.
+
+// Global error handler: log and return JSON errors
+app.use((err, req, res, next) => {
+  console.error('Unhandled error:', err && err.stack ? err.stack : err);
+  const status = err && err.status ? err.status : (err && err.name === 'MulterError' ? 400 : 500);
+  res.status(status).json({ error: err && err.message ? err.message : 'Internal Server Error' });
+});
+
 if (require.main === module) {
   const server = app.listen(PORT, () => {
     console.log(`Backend running on http://localhost:${PORT}`);

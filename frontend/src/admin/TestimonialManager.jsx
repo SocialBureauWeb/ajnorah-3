@@ -24,10 +24,23 @@ export default function TestimonialManager() {
     if (!form.name || !form.content) { setError('Name and content are required.'); return; }
     setSaving(true); setError('');
     try {
-      if (modal === 'add') {
-        await apiFetch('/testimonials', { method: 'POST', body: JSON.stringify(form) });
+      if (form.avatarFile) {
+        const fd = new FormData();
+        fd.append('name', form.name);
+        fd.append('role', form.role || '');
+        fd.append('company', form.company || '');
+        fd.append('content', form.content || '');
+        fd.append('rating', String(form.rating || 5));
+        fd.append('published', form.published ? 'true' : '');
+        fd.append('avatar', form.avatarFile);
+        if (modal === 'add') await apiFetch('/testimonials', { method: 'POST', body: fd });
+        else await apiFetch(`/testimonials/${modal.id}`, { method: 'PUT', body: fd });
       } else {
-        await apiFetch(`/testimonials/${modal.id}`, { method: 'PUT', body: JSON.stringify(form) });
+        if (modal === 'add') {
+          await apiFetch('/testimonials', { method: 'POST', body: JSON.stringify(form) });
+        } else {
+          await apiFetch(`/testimonials/${modal.id}`, { method: 'PUT', body: JSON.stringify(form) });
+        }
       }
       await load(); closeModal();
     } catch (e) { setError(e.message); }
@@ -106,6 +119,9 @@ export default function TestimonialManager() {
             </Field>
             <Field label="Avatar URL (optional)">
               <Input value={form.avatar} onChange={e => set('avatar', e.target.value)} placeholder="https://..." />
+            </Field>
+            <Field label="Avatar File">
+              <input type="file" accept="image/*" onChange={e => set('avatarFile', e.target.files && e.target.files[0])} />
             </Field>
             <Toggle label="Publish" checked={form.published} onChange={v => set('published', v)} />
             <div className="flex gap-3 pt-2">

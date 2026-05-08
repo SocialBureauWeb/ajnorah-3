@@ -1,5 +1,6 @@
 const express = require('express');
 const adminAuth = require('../middleware/adminAuth');
+const upload = require('../middleware/cloudflare');
 const { getDb, ObjectId } = require('../db');
 
 const router = express.Router();
@@ -24,18 +25,26 @@ router.get('/blogs', async (_req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-router.post('/blogs', async (req, res) => {
-  const { title, slug, excerpt, content, coverImage, tags, published } = req.body || {};
+router.post('/blogs', upload.single('coverImage'), async (req, res) => {
+  const { title, slug, excerpt, content, tags, published } = req.body || {};
+  const coverImage = (req.file && req.file.location) ? req.file.location : String(req.body.coverImage || '').slice(0, 500);
   if (!title || !content) return res.status(400).json({ error: 'Title and content are required.' });
   try {
     const db = await getDb();
+    // normalize tags: accept array, comma-separated string, or JSON array string
+    let tagsArr = [];
+    if (Array.isArray(tags)) tagsArr = tags;
+    else if (typeof tags === 'string') {
+      try { const parsed = JSON.parse(tags); if (Array.isArray(parsed)) tagsArr = parsed; else tagsArr = tags.split(',').map(t => t.trim()).filter(Boolean); } catch { tagsArr = tags.split(',').map(t => t.trim()).filter(Boolean); }
+    }
+
     const blog = {
       title: String(title).slice(0, 200),
       slug: (slug || String(title).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')).slice(0, 200),
       excerpt: String(excerpt || '').slice(0, 500),
       content: String(content).slice(0, 50000),
-      coverImage: String(coverImage || '').slice(0, 500),
-      tags: Array.isArray(tags) ? tags.slice(0, 10).map(t => String(t).slice(0, 50)) : [],
+      coverImage: coverImage,
+      tags: Array.isArray(tagsArr) ? tagsArr.slice(0, 10).map(t => String(t).slice(0, 50)) : [],
       published: Boolean(published),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -45,17 +54,26 @@ router.post('/blogs', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-router.put('/blogs/:id', async (req, res) => {
+router.put('/blogs/:id', upload.single('coverImage'), async (req, res) => {
   try {
     const db = await getDb();
-    const { title, slug, excerpt, content, coverImage, tags, published } = req.body || {};
+    const { title, slug, excerpt, content, tags, published } = req.body || {};
+    const incomingCover = (req.file && req.file.location) ? req.file.location : (req.body.coverImage);
+    // normalize tags for update
+    let tagsArr = undefined;
+    if (tags !== undefined) {
+      if (Array.isArray(tags)) tagsArr = tags;
+      else if (typeof tags === 'string') {
+        try { const parsed = JSON.parse(tags); tagsArr = Array.isArray(parsed) ? parsed : tags.split(',').map(t => t.trim()).filter(Boolean); } catch { tagsArr = tags.split(',').map(t => t.trim()).filter(Boolean); }
+      }
+    }
     const update = {
       ...(title !== undefined && { title: String(title).slice(0, 200) }),
       ...(slug !== undefined && { slug: String(slug).slice(0, 200) }),
       ...(excerpt !== undefined && { excerpt: String(excerpt).slice(0, 500) }),
       ...(content !== undefined && { content: String(content).slice(0, 50000) }),
-      ...(coverImage !== undefined && { coverImage: String(coverImage).slice(0, 500) }),
-      ...(tags !== undefined && { tags: Array.isArray(tags) ? tags.slice(0, 10).map(t => String(t).slice(0, 50)) : [] }),
+      ...(incomingCover !== undefined && { coverImage: String(incomingCover).slice(0, 500) }),
+      ...(tagsArr !== undefined && { tags: Array.isArray(tagsArr) ? tagsArr.slice(0, 10).map(t => String(t).slice(0, 50)) : [] }),
       ...(published !== undefined && { published: Boolean(published) }),
       updatedAt: new Date().toISOString(),
     };
@@ -92,8 +110,9 @@ router.get('/courses', async (_req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-router.post('/courses', async (req, res) => {
-  const { title, description, duration, level, price, coverImage, published } = req.body || {};
+router.post('/courses', upload.single('coverImage'), async (req, res) => {
+  const { title, description, duration, level, price, published } = req.body || {};
+  const coverImage = (req.file && req.file.location) ? req.file.location : String(req.body.coverImage || '').slice(0, 500);
   if (!title || !description) return res.status(400).json({ error: 'Title and description are required.' });
   try {
     const db = await getDb();
@@ -103,7 +122,7 @@ router.post('/courses', async (req, res) => {
       duration: String(duration || '').slice(0, 100),
       level: String(level || 'Beginner').slice(0, 50),
       price: String(price || '').slice(0, 50),
-      coverImage: String(coverImage || '').slice(0, 500),
+      coverImage: coverImage,
       published: Boolean(published),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -113,17 +132,18 @@ router.post('/courses', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-router.put('/courses/:id', async (req, res) => {
+router.put('/courses/:id', upload.single('coverImage'), async (req, res) => {
   try {
     const db = await getDb();
-    const { title, description, duration, level, price, coverImage, published } = req.body || {};
+    const { title, description, duration, level, price, published } = req.body || {};
+    const incomingCover = (req.file && req.file.location) ? req.file.location : (req.body.coverImage);
     const update = {
       ...(title !== undefined && { title: String(title).slice(0, 200) }),
       ...(description !== undefined && { description: String(description).slice(0, 5000) }),
       ...(duration !== undefined && { duration: String(duration).slice(0, 100) }),
       ...(level !== undefined && { level: String(level).slice(0, 50) }),
       ...(price !== undefined && { price: String(price).slice(0, 50) }),
-      ...(coverImage !== undefined && { coverImage: String(coverImage).slice(0, 500) }),
+      ...(incomingCover !== undefined && { coverImage: String(incomingCover).slice(0, 500) }),
       ...(published !== undefined && { published: Boolean(published) }),
       updatedAt: new Date().toISOString(),
     };
@@ -252,8 +272,9 @@ router.get('/testimonials', async (_req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-router.post('/testimonials', async (req, res) => {
-  const { name, role, company, content, rating, avatar, published } = req.body || {};
+router.post('/testimonials', upload.single('avatar'), async (req, res) => {
+  const { name, role, company, content, rating, published } = req.body || {};
+  const avatar = (req.file && req.file.location) ? req.file.location : String(req.body.avatar || '').slice(0, 500);
   if (!name || !content) return res.status(400).json({ error: 'Name and content are required.' });
   try {
     const db = await getDb();
@@ -263,7 +284,7 @@ router.post('/testimonials', async (req, res) => {
       company: String(company || '').slice(0, 100),
       content: String(content).slice(0, 2000),
       rating: Math.min(5, Math.max(1, parseInt(rating) || 5)),
-      avatar: String(avatar || '').slice(0, 500),
+      avatar: avatar,
       published: Boolean(published),
       createdAt: new Date().toISOString(),
     };
@@ -272,17 +293,18 @@ router.post('/testimonials', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-router.put('/testimonials/:id', async (req, res) => {
+router.put('/testimonials/:id', upload.single('avatar'), async (req, res) => {
   try {
     const db = await getDb();
-    const { name, role, company, content, rating, avatar, published } = req.body || {};
+    const { name, role, company, content, rating, published } = req.body || {};
+    const incomingAvatar = (req.file && req.file.location) ? req.file.location : (req.body.avatar);
     const update = {
       ...(name !== undefined && { name: String(name).slice(0, 100) }),
       ...(role !== undefined && { role: String(role).slice(0, 100) }),
       ...(company !== undefined && { company: String(company).slice(0, 100) }),
       ...(content !== undefined && { content: String(content).slice(0, 2000) }),
       ...(rating !== undefined && { rating: Math.min(5, Math.max(1, parseInt(rating) || 5)) }),
-      ...(avatar !== undefined && { avatar: String(avatar).slice(0, 500) }),
+      ...(incomingAvatar !== undefined && { avatar: String(incomingAvatar).slice(0, 500) }),
       ...(published !== undefined && { published: Boolean(published) }),
       updatedAt: new Date().toISOString(),
     };

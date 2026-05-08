@@ -26,10 +26,26 @@ export default function BlogManager() {
     setSaving(true); setError('');
     try {
       const payload = { ...form, tags: form.tags ? form.tags.split(',').map(t => t.trim()).filter(Boolean) : [] };
-      if (modal === 'add') {
-        await apiFetch('/blogs', { method: 'POST', body: JSON.stringify(payload) });
+      if (form.coverFile) {
+        const fd = new FormData();
+        fd.append('title', payload.title);
+        fd.append('slug', payload.slug || '');
+        fd.append('excerpt', payload.excerpt || '');
+        fd.append('content', payload.content || '');
+        fd.append('tags', (payload.tags || []).join(','));
+        fd.append('published', payload.published ? 'true' : '');
+        fd.append('coverImage', form.coverFile);
+        if (modal === 'add') {
+          await apiFetch('/blogs', { method: 'POST', body: fd });
+        } else {
+          await apiFetch(`/blogs/${modal.id}`, { method: 'PUT', body: fd });
+        }
       } else {
-        await apiFetch(`/blogs/${modal.id}`, { method: 'PUT', body: JSON.stringify(payload) });
+        if (modal === 'add') {
+          await apiFetch('/blogs', { method: 'POST', body: JSON.stringify(payload) });
+        } else {
+          await apiFetch(`/blogs/${modal.id}`, { method: 'PUT', body: JSON.stringify(payload) });
+        }
       }
       await load();
       closeModal();
@@ -99,6 +115,9 @@ export default function BlogManager() {
             </Field>
             <Field label="Cover Image URL">
               <Input value={form.coverImage} onChange={e => set('coverImage', e.target.value)} placeholder="https://..." />
+            </Field>
+            <Field label="Cover Image File">
+              <input type="file" accept="image/*,video/*" onChange={e => set('coverFile', e.target.files && e.target.files[0])} />
             </Field>
             <Field label="Tags (comma-separated)">
               <Input value={form.tags} onChange={e => set('tags', e.target.value)} placeholder="study abroad, visa, tips" />
