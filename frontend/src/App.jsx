@@ -660,11 +660,11 @@ function Contact() {
             </div>
             <div className="flex flex-col gap-1">
               <strong className="text-xs text-primary uppercase tracking-wider font-bold">Phone:</strong>
-              <a href="tel:+919170065003" className="text-base text-dark font-medium hover:text-primary transition-colors">+91 91 7006 5003</a>
+              <a href="tel:+919170065003" className="text-base text-dark font-medium hover:text-primary transition-colors">+91 91 7006 5003, +91 887 2222 887, +91 86 5150 5150</a>
             </div>
             <div className="flex flex-col gap-1">
               <strong className="text-xs text-primary uppercase tracking-wider font-bold">Service Address:</strong>
-              <p className="text-base text-dark font-medium">102, Deo Enclave, Vile Parle East, Mumbai - 400057</p>
+              <p className="text-base text-dark font-medium">102, DEO ENCLAVE, NEAR DAHANUKAR MANAGEMENT COLLEGE, VILE PARLE EAST, MUMBAI, MAHARASHTRA - 400057</p>
             </div>
           </div>
         </div>
@@ -945,7 +945,7 @@ export default function App() {
                     <div className="flex flex-col gap-1">
                       <span className="text-[10px] font-bold text-primary uppercase tracking-wider">Call Us</span>
                       <a href="tel:+919170065003" className="text-[14px] text-dark font-medium hover:text-primary transition-colors">
-                        +91 91700 65003
+                        +91 91 7006 5003, +91 887 2222 887, +91 86 5150 5150
                       </a>
                     </div>
                   </div>
