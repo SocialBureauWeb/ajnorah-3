@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { apiFetch } from './useAdminApi';
 import Modal, { Field, Input, Textarea, Toggle, ActionBtn, StatusBadge } from './AdminUI';
 
-const EMPTY = { name: '', role: '', company: '', content: '', rating: 5, avatar: '', published: true };
+const EMPTY = { name: '', role: '', company: '', content: '', rating: 5, avatar: '', video: '', published: true };
 
 export default function TestimonialManager() {
   const [items, setItems] = useState([]);
@@ -24,7 +24,7 @@ export default function TestimonialManager() {
     if (!form.name || !form.content) { setError('Name and content are required.'); return; }
     setSaving(true); setError('');
     try {
-      if (form.avatarFile) {
+      if (form.avatarFile || form.videoFile) {
         const fd = new FormData();
         fd.append('name', form.name);
         fd.append('role', form.role || '');
@@ -32,7 +32,10 @@ export default function TestimonialManager() {
         fd.append('content', form.content || '');
         fd.append('rating', String(form.rating || 5));
         fd.append('published', form.published ? 'true' : '');
-        fd.append('avatar', form.avatarFile);
+        if (form.avatar) fd.append('avatar', form.avatar);
+        if (form.video) fd.append('video', form.video);
+        if (form.avatarFile) fd.append('avatar', form.avatarFile);
+        if (form.videoFile) fd.append('video', form.videoFile);
         if (modal === 'add') await apiFetch('/testimonials', { method: 'POST', body: fd });
         else await apiFetch(`/testimonials/${modal.id}`, { method: 'PUT', body: fd });
       } else {
@@ -84,6 +87,13 @@ export default function TestimonialManager() {
               </div>
               <Stars n={t.rating || 5} />
               <p className="text-sm text-muted mt-2 line-clamp-3">{t.content}</p>
+              {t.video && (
+                <video
+                  src={t.video}
+                  controls
+                  className="mt-3 w-full rounded-xl max-h-40 object-cover bg-black"
+                />
+              )}
               <div className="flex gap-2 mt-3">
                 <ActionBtn variant="ghost" onClick={() => openEdit(t)}>Edit</ActionBtn>
                 <ActionBtn variant="danger" onClick={() => remove(t.id)}>Delete</ActionBtn>
@@ -122,6 +132,18 @@ export default function TestimonialManager() {
             </Field>
             <Field label="Avatar File">
               <input type="file" accept="image/*" onChange={e => set('avatarFile', e.target.files && e.target.files[0])} />
+            </Field>
+            <Field label="Video URL (optional)">
+              <Input value={form.video} onChange={e => set('video', e.target.value)} placeholder="https://..." />
+            </Field>
+            <Field label="Video File (mp4, webm…)">
+              <input type="file" accept="video/*" onChange={e => set('videoFile', e.target.files && e.target.files[0])} />
+              {form.videoFile && (
+                <video src={URL.createObjectURL(form.videoFile)} controls className="mt-2 w-full rounded-xl max-h-40 bg-black" />
+              )}
+              {!form.videoFile && form.video && (
+                <video src={form.video} controls className="mt-2 w-full rounded-xl max-h-40 bg-black" />
+              )}
             </Field>
             <Toggle label="Publish" checked={form.published} onChange={v => set('published', v)} />
             <div className="flex gap-3 pt-2">

@@ -272,9 +272,11 @@ router.get('/testimonials', async (_req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-router.post('/testimonials', upload.single('avatar'), async (req, res) => {
+router.post('/testimonials', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'video', maxCount: 1 }]), async (req, res) => {
   const { name, role, company, content, rating, published } = req.body || {};
-  const avatar = (req.file && req.file.location) ? req.file.location : String(req.body.avatar || '').slice(0, 500);
+  const files = req.files || {};
+  const avatar = (files.avatar && files.avatar[0] && files.avatar[0].location) ? files.avatar[0].location : String(req.body.avatar || '').slice(0, 500);
+  const video = (files.video && files.video[0] && files.video[0].location) ? files.video[0].location : String(req.body.video || '').slice(0, 500);
   if (!name || !content) return res.status(400).json({ error: 'Name and content are required.' });
   try {
     const db = await getDb();
@@ -285,6 +287,7 @@ router.post('/testimonials', upload.single('avatar'), async (req, res) => {
       content: String(content).slice(0, 2000),
       rating: Math.min(5, Math.max(1, parseInt(rating) || 5)),
       avatar: avatar,
+      video: video,
       published: Boolean(published),
       createdAt: new Date().toISOString(),
     };
@@ -293,11 +296,13 @@ router.post('/testimonials', upload.single('avatar'), async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-router.put('/testimonials/:id', upload.single('avatar'), async (req, res) => {
+router.put('/testimonials/:id', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'video', maxCount: 1 }]), async (req, res) => {
   try {
     const db = await getDb();
     const { name, role, company, content, rating, published } = req.body || {};
-    const incomingAvatar = (req.file && req.file.location) ? req.file.location : (req.body.avatar);
+    const files = req.files || {};
+    const incomingAvatar = (files.avatar && files.avatar[0] && files.avatar[0].location) ? files.avatar[0].location : (req.body.avatar);
+    const incomingVideo = (files.video && files.video[0] && files.video[0].location) ? files.video[0].location : (req.body.video);
     const update = {
       ...(name !== undefined && { name: String(name).slice(0, 100) }),
       ...(role !== undefined && { role: String(role).slice(0, 100) }),
@@ -305,6 +310,7 @@ router.put('/testimonials/:id', upload.single('avatar'), async (req, res) => {
       ...(content !== undefined && { content: String(content).slice(0, 2000) }),
       ...(rating !== undefined && { rating: Math.min(5, Math.max(1, parseInt(rating) || 5)) }),
       ...(incomingAvatar !== undefined && { avatar: String(incomingAvatar).slice(0, 500) }),
+      ...(incomingVideo !== undefined && { video: String(incomingVideo).slice(0, 500) }),
       ...(published !== undefined && { published: Boolean(published) }),
       updatedAt: new Date().toISOString(),
     };
