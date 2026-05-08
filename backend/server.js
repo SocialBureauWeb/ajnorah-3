@@ -129,8 +129,11 @@ app.use('/api', publicRouter);
 // ── Health check ──────────────────────────────────────────
 app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
 
-// ── Start (local dev only) ────────────────────────────────
-if (process.env.NODE_ENV !== 'production') {
+// ── Start (when run directly) ─────────────────────────────
+// If this file is executed directly (e.g. `node server.js`) start
+// a listening HTTP server. When imported (serverless platforms)
+// the exported `app` can be used without starting a listener.
+if (require.main === module) {
   const server = app.listen(PORT, () => {
     console.log(`Backend running on http://localhost:${PORT}`);
   });

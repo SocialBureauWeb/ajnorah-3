@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: ajinorah-backend
+    env: node
+    branch: main
+    plan: free
+    region: oregon
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    path: backend

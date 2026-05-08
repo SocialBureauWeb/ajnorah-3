@@ -586,18 +586,34 @@ function About() {
           </div>
 
           <div className="grid grid-cols-3 gap-4 md:gap-6 mt-2">
-            <div className="bg-white/70 backdrop-blur-sm p-4 md:p-6 rounded-xl border border-white text-center transition-transform hover:-translate-y-1 shadow-sm">
-              <span className="block text-2xl md:text-3xl font-extrabold text-primary mb-1">95%</span>
-              <span className="text-[10px] md:text-xs font-bold text-dark/70 uppercase tracking-wide">Visa Success</span>
+  
+            <div className="bg-white/70 backdrop-blur-sm min-h-[110px] md:min-h-[130px] p-4 md:p-6 rounded-xl border border-white text-center transition-transform hover:-translate-y-1 shadow-sm flex flex-col justify-center items-center overflow-hidden">
+              <span className="block text-2xl md:text-3xl font-extrabold text-primary mb-1 break-words">
+                95%
+              </span>
+              <span className="text-[10px] md:text-xs font-bold text-dark/70 uppercase tracking-wide break-words">
+                Visa Success
+              </span>
             </div>
-            <div className="bg-white/70 backdrop-blur-sm p-4 md:p-6 rounded-xl border border-white text-center transition-transform hover:-translate-y-1 shadow-sm">
-              <span className="block text-2xl md:text-3xl font-extrabold text-primary mb-1">1 Lakh+</span>
-              <span className="text-[10px] md:text-xs font-bold text-dark/70 uppercase tracking-wide">Students</span>
+
+            <div className="bg-white/70 backdrop-blur-sm min-h-[110px] md:min-h-[130px] p-4 md:p-6 rounded-xl border border-white text-center transition-transform hover:-translate-y-1 shadow-sm flex flex-col justify-center items-center overflow-hidden">
+              <span className="block text-2xl md:text-3xl font-extrabold text-primary mb-1 break-words">
+                1 Lakh+
+              </span>
+              <span className="text-[10px] md:text-xs font-bold text-dark/70 uppercase tracking-wide break-words">
+                Students
+              </span>
             </div>
-            <div className="bg-white/70 backdrop-blur-sm p-4 md:p-6 rounded-xl border border-white text-center transition-transform hover:-translate-y-1 shadow-sm">
-              <span className="block text-2xl md:text-3xl font-extrabold text-primary mb-1">100%</span>
-              <span className="text-[10px] md:text-xs font-bold text-dark/70 uppercase tracking-wide">Scholarships</span>
+
+            <div className="bg-white/70 backdrop-blur-sm min-h-[110px] md:min-h-[130px] p-4 md:p-6 rounded-xl border border-white text-center transition-transform hover:-translate-y-1 shadow-sm flex flex-col justify-center items-center overflow-hidden">
+              <span className="block text-2xl md:text-3xl font-extrabold text-primary mb-1 break-words">
+                100%
+              </span>
+              <span className="text-[10px] md:text-xs font-bold text-dark/70 uppercase tracking-wide break-words">
+                Scholarships
+              </span>
             </div>
+
           </div>
         </div>
       </div>
