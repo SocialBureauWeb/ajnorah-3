@@ -1,4 +1,9 @@
 {
+  "name": "ajnorah-root",
+  "private": true,
+  "scripts": {
+    "build": "npm --prefix frontend install && npm --prefix frontend run build"
+  },
   "dependencies": {
     "mongoose": "^9.6.1"
   }
