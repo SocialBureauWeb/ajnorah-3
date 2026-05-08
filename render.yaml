@@ -2,9 +2,10 @@ services:
   - type: web
     name: ajinorah-backend
     env: node
+    nodeVersion: 18
     branch: main
     plan: free
     region: oregon
-    buildCommand: cd backend && npm install
+    buildCommand: cd backend && npm ci
     startCommand: cd backend && npm start
     path: backend
