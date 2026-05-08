@@ -1,16 +1,10 @@
 {
-  "name": "ajinorah-monorepo",
-  "private": true,
+  "dependencies": {
+    "mongoose": "^9.6.1"
+  },
   "scripts": {
-    "build": "npm --prefix frontend run build",
-    "dev": "npm --prefix frontend run dev",
-    "start": "npm --prefix backend start",
-    "start:backend": "npm --prefix backend start",
-    "start:frontend": "npm --prefix frontend run dev"
-  }
-}
-
-{
+    "build": "cd frontend && npm install && npm run build"
+  },
   "scripts": {
     "build": "cd frontend && npm install && npm run build"
   }
