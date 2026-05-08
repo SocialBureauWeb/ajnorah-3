@@ -5,7 +5,7 @@ export default function PublicCourses() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/courses').then(r => r.json()).then(d => setItems(d || [])).catch(() => setItems([])).finally(() => setLoading(false));
+    fetch('/api/courses').then(r => r.json()).then(d => setItems(Array.isArray(d) ? d : [])).catch(() => setItems([])).finally(() => setLoading(false));
   }, []);
 
   return (

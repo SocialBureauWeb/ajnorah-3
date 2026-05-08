@@ -9,3 +9,10 @@ services:
     buildCommand: cd backend && npm ci
     startCommand: cd backend && npm start
     path: backend
+    envVars:
+      - key: MONGO_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: FRONTEND_URL
+        value: https://www.ajinorahworldwide.com

@@ -6,7 +6,7 @@ export default function PublicBlogs() {
   const [active, setActive] = useState(null);
 
   useEffect(() => {
-    fetch('/api/blogs').then(r => r.json()).then(d => { setPosts(d || []); }).catch(() => setPosts([])).finally(() => setLoading(false));
+    fetch('/api/blogs').then(r => r.json()).then(d => { setPosts(Array.isArray(d) ? d : []); }).catch(() => setPosts([])).finally(() => setLoading(false));
   }, []);
 
   return (

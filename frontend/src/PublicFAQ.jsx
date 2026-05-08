@@ -5,7 +5,7 @@ export default function PublicFAQ() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/faqs').then(r => r.json()).then(d => setFaqs(d || [])).catch(() => setFaqs([])).finally(() => setLoading(false));
+    fetch('/api/faqs').then(r => r.json()).then(d => setFaqs(Array.isArray(d) ? d : [])).catch(() => setFaqs([])).finally(() => setLoading(false));
   }, []);
 
   return (

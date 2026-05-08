@@ -10,6 +10,8 @@ const PORT = process.env.PORT || 5000;
 // ── CORS ──────────────────────────────────────────────────
 const allowedOrigins = [
   process.env.FRONTEND_URL || "http://localhost:5173",
+  "https://www.ajinorahworldwide.com",
+  "https://ajinorahworldwide.com",
 ];
 
 app.use(

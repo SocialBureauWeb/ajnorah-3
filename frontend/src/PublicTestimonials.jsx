@@ -5,7 +5,7 @@ export default function PublicTestimonials() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/testimonials').then(r => r.json()).then(d => setItems((d || []).filter(t => t.published))).catch(() => setItems([])).finally(() => setLoading(false));
+    fetch('/api/testimonials').then(r => r.json()).then(d => setItems(Array.isArray(d) ? d.filter(t => t.published) : [])).catch(() => setItems([])).finally(() => setLoading(false));
   }, []);
 
   return (
