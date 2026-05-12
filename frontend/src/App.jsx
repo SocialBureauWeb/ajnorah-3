@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Auth from "./Auth";
 import AdminApp from "./admin/AdminApp";
 import PublicCourses from "./PublicCourses";
@@ -107,15 +107,15 @@ function Header() {
 
   return (
     <>
-    <header className="sticky top-0 z-[100] bg-white/90 backdrop-blur-md border-b border-border/40 h-[100px] flex items-center overflow-visible">
-      <div className="container mx-auto px-4 md:pr-8 flex items-center justify-between w-full h-full">
+    <header className="sticky top-0 z-[100] bg-white/90 backdrop-blur-md border-b border-border/40 h-[50px] md:h-[100px] flex items-center overflow-visible">
+      <div className="container mx-auto px-0 md:px-4 md:pr-8 flex items-center justify-between w-full h-full pb-1">
         {/* Brand */}
         <div className="flex items-center shrink-0 w-[180px] md:w-[260px] h-full relative overflow-hidden">
           <a href="#home" className="block absolute top-1/2 -translate-y-1/2 left-0 z-50">
             <img
               src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777557258/images/osrzkwmrt33dlpzyofze.png"
               alt="Ajinorah"
-              className="h-[60px] md:h-[810px] w-auto block transition-all hover:scale-105 object-contain object-left origin-left"
+              className="h-[350px] md:h-[810px] w-auto block transition-all hover:scale-105 object-contain object-left origin-left"
             />
           </a>
         </div>
@@ -158,10 +158,10 @@ function Header() {
             <a href="https://x.com/Ajinorah_Maha" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
             </a>
-            <a href="https://www.facebook.com/people/Ajinorah-Maharashtra/61586724492187/" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
+            <a href="https://www.facebook.com/profile.php?id=61586724492187" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
             </a>
-            <a href="https://www.instagram.com/ajinorahmaharashtra/" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
+            <a href="https://www.instagram.com/ajinorahmaharashtra" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
             </a>
             <a href="https://www.youtube.com/@ajinorahmaharashtra" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
@@ -195,7 +195,7 @@ function Header() {
             )}
           </div>
           <button
-            className="p-2.5 rounded-xl md:hidden transition-all text-black border border-border/50 hover:bg-bg-soft"
+            className="rounded-xl md:hidden transition-all text-black border border-border/50 hover:bg-bg-soft"
             onClick={() => setOpen(!open)}
             aria-label="Toggle Menu"
           >
@@ -374,7 +374,7 @@ function Destinations() {
       <div className="container mx-auto px-4 md:px-8 grid md:grid-cols-[280px_1fr] items-start gap-12">
         <div className="text-center md:text-left">
           <p className="text-[11px] font-bold tracking-[0.14em] text-teal uppercase mb-3.5">POPULAR DESTINATIONS</p>
-          <h2 className="text-4xl font-extrabold text-dark leading-snug mb-4 tracking-tight">Explore Top Study<br />Abroad Destinations</h2>
+          <h2 className="text-4xl font-extrabold text-dark leading-[1.12] mb-4 tracking-tight">Explore Top Study<br />Abroad Destinations</h2>
           <p className="text-[14.5px] text-muted leading-relaxed mb-6">
             Choose from the world's best countries<br />and top-ranked universities.
           </p>
@@ -419,6 +419,64 @@ function Destinations() {
 
 /* ── Services ────────────────────────────────────────────── */
 function Services() {
+  const [activeService, setActiveService] = useState(null);
+  const serviceDetails = {
+  scholarship: {
+    title: "Scholarship Assistance",
+    tagline: "100% funded & sponsored opportunities",
+    points: [
+      "Fully funded university scholarships in Europe, UK, USA & Canada",
+      "Personalized scholarship matching based on your profile",
+      "Application review & SOP writing support",
+      "Interview preparation for scholarship panels",
+      "Ongoing updates on new scholarship openings",
+    ],
+  },
+  coaching: {
+    title: "IELTS / TOEFL Coaching",
+    tagline: "Expert training to ace your language tests",
+    points: [
+      "Structured batch & one-on-one coaching sessions",
+      "Experienced trainers with proven track records",
+      "Mock tests with detailed performance feedback",
+      "Targeted modules for Reading, Writing, Listening & Speaking",
+      "Flexible schedules for working professionals & students",
+    ],
+  },
+  counseling: {
+    title: "Abroad Study Counseling",
+    tagline: "End-to-end guidance from selection to departure",
+    points: [
+      "University shortlisting based on profile & budget",
+      "Application filing & documentation assistance",
+      "SOP, LOR & resume writing support",
+      "Scholarship & financial aid guidance",
+      "Pre-departure orientation & cultural briefing",
+    ],
+  },
+  visa: {
+    title: "Visa Processing Support",
+    tagline: "High success rate with personalized assistance",
+    points: [
+      "Step-by-step visa application guidance",
+      "Document checklist & verification support",
+      "Mock visa interview preparation",
+      "Follow-up with embassies & consulates",
+      "Handling of rejections & re-applications",
+    ],
+  },
+  corporate: {
+    title: "Corporate Training",
+    tagline: "Upskilling programs for professionals & students",
+    points: [
+      "Customized training programs for organizations",
+      "Soft skills, communication & leadership workshops",
+      "Language proficiency training for corporate teams",
+      "Certification programs recognized internationally",
+      "In-house & remote training options available",
+    ],
+  },
+};
   const services = [
     { key: "scholarship", icon: ServiceSVGs.hat, color: "#FFF3EC", stroke: "#FF6B35", title: "Scholarship Assistance", desc: "Specializing in 100% funded and sponsored opportunities." },
     { key: "coaching", icon: ServiceSVGs.university, color: "#FFFBEB", stroke: "#F59E0B", title: "IELTS / TOEFL Coaching", desc: "Expert training to ace your language proficiency tests." },
@@ -426,13 +484,29 @@ function Services() {
     { key: "visa", icon: ServiceSVGs.visa, color: "#EFF6FF", stroke: "#3B82F6", title: "Visa Processing Support", desc: "High success rate with personalized visa assistance." },
     { key: "corporate", icon: ServiceSVGs.arrival, color: "#F5F3FF", stroke: "#8B5CF6", title: "Corporate Training", desc: "Upskilling programs for professionals and students alike." },
   ];
+const detail = activeService ? serviceDetails[activeService.key] : null;
 
+  const openPopup = (s) => {
+    setActiveService(s);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closePopup = () => {
+    setActiveService(null);
+    document.body.style.overflow = '';
+  };
+
+  const handleWhatsApp = () => {
+    const s = activeService;
+    const message = `Hi, I'm interested in your ${s.title} service: ${s.desc}. I'd like to know more about ${s.title} and the programs you provide.`;
+    window.open(`https://wa.me/919170065003?text=${encodeURIComponent(message)}`, '_blank');
+  };
   return (
     <section id="services" className="py-20 bg-bg-soft">
       <div className="container mx-auto px-4 md:px-8 grid md:grid-cols-[280px_1fr] items-start gap-12">
         <div className="text-center md:text-left">
           <p className="text-[11px] font-bold tracking-[0.14em] text-teal uppercase mb-3.5">OUR SERVICES</p>
-          <h2 className="text-4xl font-extrabold text-dark leading-snug mb-4 tracking-tight">We're with you<br />at every step</h2>
+          <h2 className="text-4xl font-extrabold text-dark leading-[1.12] mb-4 tracking-tight">We're with you<br />at every step</h2>
           <div className="w-10 h-[3px] bg-orange rounded-sm mb-[18px] mx-auto md:mx-0" />
           <p className="text-[14.5px] text-muted leading-relaxed mb-6">
             From shortlisting to visa approval and<br />
@@ -443,29 +517,101 @@ function Services() {
         </div>
 
         <div className="flex flex-col gap-3.5">
-          {services.map((s) => {
-            const message = `Hi, I'm interested in your ${s.title} service: ${s.desc}. I'd like to know more about ${s.title} and the programs you provide.`;
-            const waLink = `https://wa.me/919170065003?text=${encodeURIComponent(message)}`;
+        {services.map((s) => (
+          <button
+            key={s.key}
+            onClick={() => openPopup(s)}
+            className="bg-[linear-gradient(to_right,#fff1f2,#fef3c7,#ecfdf5,#eff6ff,#f5f3ff)] rounded-2xl p-[20px] flex items-start gap-4 shadow-sm border border-white transition-all hover:shadow-md hover:-translate-y-1 group h-auto text-left w-full"
+          >
+            <div
+              className="w-[50px] h-[50px] bg-white/60 backdrop-blur-sm rounded-xl flex items-center justify-center shrink-0 shadow-sm"
+              style={{ color: s.stroke }}
+            >
+              {s.icon}
+            </div>
+            <div>
+              <h4 className="text-[14.5px] font-bold text-dark mb-1">{s.title}</h4>
+              <p className="text-xs text-dark/70 font-medium leading-relaxed">{s.desc}</p>
+            </div>
+          </button>
+        ))}
+      </div>
 
-            return (
-              <a
-                key={s.key}
-                href={waLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[linear-gradient(to_right,#fff1f2,#fef3c7,#ecfdf5,#eff6ff,#f5f3ff)] rounded-2xl p-[20px] flex items-start gap-4 shadow-sm border border-white transition-all hover:shadow-md hover:-translate-y-1 group h-auto"
-              >
-                <div className="w-[50px] h-[50px] bg-white/60 backdrop-blur-sm rounded-xl flex items-center justify-center shrink-0 shadow-sm" style={{ color: s.stroke }}>
-                  {s.icon}
+      {/* Backdrop */}
+      {activeService && (
+        <div
+          className="fixed inset-0 z-[400] bg-black/50"
+          onClick={closePopup}
+        />
+      )}
+
+      {/* Bottom Sheet */}
+      <div
+        className={`fixed left-0 right-0 bottom-0 z-[500] bg-white rounded-t-3xl transition-transform duration-300 ease-out ${
+          activeService ? 'translate-y-0' : 'translate-y-full'
+        }`}
+        style={{ maxHeight: '82vh', overflowY: 'auto' }}
+      >
+        {activeService && detail && (
+          <>
+            {/* Handle bar */}
+            <div className="flex justify-center pt-3 pb-1">
+              <div className="w-10 h-1 rounded-full bg-gray-200" />
+            </div>
+
+            {/* Header */}
+            <div className="flex items-start justify-between px-5 pt-3 pb-4 border-b border-gray-100">
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
+                  style={{ background: activeService.color, color: activeService.stroke }}
+                >
+                  {activeService.icon}
                 </div>
                 <div>
-                  <h4 className="text-[14.5px] font-bold text-dark mb-1">{s.title}</h4>
-                  <p className="text-xs text-dark/70 font-medium leading-relaxed">{s.desc}</p>
+                  <h3 className="text-[15px] font-bold text-dark leading-tight">{detail.title}</h3>
+                  <p className="text-xs text-dark/50 mt-0.5">{detail.tagline}</p>
                 </div>
-              </a>
-            );
-          })}
-        </div>
+              </div>
+              <button
+                onClick={closePopup}
+                className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 shrink-0 ml-3 mt-0.5"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Points */}
+            <ul className="px-5 pt-4 pb-2 flex flex-col gap-3">
+              {detail.points.map((point, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span
+                    className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-[11px] font-bold"
+                    style={{ background: activeService.color, color: activeService.stroke }}
+                  >
+                    {i + 1}
+                  </span>
+                  <p className="text-sm text-dark/80 leading-relaxed">{point}</p>
+                </li>
+              ))}
+            </ul>
+
+            {/* CTA */}
+            <div className="px-5 pt-4 pb-8">
+              <button
+                onClick={handleWhatsApp}
+                className="w-[200px] py-3.5 rounded-2xl text-sm font-bold text-white flex items-center justify-center gap-2"
+                style={{ background: activeService.stroke }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                Enquire on WhatsApp
+              </button>
+            </div>
+          </>
+        )}
+      </div>
       </div>
     </section>
   );
@@ -512,6 +658,323 @@ function Blogs() {
   );
 }
 
+/* ── Events Section ─────────────────────────────────────── */
+function Events() {
+  const items = [
+    {
+      id: 1,
+      type: 'video',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/1.mp4',
+      },
+      {
+      id: 15,
+      type: 'video',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/15.mp4',
+      },
+      {
+      id: 16,
+      type: 'video',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/16.mp4',
+      },
+      {
+      id: 17,
+      type: 'video',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/17.mp4',
+      },
+      {
+      id: 19,
+      type: 'video',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/19.mp4',
+      },
+      {
+      id: 2,
+      type: 'video',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/2.mp4',
+      },
+      {
+      id: 20,
+      type: 'video',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/20.mp4',
+      },
+      {
+      id: 21,
+      type: 'video',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/21.mp4',
+      },
+      {
+      id: 22,
+      type: 'video',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/22.mp4',
+      },
+      {
+      id: 44,
+      type: 'video',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/44.mp4',
+      },
+    {
+      id: 10,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/10.jpeg',
+      },
+    {
+      id: 11,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/11.jpeg',
+      },
+      {
+      id: 12,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/12.jpeg',
+      },
+    {
+      id: 13,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/13.jpeg',
+      },
+    {
+      id: 14,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/14.jpeg',
+      },
+    {
+      id: 18,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/18.jpeg',
+      },
+      {
+      id: 23,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/23.jpeg',
+      },
+    {
+      id: 24,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/24.jpeg',
+      },
+      {
+      id: 25,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/25.jpeg',
+      },
+    {
+      id: 26,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/26.jpeg',
+      },
+    {
+      id: 27,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/27.jpeg',
+      },
+    {
+      id: 28,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/28.jpeg',
+      },
+      {
+      id: 29,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/29.jpeg',
+      },
+      {
+      id: 3,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/3.jpeg',
+      },
+      {
+      id: 30,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/30.jpeg',
+      },
+      {
+      id: 31,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/31.jpeg',
+      },
+      {
+      id: 32,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/32.jpeg',
+      },
+    {
+      id: 33,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/33.jpeg',
+      },
+    {
+      id: 34,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/34.jpeg',
+      },
+      {
+      id: 35,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/35.jpeg',
+      },
+      {
+      id: 36,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/36.jpeg',
+      },
+      {
+      id: 37,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/37.jpeg',
+      },
+      {
+      id: 38,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/38.jpeg',
+      },
+      {
+      id: 39,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/39.jpeg',
+      },
+      {
+      id: 4,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/4.jpeg',
+      },
+      {
+      id: 40,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/40.jpeg',
+      },
+      {
+      id: 41,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/41.jpeg',
+      },
+      {
+      id: 42,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/42.jpeg',
+      },
+      {
+      id: 43,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/43.jpeg',
+      },
+      {
+      id: 45,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/45.jpeg',
+      },
+      {
+      id: 5,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/5.jpeg',
+      },
+      {
+      id: 6,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/6.jpeg',
+      },
+      {
+      id: 7,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/7.jpeg',
+      },
+      {
+      id: 8,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/8.jpeg',
+      },
+      {
+      id: 9,
+      type: 'image',
+      src: 'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Event%20Image/9.jpeg',
+      },
+  ];
+
+  const [modalItem, setModalItem] = useState(null);
+  const [orientation, setOrientation] = useState('landscape');
+  const modalRef = useRef(null);
+
+  const openMedia = (it, e) => {
+    e?.preventDefault();
+    // Determine orientation for images/videos
+    if (it.type === 'image') {
+      const img = new Image();
+      img.onload = () => {
+        setOrientation(img.naturalHeight > img.naturalWidth ? 'portrait' : 'landscape');
+        setModalItem(it);
+      };
+      img.src = it.src;
+    } else if (it.type === 'video') {
+      const v = document.createElement('video');
+      v.onloadedmetadata = () => {
+        setOrientation(v.videoHeight > v.videoWidth ? 'portrait' : 'landscape');
+        setModalItem(it);
+      };
+      v.src = it.src;
+      v.load();
+    }
+  };
+
+  const closeModal = () => {
+    setModalItem(null);
+  };
+
+  useEffect(() => {
+    const onKey = (ev) => { if (ev.key === 'Escape') closeModal(); };
+    if (modalItem) document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [modalItem]);
+
+  return (
+    <section id="events" className="py-12 bg-white">
+      <div className="container mx-auto px-4 md:px-8">
+        <p className="text-center text-[11.5px] font-bold tracking-[0.12em] text-teal uppercase mb-4">EVENTS</p>
+        <h2 className="text-3xl md:text-4xl font-extrabold text-dark text-center mb-8">Recent Events & Highlights</h2>
+
+        <div className="events-scroller">
+          <div
+            className="events-track"
+            onMouseEnter={(e) => { e.currentTarget.style.animationPlayState = 'paused'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.animationPlayState = 'running'; }}
+          >
+            {[...items, ...items].map((it, idx) => (
+              <div key={`${it.id}-${idx}`} className="events-item flex-shrink-0 min-w-[260px] md:min-w-[320px]">
+                <article className="bg-white rounded-xl border border-border shadow-sm overflow-hidden">
+                  <button onClick={(e) => openMedia(it, e)} className="w-full text-left">
+                    <div className="h-60 w-full overflow-hidden flex items-center justify-center bg-bg-soft">
+                      {it.type === 'video' ? (
+                        <video className="w-full h-full object-cover" muted>
+                          <source src={it.src} type="video/mp4" />
+                        </video>
+                      ) : (
+                        <img src={it.src} alt={it.title} className="w-full h-full object-cover" />
+                      )}
+                    </div>
+                  </button>
+                </article>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {modalItem && (
+          <div ref={modalRef} className={`media-modal fixed inset-0 z-[200] bg-black/90 flex items-center justify-center p-4 ${orientation}`} onClick={closeModal} role="dialog" aria-modal="true">
+            <div className="media-content max-w-full max-h-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+              {modalItem.type === 'video' ? (
+                <video controls autoPlay className="max-w-full max-h-full">
+                  <source src={modalItem.src} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <img src={modalItem.src} alt={modalItem.title} className="max-w-full max-h-full object-contain" />
+              )}
+            </div>
+            <button onClick={closeModal} className="media-close absolute top-6 right-6 text-white bg-black/30 rounded-full p-2">✕</button>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 /* ── CTA Banner ──────────────────────────────────────────── */
 function CTABanner() {
   return (
@@ -526,7 +989,7 @@ function CTABanner() {
             Book your free consultation today and take<br />
             the first step towards your global future.
           </p>
-          <a href="https://wa.me/919170065003" target="_blank" rel="noopener noreferrer" className="bg-primary text-white px-8 py-3.5 rounded-full font-bold text-base shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all inline-flex items-center gap-2">
+          <a href="https://wa.me/919170065003" target="_blank" rel="noopener noreferrer" className="bg-primary text-white px-8 py-3.5 rounded-full font-bold text-sm shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all inline-flex items-center gap-2">
             Book Free Consultation <ArrowRightIcon />
           </a>
         </div>
@@ -547,16 +1010,13 @@ function About() {
       <div className="absolute top-0 left-0 w-96 h-96 bg-white/40 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-white/30 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none" />
 
-      <div className="container mx-auto px-4 md:px-8 grid md:grid-cols-2 gap-16 items-center relative z-10">
+      <div className="container mx-auto px-4 md:px-8 grid md:grid-cols-2 gap-6 items-center relative z-10">
         <div className="text-center md:text-left">
           <p className="text-[11px] font-bold tracking-[0.14em] text-teal uppercase mb-3.5">WHO WE ARE</p>
-          <h2 className="text-4xl font-extrabold text-dark leading-snug mb-4 tracking-tight">Your Gateway to<br />Global Education</h2>
+          <h2 className="text-4xl font-extrabold text-dark leading-[1.12] mb-4 tracking-tight">Your Gateway to<br />Global Education</h2>
           <div className="w-10 h-[3px] bg-orange rounded-sm mb-[18px] mx-auto md:mx-0" />
           <p className="text-[14.5px] text-dark/80 font-medium leading-relaxed mb-6">
             Ajinorah Maharashtra is a global education consultancy dedicated to helping students access high-quality international education through <strong>fully funded and sponsored opportunities</strong>.
-          </p>
-          <p className="text-[14.5px] text-dark/70 leading-relaxed mb-6">
-            With a strong network of partner institutions in <strong>Malaysia, Mauritius, Albania, Uzbekistan, Dubai, Germany, and France</strong>, we provide end-to-end guidance from university selection and admissions to visa assistance and pre-departure support.
           </p>
         </div>
         <div className="flex flex-col gap-8">
@@ -579,9 +1039,6 @@ function About() {
                 </li>
               ))}
             </ul>
-            <p className="text-[14.5px] text-dark/80 font-bold leading-relaxed text-left">
-              We position ourselves not just as consultants, but as education partners committed to making global opportunities accessible to every deserving student.
-            </p>
           </div>
 
           <div className="grid grid-cols-3 gap-4 md:gap-6 mt-2">
@@ -596,7 +1053,7 @@ function About() {
             </div>
 
             <div className="bg-white/70 backdrop-blur-sm min-h-[110px] md:min-h-[130px] p-4 md:p-6 rounded-xl border border-white text-center transition-transform hover:-translate-y-1 shadow-sm flex flex-col justify-center items-center overflow-hidden">
-              <span className="block text-2xl md:text-3xl font-extrabold text-primary mb-1 break-words">
+              <span className="block text-xl md:text-3xl font-extrabold text-primary mb-1 break-words">
                 1 Lakh+
               </span>
               <span className="text-[10px] md:text-xs font-bold text-dark/70 uppercase tracking-wide break-words">
@@ -613,6 +1070,47 @@ function About() {
               </span>
             </div>
 
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Visa Success Images ────────────────────────────────── */
+function VisaSuccessImages() {
+  const imgs = [
+    'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Visa%20Success/1.jpeg',
+    'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Visa%20Success/2.jpeg',
+    'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Visa%20Success/3.jpeg',
+    'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Visa%20Success/4.jpeg',
+    'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Visa%20Success/5.jpeg',
+    'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Visa%20Success/6.jpeg',
+    'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Visa%20Success/7.jpeg',
+    'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Visa%20Success/8.jpeg',
+    'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Visa%20Success/9.jpeg',
+    'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Visa%20Success/10.jpeg',
+  ];
+
+  return (
+    <section id="visa-success" className="py-8 bg-bg-soft">
+      <div className="container mx-auto px-4 md:px-8">
+        <p className="text-center text-[11.5px] font-bold tracking-[0.12em] text-teal uppercase mb-3">VISA SUCCESS</p>
+        <h2 className="text-2xl md:text-3xl font-extrabold text-dark text-center mb-6">Recent Visa Success Stories</h2>
+
+        <div className="visa-scroller">
+          <div
+            className="visa-track"
+            onMouseEnter={(e) => { e.currentTarget.style.animationPlayState = 'paused'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.animationPlayState = 'running'; }}
+          >
+            {[...imgs, ...imgs].map((src, idx) => (
+              <div key={`${idx}`} className="visa-item flex-shrink-0 min-w-[180px] md:min-w-[220px]">
+                <div className="bg-white/70 backdrop-blur-sm p-0 md:p-1 rounded-2xl border border-white shadow-sm overflow-hidden">
+                  <img src={src} alt={`Visa success ${idx+1}`} className="w-full h-50 md:h-60 object-cover block" />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -671,15 +1169,15 @@ function Contact() {
           <div className="flex flex-col gap-6 mt-8">
             <div className="flex flex-col gap-1">
               <strong className="text-xs text-primary uppercase tracking-wider font-bold">Email:</strong>
-              <a href="mailto:info@ajinorahmaharashtra.com" className="text-base text-dark font-medium hover:text-primary transition-colors">info@ajinorahmaharashtra.com</a>
+              <a href="mailto:info@ajinorahmaharashtra.com" className="text-xs text-dark font-medium hover:text-primary transition-colors">info@ajinorahmaharashtra.com</a>
             </div>
             <div className="flex flex-col gap-1">
               <strong className="text-xs text-primary uppercase tracking-wider font-bold">Phone:</strong>
-              <a href="tel:+919170065003" className="text-base text-dark font-medium hover:text-primary transition-colors">+91 91 7006 5003, +91 887 2222 887, +91 86 5150 5150</a>
+              <a href="tel:+919170065003" className="text-xs text-dark font-medium hover:text-primary transition-colors">+91 91 7006 5003, <br/>+91 887 2222 887, <br/>+91 86 5150 5150</a>
             </div>
             <div className="flex flex-col gap-1">
               <strong className="text-xs text-primary uppercase tracking-wider font-bold">Service Address:</strong>
-              <p className="text-base text-dark font-medium">102, DEO ENCLAVE, NEAR DAHANUKAR MANAGEMENT COLLEGE, VILE PARLE EAST, MUMBAI, MAHARASHTRA - 400057</p>
+              <p className="text-xs text-dark font-medium">102, DEO ENCLAVE, NEAR DAHANUKAR MANAGEMENT COLLEGE, VILE PARLE EAST, MUMBAI, MAHARASHTRA - 400057</p>
             </div>
           </div>
         </div>
@@ -900,9 +1398,11 @@ export default function App() {
         <Hero />
         <TrustedBy />
         <About />
+          <VisaSuccessImages />
         <Destinations />
         <Services />
         <Blogs />
+        <Events />
         <PublicCourses />
         <PublicTestimonials />
         <PublicFAQ />
@@ -912,7 +1412,7 @@ export default function App() {
       <footer className="bg-white pt-6 md:pt-24 pb-6 border-t border-border/30">
         <div className="container mx-auto px-4 md:px-8">
           {/* Main Footer Content */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-0 gap-y-10 md:gap-12 mb-4 md:mb-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-0 gap-y-5 md:gap-12 mb-4 md:mb-8">
             {/* Brand Column */}
             <div className="col-span-2 lg:col-span-1 flex flex-col gap-6">
               <img
@@ -927,10 +1427,10 @@ export default function App() {
                 <a href="https://x.com/Ajinorah_Maha" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-primary hover:border-primary transition-all">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
                 </a>
-                <a href="https://www.facebook.com/people/Ajinorah-Maharashtra/61586724492187/" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-primary hover:border-primary transition-all">
+                <a href="https://www.facebook.com/profile.php?id=61586724492187" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-primary hover:border-primary transition-all">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
                 </a>
-                <a href="https://www.instagram.com/ajinorahmaharashtra/" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-primary hover:border-primary transition-all">
+                <a href="https://www.instagram.com/ajinorahmaharashtra" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-primary hover:border-primary transition-all">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                 </a>
                 <a href="https://www.youtube.com/@ajinorahmaharashtra" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-primary hover:border-primary transition-all">
@@ -959,24 +1459,16 @@ export default function App() {
                     </div>
                     <div className="flex flex-col gap-1">
                       <span className="text-[10px] font-bold text-primary uppercase tracking-wider">Call Us</span>
-                      <a href="tel:+919170065003" className="text-[14px] text-dark font-medium hover:text-primary transition-colors">
-                        +91 91 7006 5003, +91 887 2222 887, +91 86 5150 5150
+                      <a href="tel:+919170065003" className="text-xs text-dark font-medium hover:text-primary transition-colors">
+                        +91 91 7006 5003, <br/>
+                        +91 887 2222 887, <br/>
+                        +91 86 5150 5150
                       </a>
                     </div>
                   </div>
                 </div>
 
-                {/* Powered By (Mobile Only) */}
-                <div className="flex md:hidden flex-row items-center gap-2 text-[10px] font-bold text-muted uppercase tracking-[0.2em] mt-2">
-                  <span>POWERED BY</span>
-                  <a href="https://www.socialbureau.in/enquiry-form" target="_blank" rel="noopener noreferrer">
-                    <img
-                      src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777199141/SB_LOGO_BLACK_PNG_iev5qz.png"
-                      alt="SocialBureau"
-                      className="h-15 w-auto"
-                    />
-                  </a>
-                </div>
+                {/* Powered By (Responsive) — shows on all viewports; stacks on mobile */}
               </div>
             </div>
 
@@ -1016,14 +1508,14 @@ export default function App() {
                 ))}
               </nav>
 
-              {/* Powered By (Desktop Only) */}
-              <div className="hidden md:flex flex-row items-center gap-2 text-[11px] font-bold text-muted uppercase tracking-[0.2em] mt-4">
+              {/* Powered By (Responsive) */}
+              <div className="flex flex-col md:flex-row items-center gap-2 text-[10px] md:text-[11px] font-bold text-muted uppercase tracking-[0.2em] mt-4 justify-center md:justify-start">
                 <span>POWERED BY</span>
-                <a href="https://www.socialbureau.in/enquiry-form" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.socialbureau.in/enquiry-form" target="_blank" rel="noopener noreferrer" className="w-full md:w-auto flex justify-center md:justify-start">
                   <img
                     src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777199141/SB_LOGO_BLACK_PNG_iev5qz.png"
                     alt="SocialBureau"
-                    className="h-12 w-auto"
+                    className="h-10 md:h-12 w-auto"
                   />
                 </a>
               </div>
@@ -1033,8 +1525,8 @@ export default function App() {
           {/* Bottom Bar */}
           <div className="pt-3 md:pt-6 border-t border-border/10 flex items-center justify-start">
             {/* Copyright */}
-            <p className="text-sm text-muted font-medium">
-              © {new Date().getFullYear()} Ajinorah Maharashtra. All rights reserved.
+            <p className="text-xs text-muted font-medium">
+              Copyright © {new Date().getFullYear()} Ajinorah Maharashtra. All rights reserved.
             </p>
           </div>
         </div>

@@ -273,6 +273,65 @@
   line-height: 1.75;
   margin-bottom: 24px;
 }
+
+/* ── Events Styles ─────────────────────────────────────── */
+.events-section { padding: 48px 0; }
+.events-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.events-card { background: white; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+.events-media { height: 14rem; overflow: hidden; display:flex; align-items:center; justify-content:center; background:var(--bg-soft); }
+.events-media img, .events-media video { width:100%; height:100%; object-fit:cover; }
+
+/* Fullscreen modal for media */
+.media-modal { display:flex; }
+.media-modal .media-content { display:flex; align-items:center; justify-content:center; }
+.media-modal.landscape .media-content video,
+.media-modal.landscape .media-content img { width: 100vw; height: 100vh; object-fit:contain; }
+.media-modal.portrait .media-content video,
+.media-modal.portrait .media-content img { height: 100vh; width: auto; max-width: 900px; object-fit:contain; }
+.media-close { border: none; cursor: pointer; }
+
+/* Events auto-scroll (single row) */
+.events-scroller { overflow: hidden; width: 100%; }
+.events-track { display: flex; gap: 16px; width: max-content; align-items: stretch; animation: scroll-left 180s linear infinite; }
+.events-track:hover { animation-play-state: paused; }
+.events-item { display: block; }
+
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Make the scroll slower on small screens */
+@media (max-width: 900px) {
+  .events-track { animation-duration: 270s; }
+  .events-item { min-width: 220px; }
+}
+
+/* Visa Success gallery tweaks */
+.visa-gallery img { width: 100%; height: auto; display: block; }
+
+/* Visa success scroller */
+.visa-scroller { overflow: hidden; width: 100%; }
+.visa-track { display: flex; gap: 12px; width: max-content; align-items: stretch; animation: scroll-left 240s linear infinite; }
+.visa-track:hover { animation-play-state: paused; }
+.visa-item { display: block; }
+
+@media (max-width: 900px) {
+  .visa-track { animation-duration: 360s; }
+  .visa-item { min-width: 160px; }
+}
+
+/* Testimonials scroller */
+.testimonials-scroller { overflow: hidden; width: 100%; }
+.testimonials-track { display: flex; gap: 16px; align-items: stretch; width: max-content; }
+.testimonial-item { display: block; }
+.testimonials-scroller::-webkit-scrollbar { display: none; }
+.btn-secondary { background: white; border: 1px solid var(--border); padding: 8px 10px; border-radius: 8px; cursor: pointer; }
+
+@media (max-width: 900px) {
+  .testimonial-item { min-width: 220px; }
+}
+
 .link-arrow {
   display: inline-flex;
   align-items: center;

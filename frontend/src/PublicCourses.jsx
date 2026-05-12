@@ -10,7 +10,7 @@ export default function PublicCourses() {
 
   return (
     <section id="courses" className="container mx-auto px-4 md:px-8 py-12 mb-5">
-      <h2 className="text-2xl font-bold mb-4">Our Courses</h2>
+      {/* <h2 className="text-2xl font-bold mb-4">Our Courses</h2> */}
       {loading ? <p className="text-muted">Loading...</p> : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {items.map(c => (
