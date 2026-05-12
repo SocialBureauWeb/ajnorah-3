@@ -260,13 +260,13 @@ function Hero() {
         </div>
 
         {/* Right Visual */}
-        <div className="flex justify-start md:justify-center items-center h-[400px] md:h-[500px] relative z-10">
-          <div className="relative w-full max-w-[850px] h-full flex items-center justify-start md:justify-center">
+        <div className="flex justify-center items-center h-[400px] md:h-[500px] relative z-10">
+          <div className="relative w-full max-w-[850px] h-full flex items-center justify-center">
 
             <img
               src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777724841/Untitled_design_58_gtqso7.png"
               alt="Student"
-              className="absolute top-1/2 left-0 md:left-1/2 -translate-x-24 md:-translate-x-1/2 -translate-y-1/2 w-full h-full object-contain z-10 scale-125"
+              className="absolute top-1/2 -translate-x-20 md:-translate-x-1/2 -translate-y-1/2 w-full h-full object-contain z-10 scale-125"
             />
             <a href="https://youtube.com/shorts/2rZzWat_alY?si=C0k2dHejGZflkZqq">
               <div className="absolute bottom-[85px] md:bottom-[40px] right-6 md:-right-[10px] bg-white rounded-2xl shadow-lg p-2.5 md:p-4 flex items-center gap-3 z-20 min-w-[140px] md:min-w-[210px] border border-border/50">
@@ -1053,7 +1053,7 @@ function About() {
             </div>
 
             <div className="bg-white/70 backdrop-blur-sm min-h-[110px] md:min-h-[130px] p-4 md:p-6 rounded-xl border border-white text-center transition-transform hover:-translate-y-1 shadow-sm flex flex-col justify-center items-center overflow-hidden">
-              <span className="block text-xl md:text-3xl font-extrabold text-primary mb-1 break-words">
+              <span className="block text-lg md:text-3xl font-extrabold text-primary mb-1 break-words">
                 1 Lakh+
               </span>
               <span className="text-[10px] md:text-xs font-bold text-dark/70 uppercase tracking-wide break-words">
@@ -1175,10 +1175,16 @@ function Contact() {
               <strong className="text-xs text-primary uppercase tracking-wider font-bold">Phone:</strong>
               <a href="tel:+919170065003" className="text-xs text-dark font-medium hover:text-primary transition-colors">+91 91 7006 5003, <br/>+91 887 2222 887, <br/>+91 86 5150 5150</a>
             </div>
-            <div className="flex flex-col gap-1">
-              <strong className="text-xs text-primary uppercase tracking-wider font-bold">Service Address:</strong>
-              <p className="text-xs text-dark font-medium">102, DEO ENCLAVE, NEAR DAHANUKAR MANAGEMENT COLLEGE, VILE PARLE EAST, MUMBAI, MAHARASHTRA - 400057</p>
-            </div>
+            <div className="flex flex-col gap-0.5">
+  <strong className="text-xs text-primary uppercase tracking-wide font-bold">
+    Service Address:
+  </strong>
+
+  <p className="text-[10px] leading-tight text-dark font-medium">
+    102, DEO ENCLAVE, NEAR DAHANUKAR MANAGEMENT COLLEGE, VILE PARLE EAST,
+    MUMBAI, MAHARASHTRA - 400057
+  </p>
+</div>
           </div>
         </div>
 
@@ -1423,7 +1429,7 @@ export default function App() {
               <p className="text-[14px] text-muted leading-relaxed max-w-[260px]">
                 Empowering students to achieve their global education dreams through fully funded scholarships and expert guidance.
               </p>
-              <div className="flex items-center gap-3 mt-4">
+              <div className="flex items-center gap-3 mt-4 justify-center md:justify-start pl-2 md:pl-0">
                 <a href="https://x.com/Ajinorah_Maha" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-primary hover:border-primary transition-all">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
                 </a>
@@ -1509,7 +1515,10 @@ export default function App() {
               </nav>
 
               {/* Powered By (Responsive) */}
-              <div className="flex flex-col md:flex-row items-center gap-2 text-[10px] md:text-[11px] font-bold text-muted uppercase tracking-[0.2em] mt-4 justify-center md:justify-start">
+              
+            </div>
+          </div>
+<div className="flex flex-col md:flex-row items-center gap-2 text-[10px] md:text-[11px] font-bold text-muted uppercase tracking-[0.2em] mt-4 justify-center md:justify-start w-full text-center md:text-left">
                 <span>POWERED BY</span>
                 <a href="https://www.socialbureau.in/enquiry-form" target="_blank" rel="noopener noreferrer" className="w-full md:w-auto flex justify-center md:justify-start">
                   <img
@@ -1519,9 +1528,6 @@ export default function App() {
                   />
                 </a>
               </div>
-            </div>
-          </div>
-
           {/* Bottom Bar */}
           <div className="pt-3 md:pt-6 border-t border-border/10 flex items-center justify-start">
             {/* Copyright */}
