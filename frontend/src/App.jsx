@@ -127,7 +127,7 @@ function Header({ visible }) {
 
   return (
     <>
-    <div className="h-[50px] md:h-[100px]" />
+    <div className="h-16 md:h-20" />
     <motion.header 
       initial={{ y: 0 }}
       animate={{ y: visible ? 0 : -110 }}
@@ -247,7 +247,7 @@ function Header({ visible }) {
 /* â”€â”€ Hero â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function Hero() {
   return (
-    <section id="home" className="relative overflow-hidden min-h-[500px] flex items-center pt-6 md:pt-12 pb-2">
+    <section id="home" className="relative overflow-hidden min-h-[500px] flex items-center pt-8 md:pt-16 pb-2">
       <div className="container mx-auto px-4 md:px-8 grid md:grid-cols-2 items-center gap-0">
         {/* Left Content */}
         <motion.div 
@@ -329,12 +329,15 @@ function Hero() {
             />
             <motion.a 
               href="https://youtube.com/shorts/2rZzWat_alY?si=C0k2dHejGZflkZqq"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute bottom-[85px] md:bottom-[40px] right-6 md:-right-[10px] z-20 block"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <div className="absolute bottom-[85px] md:bottom-[40px] right-6 md:-right-[10px] bg-white rounded-2xl shadow-lg p-2.5 md:p-4 flex items-center gap-3 z-20 min-w-[140px] md:min-w-[210px] border border-border/50">
+              <div className="bg-white rounded-2xl shadow-lg p-2.5 md:p-4 flex items-center gap-3 min-w-[140px] md:min-w-[210px] border border-border/50">
                 <div className="shrink-0 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary scale-75 md:scale-100"><PlayIcon /></div>
-                <div className="flex flex-col gap-0">
+                <div className="flex flex-col gap-0 text-left">
                   <span className="text-[11px] md:text-[14.5px] font-bold text-dark">Join 1 Lakh+ Students</span>
                   <span className="text-[9px] md:text-[12px] text-muted">Global Network</span>
                 </div>
