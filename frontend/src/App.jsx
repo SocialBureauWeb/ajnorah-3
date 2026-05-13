@@ -127,22 +127,22 @@ function Header({ visible }) {
 
   return (
     <>
-    <div className="h-[50px] md:h-[100px]" />
+    <div className="h-[56px] md:h-[100px]" />
     <motion.header 
       initial={{ y: 0 }}
       animate={{ y: visible ? 0 : -110 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="fixed md:absolute top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-md border-b border-border/40 h-[50px] md:h-[100px] flex items-center shadow-sm"
+      className="fixed md:absolute top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-md border-b border-border/40 h-[56px] md:h-[100px] flex items-center shadow-sm"
     >
-      <div className="container mx-auto px-0 md:px-4 md:pr-8 flex items-center justify-between w-full h-full">
+      <div className="container mx-auto px-4 md:px-4 md:pr-8 flex items-center justify-between w-full h-full">
         {/* Brand */}
-        <div className="flex items-center shrink-0 w-[180px] md:w-[260px] h-full relative overflow-hidden">
-          <a href="#home" className="block absolute top-1/2 -translate-y-1/2 left-0 z-50 h-[34px] md:h-auto">
+        <div className="flex items-center shrink-0 w-[240px] md:w-[260px] h-full relative overflow-hidden">
+          <a href="#home" className="block absolute top-[44%] -translate-y-1/2 left-0 z-50">
             <motion.img 
               whileHover={{ scale: 1.05 }}
               src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777557258/images/osrzkwmrt33dlpzyofze.png"
               alt="Ajinorah" 
-              className="h-full md:h-[810px] w-auto block transition-all hover:scale-105 object-contain object-left origin-left"
+              className="h-[280px] md:h-[810px] w-auto block transition-all hover:scale-105 object-contain object-left origin-left"
             />
           </a>
         </div>
