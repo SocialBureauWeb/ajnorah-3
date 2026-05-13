@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
+import Lenis from "lenis";
+import "lenis/dist/lenis.css";
+import { motion, AnimatePresence } from "framer-motion";
 import Auth from "./Auth";
 import AdminApp from "./admin/AdminApp";
 import PublicCourses from "./PublicCourses";
@@ -6,10 +9,27 @@ import PublicFAQ from "./PublicFAQ";
 import PublicTestimonials from "./PublicTestimonials";
 import { apiFetch } from "./admin/useAdminApi";
 
-/* ── Logo Icon ─────────────────────────────────────────── */
+/* â”€â”€ Logo Icon â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+/* â”€â”€ Animation Variants â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+const fadeInUp = {
+  initial: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }
+};
+
+const staggerContainer = {
+  initial: { opacity: 0 },
+  visible: { 
+    opacity: 1, 
+    transition: { 
+      staggerChildren: 0.1,
+      delayChildren: 0
+    } 
+  }
+};
 
 
-/* ── Inline SVG icons ───────────────────────────────────── */
+/* â”€â”€ Inline SVG icons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const ArrowRightIcon = ({ size = 16 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
     <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
@@ -81,8 +101,8 @@ const ServiceSVGs = {
   ),
 };
 
-/* ── Header ─────────────────────────────────────────────── */
-function Header() {
+/* â”€â”€ Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function Header({ visible }) {
   const [open, setOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
   const [user, setUser] = useState(() => {
@@ -107,7 +127,13 @@ function Header() {
 
   return (
     <>
-    <header className="sticky top-0 z-[100] bg-white/90 backdrop-blur-md border-b border-border/40 h-[50px] md:h-[100px] flex items-center overflow-visible">
+    <div className="h-[50px] md:h-[100px]" />
+    <motion.header 
+      initial={{ y: 0 }}
+      animate={{ y: visible ? 0 : -110 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      className="fixed md:absolute top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-md border-b border-border/40 h-[50px] md:h-[100px] flex items-center shadow-sm"
+    >
       <div className="container mx-auto px-0 md:px-4 md:pr-8 flex items-center justify-between w-full h-full pb-1">
         {/* Brand */}
         <div className="flex items-center shrink-0 w-[180px] md:w-[260px] h-full relative overflow-hidden">
@@ -129,15 +155,18 @@ function Header() {
           shadow-xl md:shadow-none border-b md:border-none border-border/20 transition-all duration-300 ease-in-out
         `}>
           {navLinks.map((link) => (
-            <a
+            <motion.a
               key={link.label}
               href={link.href}
               className="relative px-4 py-4 md:py-2 text-[16px] md:text-[14.5px] font-bold md:font-semibold text-dark md:text-muted/90 transition-all border-b border-border/10 md:border-none last:border-none hover:bg-bg-soft md:hover:bg-transparent hover:text-primary group whitespace-nowrap"
               onClick={() => setOpen(false)}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
             >
               {link.label}
               <span className="hidden md:block absolute bottom-1.5 left-4 right-4 h-0.5 bg-primary origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
-            </a>
+            </motion.a>
           ))}
           {/* Mobile-only auth action inside the collapsed menu */}
           {user ? (
@@ -209,66 +238,100 @@ function Header() {
           </button>
         </div>
       </div>
-    </header>
+    </motion.header>
     {authOpen && <Auth open={true} onClose={() => setAuthOpen(false)} />}
     </>
   );
 }
 
-/* ── Hero ────────────────────────────────────────────────── */
+/* â”€â”€ Hero â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function Hero() {
   return (
     <section id="home" className="relative overflow-hidden min-h-[500px] flex items-center pt-6 md:pt-12 pb-2">
       <div className="container mx-auto px-4 md:px-8 grid md:grid-cols-2 items-center gap-0">
         {/* Left Content */}
-        <div className="max-w-[540px]">
-          <p className="inline-flex items-center gap-2 text-[11.5px] font-bold tracking-[0.12em] text-teal uppercase mb-[18px]">
+        <motion.div 
+          className="max-w-[540px] relative z-20 text-center md:text-left mx-auto md:mx-0"
+          initial="initial"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.3, margin: "0px 0px -50px 0px" }}
+          variants={staggerContainer}
+        >
+          <motion.p variants={fadeInUp} className="inline-flex items-center justify-center md:justify-start gap-2 text-[11.5px] font-bold tracking-[0.12em] text-teal uppercase mb-[18px]">
             <span className="w-1.5 h-1.5 rounded-full bg-teal shrink-0" />
             GET SET FLY
-          </p>
-          <h1 className="text-4xl md:text-[56px] font-extrabold leading-[1.12] text-dark mb-[18px] tracking-tight">
+          </motion.p>
+          <motion.h1 variants={fadeInUp} className="text-4xl md:text-[56px] font-extrabold leading-[1.12] text-dark mb-[18px] tracking-tight">
             Your Dream.<br />
             Our Guidance.<br />
             <span className="gradient-text">Global Success.</span>
-          </h1>
-          <p className="text-[15.5px] text-muted leading-relaxed mb-7">
+          </motion.h1>
+          <motion.p variants={fadeInUp} className="text-[15.5px] text-muted leading-relaxed mb-7">
             Ajinorah Maharashtra helps ambitious students gain admission to<br />
             top universities worldwide with a focus on 100% scholarships.
-          </p>
-          <div className="flex items-center gap-3.5 mb-9 flex-wrap">
-            <a href="https://wa.me/919170065003" target="_blank" rel="noopener noreferrer" className="bg-primary text-white shadow-[0_4px_18px_rgba(107,71,220,0.32)] hover:bg-primary-dark hover:shadow-[0_6px_24px_rgba(107,71,220,0.40)] hover:-translate-y-[1px] inline-flex items-center gap-2 px-[22px] py-3 rounded-full font-semibold text-[14.5px] whitespace-nowrap transition-all duration-200">
+          </motion.p>
+          <motion.div variants={fadeInUp} className="flex items-center justify-center md:justify-start gap-3.5 mb-9 flex-wrap">
+            <a 
+              href="https://wa.me/919170065003" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="bg-primary text-white shadow-[0_4px_18px_rgba(107,71,220,0.32)] hover:bg-primary-dark hover:shadow-[0_6px_24px_rgba(107,71,220,0.40)] hover:-translate-y-[1px] inline-flex items-center gap-2 px-[22px] py-3 rounded-full font-semibold text-[14.5px] whitespace-nowrap transition-[shadow,background-color,transform] duration-200 transform-gpu will-change-transform"
+            >
               Book Free Consultation <ArrowRightIcon />
             </a>
-            <a href="#destinations" className="bg-transparent text-dark border-[1.5px] border-border hover:border-primary hover:text-primary inline-flex items-center gap-2 px-[22px] py-3 rounded-full font-semibold text-[14.5px] whitespace-nowrap transition-all duration-200">
+            <a 
+              href="#destinations" 
+              className="bg-transparent text-dark border-[1.5px] border-border hover:border-primary hover:text-primary inline-flex items-center gap-2 px-[22px] py-3 rounded-full font-semibold text-[14.5px] whitespace-nowrap transition-[border-color,color,transform] duration-200 transform-gpu will-change-transform"
+            >
               Explore Destinations <ArrowRightIcon />
             </a>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-4 gap-2 md:gap-4 pt-6 border-t border-border/50 w-full">
+          <motion.div variants={fadeInUp} className="grid grid-cols-4 gap-2 md:gap-4 pt-6 border-t border-border/50 w-full">
             {[
               { icon: FeatureIcons.guidance, label: "100%\nScholarships" },
               { icon: FeatureIcons.support, label: "End-to-End\nSupport" },
               { icon: FeatureIcons.university, label: "Global\nNetwork" },
               { icon: FeatureIcons.visa, label: "95% Visa\nSuccess" },
             ].map((f) => (
-              <div key={f.label} className="flex flex-col xl:flex-row items-center xl:items-start text-center xl:text-left gap-1.5 md:gap-2.5">
+              <div key={f.label} className="flex flex-col xl:flex-row items-center xl:items-center md:items-start text-center xl:text-left gap-1.5 md:gap-2.5">
                 <div className="w-8 h-8 md:w-9 md:h-9 rounded-lg md:rounded-xl bg-bg-soft border border-border/50 flex items-center justify-center shrink-0 text-primary">{f.icon}</div>
                 <span className="text-[9.5px] md:text-[11px] font-bold text-dark whitespace-pre-line leading-[1.2]">{f.label}</span>
               </div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Right Visual */}
-        <div className="flex justify-center items-center h-[400px] md:h-[500px] relative z-10">
+        <motion.div 
+          className="flex justify-center items-center h-[400px] md:h-[500px] relative z-10"
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false, amount: 0.3, margin: "0px 0px -50px 0px" }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
           <div className="relative w-full max-w-[850px] h-full flex items-center justify-center">
 
-            <img
+            <motion.img
               src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777724841/Untitled_design_58_gtqso7.png"
               alt="Student"
-              className="absolute top-1/2 -translate-x-20 md:-translate-x-1/2 -translate-y-1/2 w-full h-full object-contain z-10 scale-125"
+              className="absolute top-1/2 -translate-x-20 md:-translate-x-[20%] w-full h-full object-contain z-10 scale-110 md:scale-125 pointer-events-none"
+              initial={{ y: "-50%", opacity: 0, x: 20 }}
+              whileInView={{ y: "-50%", opacity: 1, x: 0 }}
+              animate={{ 
+                y: ["-50%", "-53%", "-50%"],
+              }}
+              transition={{ 
+                y: { duration: 5, repeat: Infinity, ease: "easeInOut" },
+                opacity: { duration: 0.8 },
+                x: { duration: 0.8 }
+              }}
             />
-            <a href="https://youtube.com/shorts/2rZzWat_alY?si=C0k2dHejGZflkZqq">
+            <motion.a 
+              href="https://youtube.com/shorts/2rZzWat_alY?si=C0k2dHejGZflkZqq"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               <div className="absolute bottom-[85px] md:bottom-[40px] right-6 md:-right-[10px] bg-white rounded-2xl shadow-lg p-2.5 md:p-4 flex items-center gap-3 z-20 min-w-[140px] md:min-w-[210px] border border-border/50">
                 <div className="shrink-0 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary scale-75 md:scale-100"><PlayIcon /></div>
                 <div className="flex flex-col gap-0">
@@ -276,15 +339,15 @@ function Hero() {
                   <span className="text-[9px] md:text-[12px] text-muted">Global Network</span>
                 </div>
               </div>
-            </a>
+            </motion.a>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
 
-/* ── Trusted Universities ────────────────────────────────── */
+/* â”€â”€ Trusted Universities â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function TrustedBy() {
   const unis = [
     { abbr: "MY", name: "Malaysia\nInstitutions" },
@@ -301,15 +364,29 @@ function TrustedBy() {
   return (
     <section className="py-12 border-y border-border bg-[#FAFBFF] overflow-hidden">
       <div className="container mx-auto px-4 md:px-8">
-        <p className="text-center text-[11.5px] font-bold tracking-[0.12em] text-muted uppercase mb-10">OUR GLOBAL PARTNER NETWORK ACROSS 7+ COUNTRIES</p>
+        <motion.p 
+          className="text-center text-[11.5px] font-bold tracking-[0.12em] text-muted uppercase mb-10"
+          initial="initial"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.3, margin: "0px 0px -50px 0px" }}
+          variants={fadeInUp}
+        >
+          OUR GLOBAL PARTNER NETWORK ACROSS 7+ COUNTRIES
+        </motion.p>
 
         <div className="relative flex overflow-hidden no-scrollbar">
           <div className="animate-marquee gap-12 md:gap-20 no-scrollbar">
             {[...unis, ...unis].map((u, i) => (
-              <div key={i} className="flex items-center gap-3 opacity-60 transition-opacity hover:opacity-100 shrink-0">
+              <motion.div 
+                key={i} 
+                className="flex items-center gap-3 opacity-60 transition-opacity hover:opacity-100 shrink-0"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: false, amount: 0.3, margin: "0px 0px -50px 0px" }}
+              >
                 {u.abbr && <span className="text-[28px] md:text-[32px] font-black text-dark tracking-tighter leading-none">{u.abbr}</span>}
                 <span className="text-[10px] md:text-[11px] font-bold text-dark uppercase tracking-[0.06em] whitespace-pre-line leading-tight">{u.name}</span>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -318,63 +395,69 @@ function TrustedBy() {
   );
 }
 
-/* ── Destinations ────────────────────────────────────────── */
+/* â”€â”€ Destinations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function Destinations() {
   const [showAll, setShowAll] = React.useState(false);
 
   const countries = [
     {
       name: "Malaysia",
-      flag: "🇲🇾",
+      flag: "ðŸ‡²ðŸ‡¾",
       desc: "Top scholarship options & vibrant culture.",
       img: "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=400&h=220&fit=crop&q=80",
     },
     {
       name: "Mauritius",
-      flag: "🇲🇺",
+      flag: "ðŸ‡²ðŸ‡º",
       desc: "High-quality education in a tropical paradise.",
       img: "https://images.unsplash.com/photo-1582574643306-d00ea3f7d49b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bWF1cml0aXVzfGVufDB8fDB8fHww",
     },
     {
       name: "France",
-      flag: "🇫🇷",
+      flag: "ðŸ‡«ðŸ‡·",
       desc: "Rich academic tradition and career opportunities.",
       img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=400&h=220&fit=crop&q=80",
     },
     {
       name: "Germany",
-      flag: "🇩🇪",
+      flag: "ðŸ‡©ðŸ‡ª",
       desc: "Low-cost education with world-class engineering.",
       img: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&h=220&fit=crop&q=80",
     },
     {
       name: "Dubai",
-      flag: "🇦🇪",
+      flag: "ðŸ‡¦ðŸ‡ª",
       desc: "Modern hub for global business and innovation.",
       img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400&h=220&fit=crop&q=80",
     },
     {
       name: "Albania",
-      flag: "🇦🇱",
+      flag: "ðŸ‡¦ðŸ‡±",
       desc: "Emerging destination with affordable medical programs.",
       img: "https://plus.unsplash.com/premium_photo-1697730104948-43575659bf0a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YWxiYW5pYXxlbnwwfHwwfHx8MA%3D%3D",
     },
     {
       name: "Uzbekistan",
-      flag: "🇺🇿",
+      flag: "ðŸ‡ºðŸ‡¿",
       desc: "Excellent opportunities for medical and technical studies.",
       img: "https://images.unsplash.com/photo-1670514535515-e7af911bdadb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fFV6YmVraXN0YW58ZW58MHx8MHx8fDA%3D",
     },
   ];
 
-  const displayedCountries = showAll ? countries : countries.slice(0, 3);
+  const displayedCountries = showAll ? countries : countries.slice(0, 4);
 
   return (
-    <section id="destinations" className="py-20 bg-white">
+    <section id="destinations" className="pt-20 pb-10 bg-white">
       <div className="container mx-auto px-4 md:px-8 grid md:grid-cols-[280px_1fr] items-start gap-12">
-        <div className="text-center md:text-left">
+        <motion.div 
+          className="text-center md:text-left"
+          initial="initial"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.3, margin: "0px 0px -50px 0px" }}
+          variants={fadeInUp}
+        >
           <p className="text-[11px] font-bold tracking-[0.14em] text-teal uppercase mb-3.5">POPULAR DESTINATIONS</p>
-          <h2 className="text-4xl font-extrabold text-dark leading-[1.12] mb-4 tracking-tight">Explore Top Study<br />Abroad Destinations</h2>
+          <h2 className="text-[42px] md:text-5xl font-extrabold text-dark leading-[1.12] mb-4 tracking-tight">Explore Top Study<br />Abroad Destinations</h2>
           <p className="text-[14.5px] text-muted leading-relaxed mb-6">
             Choose from the world's best countries<br />and top-ranked universities.
           </p>
@@ -384,13 +467,21 @@ function Destinations() {
           >
             {showAll ? "Show Less" : "View All Countries"} <ArrowRightIcon />
           </button>
-        </div>
+        </motion.div>
 
-        <div className="relative">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <motion.div 
+          key={showAll ? 'all' : 'limited'}
+          className="relative w-full"
+          initial="initial"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1, margin: "0px 0px -50px 0px" }}
+          variants={staggerContainer}
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {displayedCountries.map((c) => (
-              <a
+              <motion.a
                 key={c.name}
+                variants={fadeInUp}
                 href={`https://wa.me/919170065003?text=${encodeURIComponent(`Hello, I'm interested in studying in ${c.name}. ${c.desc}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -408,16 +499,16 @@ function Destinations() {
                     <ArrowRightIcon size={14} />
                   </div>
                 </div>
-              </a>
+              </motion.a>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
 
-/* ── Services ────────────────────────────────────────────── */
+/* â”€â”€ Services â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function Services() {
   const [activeService, setActiveService] = useState(null);
   const serviceDetails = {
@@ -502,24 +593,36 @@ const detail = activeService ? serviceDetails[activeService.key] : null;
     window.open(`https://wa.me/919170065003?text=${encodeURIComponent(message)}`, '_blank');
   };
   return (
-    <section id="services" className="py-20 bg-bg-soft">
+    <section id="services" className="pt-10 pb-20 bg-bg-soft">
       <div className="container mx-auto px-4 md:px-8 grid md:grid-cols-[280px_1fr] items-start gap-12">
-        <div className="text-center md:text-left">
+        <motion.div 
+          className="text-center md:text-left"
+          initial="initial"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.3, margin: "0px 0px -50px 0px" }}
+          variants={fadeInUp}
+        >
           <p className="text-[11px] font-bold tracking-[0.14em] text-teal uppercase mb-3.5">OUR SERVICES</p>
-          <h2 className="text-4xl font-extrabold text-dark leading-[1.12] mb-4 tracking-tight">We're with you<br />at every step</h2>
+          <h2 className="text-[42px] md:text-5xl font-extrabold text-dark leading-[1.12] mb-4 tracking-tight">We're with you<br />at every step</h2>
           <div className="w-10 h-[3px] bg-orange rounded-sm mb-[18px] mx-auto md:mx-0" />
           <p className="text-[14.5px] text-muted leading-relaxed mb-6">
             From shortlisting to visa approval and<br />
-            beyond — we make your study abroad<br />
+            beyond â€” we make your study abroad<br />
             journey smooth and successful.
           </p>
-          <a href="#" className="inline-flex items-center gap-[7px] text-sm font-semibold text-primary transition-all hover:gap-[11px] justify-center md:justify-start">View All Services <ArrowRightIcon /></a>
-        </div>
+        </motion.div>
 
-        <div className="flex flex-col gap-3.5">
+        <motion.div 
+          className="flex flex-col gap-3.5"
+          initial="initial"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.3, margin: "0px 0px -50px 0px" }}
+          variants={staggerContainer}
+        >
         {services.map((s) => (
-          <button
+          <motion.button
             key={s.key}
+            variants={fadeInUp}
             onClick={() => openPopup(s)}
             className="bg-[linear-gradient(to_right,#fff1f2,#fef3c7,#ecfdf5,#eff6ff,#f5f3ff)] rounded-2xl p-[20px] flex items-start gap-4 shadow-sm border border-white transition-all hover:shadow-md hover:-translate-y-1 group h-auto text-left w-full"
           >
@@ -533,9 +636,9 @@ const detail = activeService ? serviceDetails[activeService.key] : null;
               <h4 className="text-[14.5px] font-bold text-dark mb-1">{s.title}</h4>
               <p className="text-xs text-dark/70 font-medium leading-relaxed">{s.desc}</p>
             </div>
-          </button>
+          </motion.button>
         ))}
-      </div>
+      </motion.div>
 
       {/* Backdrop */}
       {activeService && (
@@ -577,7 +680,7 @@ const detail = activeService ? serviceDetails[activeService.key] : null;
                 onClick={closePopup}
                 className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 shrink-0 ml-3 mt-0.5"
               >
-                ✕
+                âœ•
               </button>
             </div>
 
@@ -617,7 +720,7 @@ const detail = activeService ? serviceDetails[activeService.key] : null;
   );
 }
 
-/* ── Blogs ───────────────────────────────────────────────── */
+/* â”€â”€ Blogs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function Blogs() {
   const [blogs, setBlogs] = useState([]);
 
@@ -634,12 +737,22 @@ function Blogs() {
 
   return (
     <section id="blogs" className="py-20 bg-white">
-      <div className="container mx-auto px-4 md:px-8">
-        <p className="text-center text-[11.5px] font-bold tracking-[0.12em] text-teal uppercase mb-4">FROM OUR BLOG</p>
-        <h2 className="text-3xl md:text-4xl font-extrabold text-dark text-center mb-8">Latest Articles & News</h2>
+      <motion.div 
+        className="container mx-auto px-4 md:px-8"
+        initial="initial"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.3, margin: "0px 0px -50px 0px" }}
+        variants={staggerContainer}
+      >
+        <motion.p variants={fadeInUp} className="text-center text-[11.5px] font-bold tracking-[0.12em] text-teal uppercase mb-4">FROM OUR BLOG</motion.p>
+        <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl font-extrabold text-dark text-center mb-8">Latest Articles & News</motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {blogs.map((b) => (
-            <article key={b.id} className="bg-white rounded-xl border border-border shadow-sm overflow-hidden">
+            <motion.article 
+              key={b.id} 
+              className="bg-white rounded-xl border border-border shadow-sm overflow-hidden"
+              variants={fadeInUp}
+            >
               {b.coverImage && (
                 <div className="h-44 w-full overflow-hidden">
                   <img src={b.coverImage} alt={b.title} className="w-full h-full object-cover" />
@@ -648,17 +761,17 @@ function Blogs() {
               <div className="p-4">
                 <h3 className="text-lg font-bold text-dark mb-2">{b.title}</h3>
                 <p className="text-sm text-muted mb-3">{b.excerpt}</p>
-                <a href={`#/blog/${b.slug || b.id}`} className="text-sm font-semibold text-primary">Read more →</a>
+                <a href={`#/blog/${b.slug || b.id}`} className="text-sm font-semibold text-primary">Read more â†’</a>
               </div>
-            </article>
+            </motion.article>
           ))}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
 
-/* ── Events Section ─────────────────────────────────────── */
+/* â”€â”€ Events Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function Events() {
   const items = [
     {
@@ -927,7 +1040,7 @@ function Events() {
     <section id="events" className="py-12 bg-white">
       <div className="container mx-auto px-4 md:px-8">
         <p className="text-center text-[11.5px] font-bold tracking-[0.12em] text-teal uppercase mb-4">EVENTS</p>
-        <h2 className="text-3xl md:text-4xl font-extrabold text-dark text-center mb-8">Recent Events & Highlights</h2>
+        <h2 className="text-4xl md:text-5xl font-extrabold text-dark text-center mb-8">Recent Events & Highlights</h2>
 
         <div className="events-scroller">
           <div
@@ -936,8 +1049,11 @@ function Events() {
             onMouseLeave={(e) => { e.currentTarget.style.animationPlayState = 'running'; }}
           >
             {[...items, ...items].map((it, idx) => (
-              <div key={`${it.id}-${idx}`} className="events-item flex-shrink-0 min-w-[260px] md:min-w-[320px]">
-                <article className="bg-white rounded-xl border border-border shadow-sm overflow-hidden">
+              <div 
+                key={`${it.id}-${idx}`} 
+                className="events-item flex-shrink-0 min-w-[260px] md:min-w-[320px]"
+              >
+                <article className="bg-white rounded-xl border border-border shadow-sm overflow-hidden transition-all hover:shadow-md hover:-translate-y-1">
                   <button onClick={(e) => openMedia(it, e)} className="w-full text-left">
                     <div className="h-60 w-full overflow-hidden flex items-center justify-center bg-bg-soft">
                       {it.type === 'video' ? (
@@ -967,7 +1083,7 @@ function Events() {
                 <img src={modalItem.src} alt={modalItem.title} className="max-w-full max-h-full object-contain" />
               )}
             </div>
-            <button onClick={closeModal} className="media-close absolute top-6 right-6 text-white bg-black/30 rounded-full p-2">✕</button>
+            <button onClick={closeModal} className="media-close absolute top-6 right-6 text-white bg-black/30 rounded-full p-2">âœ•</button>
           </div>
         )}
       </div>
@@ -975,34 +1091,43 @@ function Events() {
   );
 }
 
-/* ── CTA Banner ──────────────────────────────────────────── */
+/* â”€â”€ CTA Banner â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function CTABanner() {
   return (
     <section className="bg-gradient-to-br from-primary/5 via-[#F0EEFF] to-[#EEF5FF] rounded-[28px] mx-4 md:mx-8 mb-[60px] p-8 overflow-hidden relative">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between py-12 gap-8 relative z-10">
         <div className="max-w-[480px] text-center md:text-left">
-          <h2 className="text-3xl md:text-[42px] font-extrabold text-dark leading-[1.18] mb-4 tracking-tight">
-            Ready to Start Your<br />
-            <span className="gradient-text-orange">Study Abroad</span> Journey?
+          <h2 className="text-4xl md:text-5xl font-extrabold text-dark leading-[1.18] mb-4 tracking-tight">
+            Ready to Start Your <span className="gradient-text-orange">Study Abroad</span> Journey?
           </h2>
-          <p className="text-base text-muted leading-relaxed mb-7">
-            Book your free consultation today and take<br />
-            the first step towards your global future.
+          <p className="text-base text-muted leading-relaxed mb-7 max-w-[400px] mx-auto md:mx-0">
+            Book your free consultation today and take the first step towards your global future.
           </p>
-          <a href="https://wa.me/919170065003" target="_blank" rel="noopener noreferrer" className="bg-primary text-white px-8 py-3.5 rounded-full font-bold text-sm shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all inline-flex items-center gap-2">
+          <a 
+            href="https://wa.me/919170065003" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="bg-primary text-white px-8 py-3.5 rounded-full font-bold text-sm shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-[shadow,background-color,transform] duration-300 inline-flex items-center gap-2 transform-gpu will-change-transform"
+          >
             Book Free Consultation <ArrowRightIcon />
           </a>
         </div>
-        <div className="relative w-full max-w-[480px] h-auto md:h-[340px] shrink-0 hidden md:block">
+        <motion.div 
+          className="relative w-full max-w-[480px] h-auto md:h-[340px] shrink-0 hidden md:block"
+          initial={{ opacity: 0, scale: 0.9, x: 50 }}
+          whileInView={{ opacity: 1, scale: 1, x: 0 }}
+          viewport={{ once: false, amount: 0.4 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+        >
           <div className="absolute w-[320px] h-[320px] rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-primary/10 to-blue/10" />
           <img src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777735386/Untitled_design_60_zcftlx.png" alt="Ajinorah" className="relative w-full h-full object-contain" />
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
 
-/* ── About Section ───────────────────────────────────────── */
+/* â”€â”€ About Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function About() {
   return (
     <section id="about" className="py-20 relative overflow-hidden bg-[linear-gradient(135deg,#ffb3ba_0%,#ffdfba_20%,#ffffba_40%,#baffc9_60%,#bae1ff_80%,#cbaacb_100%)]">
@@ -1011,16 +1136,28 @@ function About() {
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-white/30 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none" />
 
       <div className="container mx-auto px-4 md:px-8 grid md:grid-cols-2 gap-6 items-center relative z-10">
-        <div className="text-center md:text-left">
+        <motion.div 
+          className="text-center md:text-left"
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <p className="text-[11px] font-bold tracking-[0.14em] text-teal uppercase mb-3.5">WHO WE ARE</p>
-          <h2 className="text-4xl font-extrabold text-dark leading-[1.12] mb-4 tracking-tight">Your Gateway to<br />Global Education</h2>
+          <h2 className="text-[42px] md:text-5xl font-extrabold text-dark leading-[1.12] mb-4 tracking-tight">Your Gateway to<br />Global Education</h2>
           <div className="w-10 h-[3px] bg-orange rounded-sm mb-[18px] mx-auto md:mx-0" />
           <p className="text-[14.5px] text-dark/80 font-medium leading-relaxed mb-6">
             Ajinorah Maharashtra is a global education consultancy dedicated to helping students access high-quality international education through <strong>fully funded and sponsored opportunities</strong>.
           </p>
-        </div>
+        </motion.div>
         <div className="flex flex-col gap-8">
-          <div className="bg-white/60 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-white/50 shadow-sm">
+          <motion.div 
+            className="bg-white/60 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-white/50 shadow-sm"
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+          >
             <h3 className="text-xl font-bold text-dark mb-4">Unique Selling Proposition (USP)</h3>
             <p className="text-[14.5px] text-dark/80 leading-relaxed mb-4">
               Our biggest differentiator is our strong focus on 100% scholarship and sponsorship-based education opportunities, which significantly reduces or completely eliminates the financial burden on students. Unlike traditional consultancies, we:
@@ -1039,45 +1176,60 @@ function About() {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-3 gap-4 md:gap-6 mt-2">
+          <motion.div 
+            className="grid grid-cols-3 gap-4 md:gap-6 mt-2"
+            initial="initial"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.3 }}
+            variants={staggerContainer}
+          >
   
-            <div className="bg-white/70 backdrop-blur-sm min-h-[110px] md:min-h-[130px] p-4 md:p-6 rounded-xl border border-white text-center transition-transform hover:-translate-y-1 shadow-sm flex flex-col justify-center items-center overflow-hidden">
+            <motion.div 
+              variants={fadeInUp}
+              className="bg-white/70 backdrop-blur-sm min-h-[110px] md:min-h-[130px] p-4 md:p-6 rounded-xl border border-white text-center transition-transform hover:-translate-y-1 shadow-sm flex flex-col justify-center items-center overflow-hidden"
+            >
               <span className="block text-2xl md:text-3xl font-extrabold text-primary mb-1 break-words">
                 95%
               </span>
               <span className="text-[10px] md:text-xs font-bold text-dark/70 uppercase tracking-wide break-words">
                 Visa Success
               </span>
-            </div>
-
-            <div className="bg-white/70 backdrop-blur-sm min-h-[110px] md:min-h-[130px] p-4 md:p-6 rounded-xl border border-white text-center transition-transform hover:-translate-y-1 shadow-sm flex flex-col justify-center items-center overflow-hidden">
+            </motion.div>
+ 
+            <motion.div 
+              variants={fadeInUp}
+              className="bg-white/70 backdrop-blur-sm min-h-[110px] md:min-h-[130px] p-4 md:p-6 rounded-xl border border-white text-center transition-transform hover:-translate-y-1 shadow-sm flex flex-col justify-center items-center overflow-hidden"
+            >
               <span className="block text-lg md:text-3xl font-extrabold text-primary mb-1 break-words">
                 1 Lakh+
               </span>
               <span className="text-[10px] md:text-xs font-bold text-dark/70 uppercase tracking-wide break-words">
                 Students
               </span>
-            </div>
-
-            <div className="bg-white/70 backdrop-blur-sm min-h-[110px] md:min-h-[130px] p-4 md:p-6 rounded-xl border border-white text-center transition-transform hover:-translate-y-1 shadow-sm flex flex-col justify-center items-center overflow-hidden">
+            </motion.div>
+ 
+            <motion.div 
+              variants={fadeInUp}
+              className="bg-white/70 backdrop-blur-sm min-h-[110px] md:min-h-[130px] p-4 md:p-6 rounded-xl border border-white text-center transition-transform hover:-translate-y-1 shadow-sm flex flex-col justify-center items-center overflow-hidden"
+            >
               <span className="block text-2xl md:text-3xl font-extrabold text-primary mb-1 break-words">
                 100%
               </span>
               <span className="text-[10px] md:text-xs font-bold text-dark/70 uppercase tracking-wide break-words">
                 Scholarships
               </span>
-            </div>
-
-          </div>
+            </motion.div>
+ 
+          </motion.div>
         </div>
       </div>
     </section>
   );
 }
 
-/* ── Visa Success Images ────────────────────────────────── */
+/* â”€â”€ Visa Success Images â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function VisaSuccessImages() {
   const imgs = [
     'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Visa%20Success/1.jpeg',
@@ -1094,9 +1246,15 @@ function VisaSuccessImages() {
 
   return (
     <section id="visa-success" className="py-8 bg-bg-soft">
-      <div className="container mx-auto px-4 md:px-8">
-        <p className="text-center text-[11.5px] font-bold tracking-[0.12em] text-teal uppercase mb-3">VISA SUCCESS</p>
-        <h2 className="text-2xl md:text-3xl font-extrabold text-dark text-center mb-6">Recent Visa Success Stories</h2>
+      <motion.div 
+        className="container mx-auto px-4 md:px-8"
+        initial="initial"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.1 }}
+        variants={staggerContainer}
+      >
+        <motion.p variants={fadeInUp} className="text-center text-[11.5px] font-bold tracking-[0.12em] text-teal uppercase mb-3">VISA SUCCESS</motion.p>
+        <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl font-extrabold text-dark text-center mb-6">Recent Visa Success Stories</motion.h2>
 
         <div className="visa-scroller">
           <div
@@ -1105,20 +1263,24 @@ function VisaSuccessImages() {
             onMouseLeave={(e) => { e.currentTarget.style.animationPlayState = 'running'; }}
           >
             {[...imgs, ...imgs].map((src, idx) => (
-              <div key={`${idx}`} className="visa-item flex-shrink-0 min-w-[180px] md:min-w-[220px]">
+              <motion.div 
+                key={`${idx}`} 
+                className="visa-item flex-shrink-0 min-w-[180px] md:min-w-[220px]"
+                variants={fadeInUp}
+              >
                 <div className="bg-white/70 backdrop-blur-sm p-0 md:p-1 rounded-2xl border border-white shadow-sm overflow-hidden">
                   <img src={src} alt={`Visa success ${idx+1}`} className="w-full h-50 md:h-60 object-cover block" />
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
 
-/* ── Contact Section ─────────────────────────────────────── */
+/* â”€â”€ Contact Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function Contact() {
   const [formData, setFormData] = useState({
     name: "",
@@ -1140,7 +1302,7 @@ function Contact() {
     setSubmitting(true);
     setSubmitError("");
     try {
-      const response = await fetch("/leads", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -1161,34 +1323,45 @@ function Contact() {
   return (
     <section id="contact" className="py-20 bg-bg-soft">
       <div className="container mx-auto px-4 md:px-8 grid md:grid-cols-2 gap-16 items-start">
-        <div className="text-center md:text-left">
+        <motion.div 
+          className="text-center md:text-left"
+          initial="initial"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.3, margin: "0px 0px -50px 0px" }}
+          variants={fadeInUp}
+        >
           <p className="text-[11px] font-bold tracking-[0.14em] text-teal uppercase mb-3.5">CONTACT US</p>
-          <h2 className="text-4xl font-extrabold text-dark leading-snug mb-4 tracking-tight">Get in Touch</h2>
+          <h2 className="text-5xl font-extrabold text-dark leading-snug mb-4 tracking-tight">Get in Touch</h2>
           <p className="text-[14.5px] text-muted leading-relaxed mb-6">Have questions? We are here to help you fly!</p>
 
-          <div className="flex flex-col gap-6 mt-8">
-            <div className="flex flex-col gap-1">
-              <strong className="text-xs text-primary uppercase tracking-wider font-bold">Email:</strong>
-              <a href="mailto:info@ajinorahmaharashtra.com" className="text-xs text-dark font-medium hover:text-primary transition-colors">info@ajinorahmaharashtra.com</a>
+          <div className="flex flex-col gap-8 mt-8">
+            <div className="flex flex-col gap-2">
+              <strong className="text-xs md:text-sm text-primary uppercase tracking-wider font-bold">Email:</strong>
+              <a href="mailto:info@ajinorahmaharashtra.com" className="text-sm md:text-base text-dark font-semibold hover:text-primary transition-colors">info@ajinorahmaharashtra.com</a>
             </div>
-            <div className="flex flex-col gap-1">
-              <strong className="text-xs text-primary uppercase tracking-wider font-bold">Phone:</strong>
-              <a href="tel:+919170065003" className="text-xs text-dark font-medium hover:text-primary transition-colors">+91 91 7006 5003, <br/>+91 887 2222 887, <br/>+91 86 5150 5150</a>
+            <div className="flex flex-col gap-2">
+              <strong className="text-xs md:text-sm text-primary uppercase tracking-wider font-bold">Phone:</strong>
+              <a href="tel:+919170065003" className="text-sm md:text-base text-dark font-semibold hover:text-primary transition-colors">+91 91 7006 5003, <br/>+91 887 2222 887, <br/>+91 86 5150 5150</a>
             </div>
-            <div className="flex flex-col gap-0.5">
-  <strong className="text-xs text-primary uppercase tracking-wide font-bold">
-    Service Address:
-  </strong>
-
-  <p className="text-[10px] leading-tight text-dark font-medium">
-    102, DEO ENCLAVE, NEAR DAHANUKAR MANAGEMENT COLLEGE, VILE PARLE EAST,
-    MUMBAI, MAHARASHTRA - 400057
-  </p>
-</div>
+            <div className="flex flex-col gap-2 w-full mx-auto md:mx-0">
+              <strong className="text-xs md:text-sm text-primary uppercase tracking-wide font-bold">
+                Service Address:
+              </strong>
+              <p className="text-xs md:text-sm leading-relaxed text-dark font-semibold break-words">
+                102, DEO ENCLAVE, NEAR DAHANUKAR MANAGEMENT COLLEGE, VILE PARLE EAST,
+                MUMBAI, MAHARASHTRA - 400057
+              </p>
+            </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="bg-white p-6 md:p-10 rounded-[24px] shadow-lg border border-border/50">
+        <motion.div 
+          className="bg-white p-6 md:p-10 rounded-[24px] shadow-lg border border-border/50"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3, margin: "0px 0px -50px 0px" }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+        >
           {submitted ? (
             <div className="flex flex-col items-center justify-center gap-4 py-10 text-center">
               <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center">
@@ -1250,19 +1423,19 @@ function Contact() {
             <button
               type="submit"
               disabled={submitting}
-              className="bg-primary text-white w-full py-4 rounded-xl font-bold text-base shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+              className="bg-primary text-white w-full py-4 rounded-xl font-bold text-base shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-[shadow,background-color,transform,opacity] duration-300 disabled:opacity-60 disabled:cursor-not-allowed transform-gpu will-change-transform"
             >
-              {submitting ? "Sending…" : "Send"}
+              {submitting ? "Sendingâ€¦" : "Send"}
             </button>
           </form>
           )}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
 
-/* ── Lead Form ───────────────────────────────────────────── */
+/* â”€â”€ Lead Form â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function LeadForm() {
   const [formData, setFormData] = useState({ name: '', email: '', destination: '', message: '' });
   const [success, setSuccess] = useState(false);
@@ -1328,14 +1501,50 @@ function LeadForm() {
   );
 }
 
-/* ── App ─────────────────────────────────────────────────── */
+/* â”€â”€ App â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 export default function App() {
   const [isAdmin, setIsAdmin] = useState(() => window.location.hash.startsWith('#/admin'));
   const [adminUser, setAdminUser] = useState(() => {
     try { return JSON.parse(localStorage.getItem('auth_user') || 'null'); } catch { return null; }
   });
+  const [showBackToTop, setShowBackToTop] = useState(false);
+  const [showHeader, setShowHeader] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Show/Hide Back to Top
+      setShowBackToTop(currentScrollY > 500);
+
+      // Show/Hide Header based on scroll direction
+      if (currentScrollY < 10) {
+        setShowHeader(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setShowHeader(false); // Scrolling down
+      } else if (currentScrollY < lastScrollY) {
+        setShowHeader(true); // Scrolling up
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    // Warmup Render backend (wake it up from sleep)
+    fetch('/api/health').catch(() => {});
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+
+  useEffect(() => {
+    const lenis = new Lenis();
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
     const check = () => {
       const onAdminRoute = window.location.hash.startsWith('#/admin');
       setIsAdmin(onAdminRoute);
@@ -1343,7 +1552,11 @@ export default function App() {
     };
     window.addEventListener('hashchange', check);
     window.addEventListener('authChange', check);
-    return () => { window.removeEventListener('hashchange', check); window.removeEventListener('authChange', check); };
+    return () => {
+      window.removeEventListener('hashchange', check);
+      window.removeEventListener('authChange', check);
+      lenis.destroy();
+    };
   }, []);
 
   const handleAdminLogout = () => {
@@ -1376,7 +1589,7 @@ export default function App() {
               onClick={() => { window.location.hash = ''; setIsAdmin(false); }}
               className="mt-4 text-sm text-muted hover:text-dark"
             >
-              ← Back to site
+              â† Back to site
             </button>
           </div>
         </div>
@@ -1386,7 +1599,7 @@ export default function App() {
       return (
         <div className="min-h-screen flex items-center justify-center bg-bg-soft font-sans">
           <div className="bg-white rounded-2xl border border-border shadow-sm p-8 text-center max-w-sm">
-            <p className="text-2xl mb-2">🔒</p>
+            <p className="text-2xl mb-2">ðŸ”’</p>
             <h2 className="font-bold text-dark text-lg mb-2">Access Denied</h2>
             <p className="text-sm text-muted mb-4">Your account does not have admin privileges.</p>
             <button onClick={handleAdminLogout} className="text-sm text-primary underline">Logout & go back</button>
@@ -1399,12 +1612,12 @@ export default function App() {
 
   return (
     <div className="overflow-x-hidden font-sans bg-white selection:bg-primary/10 selection:text-primary">
-      <Header />
+      <Header visible={showHeader} />
       <main>
         <Hero />
         <TrustedBy />
         <About />
-          <VisaSuccessImages />
+        <VisaSuccessImages />
         <Destinations />
         <Services />
         <Blogs />
@@ -1415,44 +1628,112 @@ export default function App() {
         <Contact />
         <CTABanner />
       </main>
+
+      {/* Back to Top Button */}
+      <AnimatePresence>
+        {showBackToTop && (
+          <motion.button
+            initial={{ opacity: 0, y: 20, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.8 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="fixed bottom-20 right-4 md:bottom-8 md:right-8 z-[100] w-12 h-12 bg-primary text-white rounded-full shadow-lg shadow-primary/30 flex items-center justify-center hover:bg-primary-dark transition-colors transform-gpu"
+            aria-label="Back to Top"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 15l-6-6-6 6" />
+            </svg>
+          </motion.button>
+        )}
+      </AnimatePresence>
       <footer className="bg-white pt-6 md:pt-24 pb-6 border-t border-border/30">
         <div className="container mx-auto px-4 md:px-8">
           {/* Main Footer Content */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-0 gap-y-5 md:gap-12 mb-4 md:mb-8">
             {/* Brand Column */}
-            <div className="col-span-2 lg:col-span-1 flex flex-col gap-6">
-              <img
+            <motion.div 
+              className="col-span-2 lg:col-span-1 flex flex-col gap-6"
+              initial="initial"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.3, margin: "0px 0px -50px 0px" }}
+              variants={staggerContainer}
+            >
+              <motion.img
+                variants={fadeInUp}
                 src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777981449/image_20_nseqst.png"
                 alt="Ajinorah"
                 className="h-14 md:h-16 w-auto self-start"
               />
-              <p className="text-[14px] text-muted leading-relaxed max-w-[260px]">
+              <motion.p variants={fadeInUp} className="text-[14px] text-muted leading-relaxed max-w-[260px]">
                 Empowering students to achieve their global education dreams through fully funded scholarships and expert guidance.
-              </p>
-              <div className="flex items-center gap-3 mt-4 justify-center md:justify-start pl-2 md:pl-0">
-                <a href="https://x.com/Ajinorah_Maha" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-primary hover:border-primary transition-all">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
-                </a>
-                <a href="https://www.facebook.com/profile.php?id=61586724492187" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-primary hover:border-primary transition-all">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-                </a>
-                <a href="https://www.instagram.com/ajinorahmaharashtra" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-primary hover:border-primary transition-all">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                </a>
-                <a href="https://www.youtube.com/@ajinorahmaharashtra" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-primary hover:border-primary transition-all">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
-                </a>
-                <a href="https://www.linkedin.com/in/ajinorah-maharashtra-2316413a7/" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-primary hover:border-primary transition-all">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                </a>
-                <a href="https://wa.me/919170065003" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full border border-border/50 flex items-center justify-center text-muted hover:text-white hover:bg-[#25D366] hover:border-[#25D366] transition-all">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.94 3.659 1.437 5.634 1.437h.005c6.558 0 11.894-5.338 11.897-11.896a11.821 11.821 0 00-3.48-8.413z" /></svg>
-                </a>
+              </motion.p>
+              <div className="flex items-center gap-5 mt-6 justify-center md:justify-start pl-2 md:pl-0">
+                {[
+                  { 
+                    link: "https://x.com/Ajinorah_Maha", 
+                    brandColor: "rgba(0,0,0,1)", 
+                    icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg> 
+                  },
+                  { 
+                    link: "https://www.facebook.com/profile.php?id=61586724492187", 
+                    brandColor: "rgba(24,119,242,1)", 
+                    icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg> 
+                  },
+                  { 
+                    link: "https://www.instagram.com/ajinorahmaharashtra", 
+                    brandColor: "linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%)", 
+                    icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> 
+                  },
+                  { 
+                    link: "https://www.youtube.com/@ajinorahmaharashtra", 
+                    brandColor: "rgba(255,0,0,1)", 
+                    icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg> 
+                  },
+                  { 
+                    link: "https://www.linkedin.com/in/ajinorah-maharashtra-2316413a7/", 
+                    brandColor: "rgba(10,102,194,1)", 
+                    icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg> 
+                  },
+                  { 
+                    link: "https://wa.me/919170065003", 
+                    brandColor: "rgba(37,211,102,1)", 
+                    icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.94 3.659 1.437 5.634 1.437h.005c6.558 0 11.894-5.338 11.897-11.896a11.821 11.821 0 00-3.48-8.413z" /></svg> 
+                  }
+                ].map((social, i) => (
+                  <motion.a
+                    key={i}
+                    href={social.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-12 h-12 rounded-full border-2 border-primary/20 flex items-center justify-center text-primary transition-all duration-500 bg-white shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:text-white hover:border-transparent hover:shadow-[0_12px_24px_rgba(var(--primary-rgb),0.3)] relative group overflow-hidden floating-social"
+                    style={{ animationDelay: `${i * 0.3}s` }}
+                    whileHover={{ 
+                      y: -8, 
+                      scale: 1.12,
+                      rotate: [0, -8, 8, 0]
+                    }}
+                  >
+                    {/* Brand Color Background Reveal */}
+                    <div 
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0" 
+                      style={{ background: social.brandColor }}
+                    />
+                    <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
+                      {social.icon}
+                    </span>
+                  </motion.a>
+                ))}
               </div>
-            </div>
+            </motion.div>
 
             {/* Contact Info & Powered By (Mobile Only) */}
-            <div className="col-span-2 md:col-span-1 flex flex-col gap-8 md:gap-6">
+            <motion.div 
+              className="col-span-2 md:col-span-1 flex flex-col gap-8 md:gap-6"
+              variants={fadeInUp}
+              initial="initial"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.3, margin: "0px 0px -50px 0px" }}
+            >
               <div className="flex flex-col items-start text-left gap-6">
                 <div className="flex flex-col gap-1 w-full">
                   <h4 className="text-[13px] font-bold text-dark uppercase tracking-[0.15em]">Get in Touch</h4>
@@ -1474,12 +1755,18 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Powered By (Responsive) — shows on all viewports; stacks on mobile */}
+                {/* Powered By (Responsive) â€” shows on all viewports; stacks on mobile */}
               </div>
-            </div>
+            </motion.div>
 
             {/* Services (Column 3) */}
-            <div className="hidden md:flex col-span-1 flex-col gap-6">
+            <motion.div 
+              className="hidden md:flex col-span-1 flex-col gap-6"
+              variants={fadeInUp}
+              initial="initial"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.3, margin: "0px 0px -50px 0px" }}
+            >
               <h4 className="text-[13px] font-bold text-dark uppercase tracking-[0.15em]">Our Services</h4>
               <nav className="flex flex-col gap-4">
                 {[
@@ -1497,42 +1784,53 @@ export default function App() {
                   </a>
                 ))}
               </nav>
-            </div>
+            </motion.div>
 
             {/* Quick Links (Column 4) */}
-            <div className="col-span-1 flex flex-col items-start gap-6 text-left">
+            <motion.div 
+              className="col-span-1 flex flex-col items-start gap-6 text-left"
+              variants={fadeInUp}
+              initial="initial"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.3, margin: "0px 0px -50px 0px" }}
+            >
               <h4 className="hidden md:block text-[13px] font-bold text-dark uppercase tracking-[0.15em]">Quick Links</h4>
               <nav className="hidden md:flex flex-col gap-4">
-                {["Home", "About Us", "Destinations", "Contact"].map((link) => (
+                {[
+                  { label: "Home", href: "#home" },
+                  { label: "About Us", href: "#about" },
+                  { label: "Destinations", href: "#destinations" },
+                  { label: "Contact", href: "#contact" }
+                ].map((link) => (
                   <a
-                    key={link}
-                    href={`#${link.toLowerCase().replace(" ", "")}`}
+                    key={link.label}
+                    href={link.href}
                     className="text-[14px] text-muted hover:text-primary transition-colors w-fit"
                   >
-                    {link}
+                    {link.label}
                   </a>
                 ))}
               </nav>
 
               {/* Powered By (Responsive) */}
               
-            </div>
+            </motion.div>
           </div>
-<div className="flex flex-col md:flex-row items-center gap-2 text-[10px] md:text-[11px] font-bold text-muted uppercase tracking-[0.2em] mt-4 justify-center md:justify-start w-full text-center md:text-left">
-                <span>POWERED BY</span>
-                <a href="https://www.socialbureau.in/enquiry-form" target="_blank" rel="noopener noreferrer" className="w-full md:w-auto flex justify-center md:justify-start">
-                  <img
-                    src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777199141/SB_LOGO_BLACK_PNG_iev5qz.png"
-                    alt="SocialBureau"
-                    className="h-10 md:h-12 w-auto"
-                  />
-                </a>
-              </div>
+          <div className="flex flex-row items-center gap-3 text-[9px] md:text-[11px] font-bold text-muted uppercase tracking-[0.2em] mt-6 justify-start w-full text-left">
+            <span>POWERED BY</span>
+            <a href="https://www.socialbureau.in/enquiry-form" target="_blank" rel="noopener noreferrer" className="flex justify-start items-center">
+              <img
+                src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777199141/SB_LOGO_BLACK_PNG_iev5qz.png"
+                alt="SocialBureau"
+                className="h-8 md:h-12 w-auto"
+              />
+            </a>
+          </div>
           {/* Bottom Bar */}
           <div className="pt-3 md:pt-6 border-t border-border/10 flex items-center justify-start">
             {/* Copyright */}
             <p className="text-xs text-muted font-medium">
-              Copyright © {new Date().getFullYear()} Ajinorah Maharashtra. All rights reserved.
+              Copyright Â© {new Date().getFullYear()} Ajinorah Maharashtra. All rights reserved.
             </p>
           </div>
         </div>
