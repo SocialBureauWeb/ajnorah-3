@@ -127,7 +127,7 @@ function Header({ visible }) {
 
   return (
     <>
-    <div className="h-16 md:h-20" />
+    <div className="h-[50px] md:h-[100px]" />
     <motion.header 
       initial={{ y: 0 }}
       animate={{ y: visible ? 0 : -110 }}
@@ -247,7 +247,7 @@ function Header({ visible }) {
 /* â”€â”€ Hero â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function Hero() {
   return (
-    <section id="home" className="relative overflow-hidden min-h-[500px] flex items-center pt-8 md:pt-16 pb-2">
+    <section id="home" className="relative overflow-hidden min-h-[500px] flex items-center pt-10 md:pt-28 pb-2">
       <div className="container mx-auto px-4 md:px-8 grid md:grid-cols-2 items-center gap-0">
         {/* Left Content */}
         <motion.div 
@@ -331,7 +331,7 @@ function Hero() {
               href="https://youtube.com/shorts/2rZzWat_alY?si=C0k2dHejGZflkZqq"
               target="_blank"
               rel="noopener noreferrer"
-              className="absolute bottom-[85px] md:bottom-[40px] right-6 md:-right-[10px] z-20 block"
+              className="absolute bottom-[25px] right-[15px] md:bottom-[35px] md:right-[15px] z-20 block"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
