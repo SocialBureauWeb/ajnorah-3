@@ -151,7 +151,7 @@ function Header({ visible }) {
           ${open ? "translate-y-0 opacity-100 pointer-events-auto" : "-translate-y-4 opacity-0 pointer-events-none"} 
           flex md:flex md:translate-y-0 md:opacity-100 md:pointer-events-auto 
           absolute md:static left-0 right-0 top-[100px] bg-white md:bg-transparent 
-          p-4 md:p-0 flex-col md:flex-row items-stretch md:items-center gap-0 md:gap-1 md:flex-1 md:mx-6 z-50 
+          p-4 md:p-0 flex-col md:flex-row items-stretch md:items-center gap-0 md:gap-1 md:flex-1 md:mx-6 md:max-w-[600px] z-50 
           shadow-xl md:shadow-none border-b md:border-none border-border/20 transition-all duration-300 ease-in-out
         `}>
           {navLinks.map((link) => (
@@ -182,24 +182,25 @@ function Header({ visible }) {
         </nav>
 
         {/* Actions */}
-        <div className="flex items-center gap-3 lg:gap-4 ml-4 shrink-0 pr-2">
-          <div className="hidden xl:flex items-center gap-2 mr-2">
-            <a href="https://x.com/Ajinorah_Maha" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
+        <div className="flex items-center gap-2 lg:gap-4 ml-2 md:ml-4 shrink-0 pr-2">
+          <div className="hidden lg:flex items-center gap-1.5 md:gap-2 mr-1 md:mr-2 shrink-0">
+            <a href="https://x.com/Ajinorah_Maha" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors shrink-0">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
             </a>
-            <a href="https://www.facebook.com/profile.php?id=61586724492187" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
+            <a href="https://www.facebook.com/profile.php?id=61586724492187" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors shrink-0">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
             </a>
-            <a href="https://www.instagram.com/ajinorahmaharashtra" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
+            <a href="https://www.instagram.com/ajinorahmaharashtra" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors shrink-0">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
             </a>
-            <a href="https://www.youtube.com/@ajinorahmaharashtra" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
+            <a href="https://www.youtube.com/@ajinorahmaharashtra" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors shrink-0">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
             </a>
-            <a href="https://www.linkedin.com/in/ajinorah-maharashtra-2316413a7/" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
+            <a href="https://www.linkedin.com/in/ajinorah-maharashtra-2316413a7/" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors shrink-0">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
             </a>
-            <a href="https://wa.me/919170065003" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-[#25D366] hover:bg-[#25D366]/10 transition-colors">
+            <a href="https://wa.me/919170065003" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted hover:text-[#25D366] hover:bg-[#25D366]/10 transition-colors shrink-0">
+
               <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.94 3.659 1.437 5.634 1.437h.005c6.558 0 11.894-5.338 11.897-11.896a11.821 11.821 0 00-3.48-8.413z" /></svg>
             </a>
           </div>
@@ -447,7 +448,7 @@ function Destinations() {
     },
   ];
 
-  const displayedCountries = showAll ? countries : countries.slice(0, 4);
+  const displayedCountries = showAll ? countries : countries.slice(0, 3);
 
   return (
     <section id="destinations" className="pt-20 pb-10 bg-white">
@@ -480,7 +481,7 @@ function Destinations() {
           viewport={{ once: true, amount: 0.1, margin: "0px 0px -50px 0px" }}
           variants={staggerContainer}
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {displayedCountries.map((c) => (
               <motion.a
                 key={c.name}
@@ -610,7 +611,7 @@ const detail = activeService ? serviceDetails[activeService.key] : null;
           <div className="w-10 h-[3px] bg-orange rounded-sm mb-[18px] mx-auto md:mx-0" />
           <p className="text-[14.5px] text-muted leading-relaxed mb-6">
             From shortlisting to visa approval and<br />
-            beyond â€” we make your study abroad<br />
+            beyond that we make your study abroad<br />
             journey smooth and successful.
           </p>
         </motion.div>
@@ -683,7 +684,7 @@ const detail = activeService ? serviceDetails[activeService.key] : null;
                 onClick={closePopup}
                 className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 shrink-0 ml-3 mt-0.5"
               >
-                âœ•
+                close
               </button>
             </div>
 
@@ -1670,7 +1671,7 @@ export default function App() {
               <motion.p variants={fadeInUp} className="text-[14px] text-muted leading-relaxed max-w-[260px]">
                 Empowering students to achieve their global education dreams through fully funded scholarships and expert guidance.
               </motion.p>
-              <div className="flex items-center gap-5 mt-6 justify-center md:justify-start pl-2 md:pl-0">
+              <div className="flex items-center gap-3 md:gap-4 mt-6 justify-start shrink-0">
                 {[
                   { 
                     link: "https://x.com/Ajinorah_Maha", 
@@ -1708,7 +1709,7 @@ export default function App() {
                     href={social.link}
                     target="_blank"
                     rel="noreferrer"
-                    className="w-12 h-12 rounded-full border-2 border-primary/20 flex items-center justify-center text-primary transition-all duration-500 bg-white shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:text-white hover:border-transparent hover:shadow-[0_12px_24px_rgba(var(--primary-rgb),0.3)] relative group overflow-hidden floating-social"
+                    className="w-10 h-10 rounded-full border border-primary/20 flex items-center justify-center text-primary transition-all duration-500 bg-white shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:text-white hover:border-transparent hover:shadow-[0_12px_24px_rgba(var(--primary-rgb),0.3)] relative group overflow-hidden floating-social shrink-0"
                     style={{ animationDelay: `${i * 0.3}s` }}
                     whileHover={{ 
                       y: -8, 
@@ -1833,7 +1834,7 @@ export default function App() {
           <div className="pt-3 md:pt-6 border-t border-border/10 flex items-center justify-start">
             {/* Copyright */}
             <p className="text-xs text-muted font-medium">
-              Copyright Â© {new Date().getFullYear()} Ajinorah Maharashtra. All rights reserved.
+              Copyright © {new Date().getFullYear()} Ajinorah Maharashtra. All rights reserved.
             </p>
           </div>
         </div>

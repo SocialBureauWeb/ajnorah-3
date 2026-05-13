@@ -110,8 +110,8 @@ app.post("/api/contact", async (req, res) => {
   }
 
   try {
-    const db = await getDb();
     const lead = {
+      id: Date.now(),
       name: name.trim().slice(0, 100),
       email: email.trim().toLowerCase().slice(0, 254),
       destination: (destination || "Not specified").slice(0, 100),
@@ -119,7 +119,23 @@ app.post("/api/contact", async (req, res) => {
       status: "new",
       createdAt: new Date().toISOString(),
     };
-    await db.collection("leads").insertOne(lead);
+
+    if (process.env.MONGO_URL) {
+      const db = await getDb();
+      await db.collection("leads").insertOne(lead);
+    } else {
+      // Fallback to local file
+      const LEADS_FILE = path.join(__dirname, "leads.json");
+      let leads = [];
+      try {
+        if (fs.existsSync(LEADS_FILE)) {
+          leads = JSON.parse(fs.readFileSync(LEADS_FILE, "utf8"));
+        }
+      } catch (e) { leads = []; }
+      leads.push(lead);
+      fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2), "utf8");
+    }
+
     return res.status(201).json({ success: true, message: "Enquiry received successfully!" });
   } catch (err) {
     console.error("Failed to save lead:", err);
