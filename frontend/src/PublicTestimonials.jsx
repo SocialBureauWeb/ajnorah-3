@@ -11,6 +11,7 @@ export default function PublicTestimonials() {
   const [loading, setLoading] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const trackRef = useRef(null);
+  const scrollerRef = useRef(null);
 
   useEffect(() => {
     fetch('/api/testimonials')
@@ -48,45 +49,43 @@ export default function PublicTestimonials() {
     return () => document.removeEventListener('keydown', onKey);
   }, [modalItem]);
 
-  // Drag to scroll
-  const isDragging = useRef(false);
-  const startX = useRef(0);
-  const scrollLeft = useRef(0);
-  const scrollerRef = useRef(null);
+  // Auto-scroll logic with native swiping support
+  const [activeScroll, setActiveScroll] = useState(true);
+  
+  useEffect(() => {
+    let animationId;
+    const scroll = () => {
+      if (activeScroll && !isPaused && scrollerRef.current) {
+        const el = scrollerRef.current;
+        el.scrollLeft += 0.8; // Adjust speed here
+        
+        // Loop back when we reach halfway (since we doubled the items)
+        if (el.scrollLeft >= el.scrollWidth / 2) {
+          el.scrollLeft = 0;
+        }
+      }
+      animationId = requestAnimationFrame(scroll);
+    };
+    
+    animationId = requestAnimationFrame(scroll);
+    return () => cancelAnimationFrame(animationId);
+  }, [activeScroll, isPaused]);
 
-  const onMouseDown = (e) => {
-    isDragging.current = true;
-    startX.current = e.pageX - scrollerRef.current.offsetLeft;
-    scrollLeft.current = scrollerRef.current.scrollLeft;
-    setIsPaused(true);
-  };
-  const onMouseUp = () => { isDragging.current = false; };
-  const onMouseMove = (e) => {
-    if (!isDragging.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollerRef.current.offsetLeft;
-    const walk = (x - startX.current) * 1.5;
-    scrollerRef.current.scrollLeft = scrollLeft.current - walk;
-  };
-
-  // Manual next/prev using CSS animation offset trick
+  // Manual next/prev
   const manualScrollBy = (dir) => {
-    setIsPaused(true);
-    // temporarily enable overflow-x scroll on scroller
     const el = scrollerRef.current;
     if (!el) return;
-    el.style.overflowX = 'auto';
     const cardWidth = 320 + 16;
     el.scrollBy({ left: dir * cardWidth, behavior: 'smooth' });
-    setTimeout(() => {
-      el.style.overflowX = 'hidden';
-      setIsPaused(false);
-    }, 3000);
+    
+    // Pause auto-scroll briefly after manual interaction
+    setActiveScroll(false);
+    setTimeout(() => setActiveScroll(true), 5000);
   };
 
   return (
-    <section id="testimonials" className="py-10 px-8 md:px-16 overflow-hidden">
-      <div className="container mx-auto px-0">
+    <section id="testimonials" className="py-10 px-0 md:px-16 overflow-hidden">
+      <div className="container mx-auto px-8 md:px-0">
         <motion.div
           className="flex flex-row items-center justify-between mb-6 md:mb-8"
           initial="initial"
@@ -105,23 +104,20 @@ export default function PublicTestimonials() {
       {loading ? <p className="text-muted text-center">Loading...</p> : (
         <div
           ref={scrollerRef}
-          className="testimonials-scroller"
+          className="testimonials-scroller-native"
           onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => { setIsPaused(false); isDragging.current = false; }}
-          onMouseDown={onMouseDown}
-          onMouseUp={onMouseUp}
-          onMouseMove={onMouseMove}
+          onMouseLeave={() => setIsPaused(false)}
           onTouchStart={() => setIsPaused(true)}
           onTouchEnd={() => setTimeout(() => setIsPaused(false), 2000)}
         >
-          <div ref={trackRef} className={`testimonials-track${isPaused ? ' paused' : ''}`}>
+          <div ref={trackRef} className="testimonials-track-native">
             {/* Render twice for seamless infinite loop */}
             {[...displayed, ...displayed].map((t, idx) => (
               <div
                 key={`${t.id}-${idx}`}
                 className="testimonial-item w-[calc(100vw-64px)] sm:w-[320px] md:w-[340px]"
               >
-                <div className="bg-white border border-border rounded-2xl p-4 shadow-sm h-full">
+                <div className="bg-white border border-border rounded-2xl p-4 shadow-sm h-full mx-2">
                   {t.video && (
                     <button
                       onClick={(e) => openVideo(t, e)}

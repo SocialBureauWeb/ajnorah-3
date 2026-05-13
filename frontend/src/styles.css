@@ -318,54 +318,47 @@
 .media-modal.portrait .media-content img { height: 100vh; width: auto; max-width: 900px; object-fit:contain; }
 .media-close { border: none; cursor: pointer; }
 
-/* Events auto-scroll (single row) */
-.events-scroller { overflow: hidden; width: 100%; }
-.events-track { display: flex; gap: 16px; width: max-content; align-items: stretch; animation: scroll-left 180s linear infinite; }
-.events-track:hover { animation-play-state: paused; }
-.events-item { display: block; }
-
-@keyframes scroll-left {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+.visa-scroller-native, .events-scroller-native {
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
+  scroll-behavior: auto;
 }
+.visa-scroller-native::-webkit-scrollbar, .events-scroller-native::-webkit-scrollbar { display: none; }
 
-/* Make the scroll slower on small screens */
-@media (max-width: 900px) {
-  .events-track { animation-duration: 270s; }
-  .events-item { min-width: 220px; }
-}
-
-/* Visa Success gallery tweaks */
-.visa-gallery img { width: 100%; height: auto; display: block; }
-
-/* Visa success scroller */
-.visa-scroller { overflow: hidden; width: 100%; }
-.visa-track { display: flex; gap: 12px; width: max-content; align-items: stretch; animation: scroll-left 240s linear infinite; }
-.visa-track:hover { animation-play-state: paused; }
-.visa-item { display: block; }
-
-@media (max-width: 900px) {
-  .visa-track { animation-duration: 360s; }
-  .visa-item { min-width: 160px; }
-}
-
-/* Testimonials scroller */
-.testimonials-scroller { overflow: hidden; width: 100%; cursor: grab; }
-.testimonials-scroller:active { cursor: grabbing; }
-.testimonials-track {
+.visa-track-native, .events-track-native {
   display: flex;
-  gap: 16px;
+  gap: 0;
   align-items: stretch;
   width: max-content;
-  padding: 0 32px;
-  animation: testimonials-scroll 40s linear infinite;
+  padding: 0 16px;
 }
-.testimonials-track:hover,
-.testimonials-track.paused {
-  animation-play-state: paused;
+
+
+/* Testimonials scroller */
+.testimonials-scroller-native {
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
+  scroll-behavior: auto; /* Important for JS animation */
 }
-.testimonial-item { display: block; flex-shrink: 0; }
-.testimonials-scroller::-webkit-scrollbar { display: none; }
+.testimonials-scroller-native:active { cursor: grabbing; }
+.testimonials-scroller-native::-webkit-scrollbar { display: none; }
+
+.testimonials-track-native {
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+  width: max-content;
+  padding: 0 16px;
+}
+
 .btn-secondary { background: white; border: 1px solid var(--border); padding: 8px 10px; border-radius: 8px; cursor: pointer; transition: background 0.2s; }
 .btn-secondary:hover { background: #f5f3ff; }
 

@@ -134,14 +134,15 @@ function Header({ visible }) {
       transition={{ duration: 0.3, ease: "easeInOut" }}
       className="fixed md:absolute top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-md border-b border-border/40 h-[50px] md:h-[100px] flex items-center shadow-sm"
     >
-      <div className="container mx-auto px-0 md:px-4 md:pr-8 flex items-center justify-between w-full h-full pb-1">
+      <div className="container mx-auto px-0 md:px-4 md:pr-8 flex items-center justify-between w-full h-full">
         {/* Brand */}
         <div className="flex items-center shrink-0 w-[180px] md:w-[260px] h-full relative overflow-hidden">
-          <a href="#home" className="block absolute top-1/2 -translate-y-1/2 left-0 z-50">
-            <img
+          <a href="#home" className="block absolute top-1/2 -translate-y-1/2 left-0 z-50 h-[34px] md:h-auto">
+            <motion.img 
+              whileHover={{ scale: 1.05 }}
               src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777557258/images/osrzkwmrt33dlpzyofze.png"
-              alt="Ajinorah"
-              className="h-[350px] md:h-[810px] w-auto block transition-all hover:scale-105 object-contain object-left origin-left"
+              alt="Ajinorah" 
+              className="h-full md:h-[810px] w-auto block transition-all hover:scale-105 object-contain object-left origin-left"
             />
           </a>
         </div>
@@ -1008,6 +1009,24 @@ function Events() {
   const [modalItem, setModalItem] = useState(null);
   const [orientation, setOrientation] = useState('landscape');
   const modalRef = useRef(null);
+  const scrollerRef = useRef(null);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    let animationId;
+    const scroll = () => {
+      if (!isPaused && scrollerRef.current) {
+        const el = scrollerRef.current;
+        el.scrollLeft += 0.7; 
+        if (el.scrollLeft >= el.scrollWidth / 2) {
+          el.scrollLeft = 0;
+        }
+      }
+      animationId = requestAnimationFrame(scroll);
+    };
+    animationId = requestAnimationFrame(scroll);
+    return () => cancelAnimationFrame(animationId);
+  }, [isPaused]);
 
   const openMedia = (it, e) => {
     e?.preventDefault();
@@ -1046,16 +1065,19 @@ function Events() {
         <p className="text-center text-[11.5px] font-bold tracking-[0.12em] text-teal uppercase mb-4">EVENTS</p>
         <h2 className="text-4xl md:text-5xl font-extrabold text-dark text-center mb-8">Recent Events & Highlights</h2>
 
-        <div className="events-scroller">
-          <div
-            className="events-track"
-            onMouseEnter={(e) => { e.currentTarget.style.animationPlayState = 'paused'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.animationPlayState = 'running'; }}
-          >
+        <div 
+          ref={scrollerRef}
+          className="events-scroller-native"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setTimeout(() => setIsPaused(false), 2000)}
+        >
+          <div className="events-track-native">
             {[...items, ...items].map((it, idx) => (
               <div 
                 key={`${it.id}-${idx}`} 
-                className="events-item flex-shrink-0 min-w-[260px] md:min-w-[320px]"
+                className="events-item flex-shrink-0 min-w-[260px] md:min-w-[320px] px-2"
               >
                 <article className="bg-white rounded-xl border border-border shadow-sm overflow-hidden transition-all hover:shadow-md hover:-translate-y-1">
                   <button onClick={(e) => openMedia(it, e)} className="w-full text-left">
@@ -1248,6 +1270,25 @@ function VisaSuccessImages() {
     'https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/Visa%20Success/10.jpeg',
   ];
 
+  const scrollerRef = useRef(null);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    let animationId;
+    const scroll = () => {
+      if (!isPaused && scrollerRef.current) {
+        const el = scrollerRef.current;
+        el.scrollLeft += 0.6; 
+        if (el.scrollLeft >= el.scrollWidth / 2) {
+          el.scrollLeft = 0;
+        }
+      }
+      animationId = requestAnimationFrame(scroll);
+    };
+    animationId = requestAnimationFrame(scroll);
+    return () => cancelAnimationFrame(animationId);
+  }, [isPaused]);
+
   return (
     <section id="visa-success" className="py-8 bg-bg-soft">
       <motion.div 
@@ -1260,16 +1301,19 @@ function VisaSuccessImages() {
         <motion.p variants={fadeInUp} className="text-center text-[11.5px] font-bold tracking-[0.12em] text-teal uppercase mb-3">VISA SUCCESS</motion.p>
         <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl font-extrabold text-dark text-center mb-6">Recent Visa Success Stories</motion.h2>
 
-        <div className="visa-scroller">
-          <div
-            className="visa-track"
-            onMouseEnter={(e) => { e.currentTarget.style.animationPlayState = 'paused'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.animationPlayState = 'running'; }}
-          >
+        <div 
+          ref={scrollerRef}
+          className="visa-scroller-native"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setTimeout(() => setIsPaused(false), 2000)}
+        >
+          <div className="visa-track-native">
             {[...imgs, ...imgs].map((src, idx) => (
               <motion.div 
                 key={`${idx}`} 
-                className="visa-item flex-shrink-0 min-w-[180px] md:min-w-[220px]"
+                className="visa-item flex-shrink-0 min-w-[180px] md:min-w-[220px] px-1.5"
                 variants={fadeInUp}
               >
                 <div className="bg-white/70 backdrop-blur-sm p-0 md:p-1 rounded-2xl border border-white shadow-sm overflow-hidden">
