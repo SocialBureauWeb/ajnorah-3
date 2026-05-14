@@ -305,6 +305,9 @@ function Hero() {
           viewport={{ once: false, amount: 0.3, margin: "0px 0px -50px 0px" }}
           variants={staggerContainer}
         >
+          <motion.p variants={fadeInUp} className="text-[15px] md:text-[20px] font-extrabold text-blue uppercase mb-1.5 tracking-[0.1em]">
+            Ajinorah World Wide Private Limited
+          </motion.p>
           <motion.p variants={fadeInUp} className="inline-flex items-center justify-center md:justify-start gap-2 text-[11.5px] font-bold tracking-[0.12em] text-teal uppercase mb-[18px]">
             <span className="w-1.5 h-1.5 rounded-full bg-teal shrink-0" />
             GET SET FLY
@@ -452,46 +455,70 @@ function Destinations() {
 
   const countries = [
     {
-      name: "Malaysia",
-      flag: "ðŸ‡²ðŸ‡¾",
-      desc: "Top scholarship options & vibrant culture.",
-      img: "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=400&h=220&fit=crop&q=80",
-    },
-    {
-      name: "Mauritius",
-      flag: "ðŸ‡²ðŸ‡º",
-      desc: "High-quality education in a tropical paradise.",
-      img: "https://images.unsplash.com/photo-1582574643306-d00ea3f7d49b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bWF1cml0aXVzfGVufDB8fDB8fHww",
-    },
-    {
       name: "France",
-      flag: "ðŸ‡«ðŸ‡·",
+      flag: "🇫🇷",
       desc: "Rich academic tradition and career opportunities.",
       img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=400&h=220&fit=crop&q=80",
     },
     {
       name: "Germany",
-      flag: "ðŸ‡©ðŸ‡ª",
+      flag: "🇩🇪",
       desc: "Low-cost education with world-class engineering.",
       img: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&h=220&fit=crop&q=80",
     },
     {
+      name: "Russia",
+      flag: "🇷🇺",
+      desc: "World-class education in medical and technical fields.",
+      img: "https://images.unsplash.com/photo-1513326738677-b964603b136d?w=400&h=220&fit=crop&q=80",
+    },
+    {
       name: "Dubai",
-      flag: "ðŸ‡¦ðŸ‡ª",
+      flag: "🇦🇪",
       desc: "Modern hub for global business and innovation.",
       img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400&h=220&fit=crop&q=80",
     },
     {
+      name: "Ireland",
+      flag: "🇮🇪",
+      desc: "Innovation-driven education with friendly culture.",
+      img: "https://images.unsplash.com/photo-1590089415225-401ed6f9db8e?w=400&h=220&fit=crop&q=80",
+    },
+    {
+      name: "Georgia",
+      flag: "🇬🇪",
+      desc: "Affordable medical programs with European standards.",
+      img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=400&h=220&fit=crop&q=80",
+    },
+    {
+      name: "Malaysia",
+      flag: "🇲🇾",
+      desc: "Top scholarship options & vibrant culture.",
+      img: "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=400&h=220&fit=crop&q=80",
+    },
+    {
+      name: "Mauritius",
+      flag: "🇲🇺",
+      desc: "High-quality education in a tropical paradise.",
+      img: "https://images.unsplash.com/photo-1582574643306-d00ea3f7d49b?w=400&h=220&fit=crop&q=80",
+    },
+    {
       name: "Albania",
-      flag: "ðŸ‡¦ðŸ‡±",
+      flag: "🇦🇱",
       desc: "Emerging destination with affordable medical programs.",
       img: "https://plus.unsplash.com/premium_photo-1697730104948-43575659bf0a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YWxiYW5pYXxlbnwwfHwwfHx8MA%3D%3D",
     },
     {
-      name: "Uzbekistan",
-      flag: "ðŸ‡ºðŸ‡¿",
-      desc: "Excellent opportunities for medical and technical studies.",
-      img: "https://images.unsplash.com/photo-1670514535515-e7af911bdadb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fFV6YmVraXN0YW58ZW58MHx8MHx8fDA%3D",
+      name: "UK",
+      flag: "🇬🇧",
+      desc: "Home to world-renowned universities and historic heritage.",
+      img: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&h=220&fit=crop&q=80",
+    },
+    {
+      name: "Australia",
+      flag: "🇦🇺",
+      desc: "Top-tier research institutions and amazing lifestyle.",
+      img: "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=400&h=220&fit=crop&q=80",
     },
   ];
 
