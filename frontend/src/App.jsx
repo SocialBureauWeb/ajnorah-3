@@ -178,7 +178,7 @@ function Header({ visible }) {
           <a href="#home" className="block absolute top-1/2 -translate-y-1/2 left-0 z-50">
             <motion.img 
               whileHover={{ scale: 1.05 }}
-              src="https://res.cloudinary.com/dpfpenhqc/image/upload/q_auto/f_auto/v1778676600/320665551211_copy_qmv3wd.png"
+              src="https://res.cloudinary.com/dpfpenhqc/image/upload/q_auto/f_auto/v1778738455/Ajinoralogo_ayhff7.png"
               alt="Ajinorah" 
               className="h-[340px] md:h-[810px] w-auto block transition-all hover:scale-105 object-contain object-left origin-left"
             />
@@ -1435,7 +1435,7 @@ function Contact() {
             </div>
             <div className="flex flex-col gap-2">
               <strong className="text-xs md:text-sm text-primary uppercase tracking-wider font-bold">Phone:</strong>
-              <a href="tel:+919170065003" className="text-sm md:text-base text-dark font-semibold hover:text-primary transition-colors">+91 91 7006 5003, <br/>+91 887 2222 887, <br/>+91 86 5150 5150</a>
+              <a href="tel:+919170065003" className="text-sm md:text-base text-dark font-semibold hover:text-primary transition-colors">+91 887 2222 887 <br/>+91 86 5150 5150 <br/>+91 91 7006 5003</a>
             </div>
             <div className="flex flex-col gap-2 w-full mx-auto md:mx-0">
               <strong className="text-xs md:text-sm text-primary uppercase tracking-wide font-bold">
@@ -1754,9 +1754,9 @@ export default function App() {
             >
               <motion.img
                 variants={fadeInUp}
-                src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777981449/image_20_nseqst.png"
+                src="https://res.cloudinary.com/dpfpenhqc/image/upload/q_auto/f_auto/v1778738455/Ajinoralogo_ayhff7.png"
                 alt="Ajinorah"
-                className="h-14 md:h-16 w-auto self-start"
+                className="h-[80px] md:h-[100px] w-auto self-start"
               />
               <motion.p variants={fadeInUp} className="text-[14px] text-muted leading-relaxed max-w-[260px]">
                 Empowering students to achieve their global education dreams through fully funded scholarships and expert guidance.
@@ -1812,9 +1812,9 @@ export default function App() {
                     <div className="flex flex-col gap-1">
                       <span className="text-[10px] font-bold text-primary uppercase tracking-wider">Call Us</span>
                       <a href="tel:+919170065003" className="text-xs text-dark font-medium hover:text-primary transition-colors">
-                        +91 91 7006 5003, <br/>
-                        +91 887 2222 887, <br/>
-                        +91 86 5150 5150
+                        +91 887 2222 887 <br/>
+                        +91 86 5150 5150 <br/>
+                        +91 91 7006 5003
                       </a>
                     </div>
                   </div>
