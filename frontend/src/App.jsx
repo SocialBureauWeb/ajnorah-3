@@ -1219,7 +1219,7 @@ function CTABanner() {
           transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
         >
           <div className="absolute w-[320px] h-[320px] rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-primary/10 to-blue/10" />
-          <img src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777735386/Untitled_design_60_zcftlx.png" alt="Ajinorah" className="relative w-full h-full object-contain" />
+          <img src="https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/images/Untitled_design_60_zcftlx.png" alt="Ajinorah" className="relative w-full h-full object-contain" />
         </motion.div>
       </div>
     </section>
@@ -1915,7 +1915,7 @@ export default function App() {
             <span>POWERED BY</span>
             <a href="https://www.socialbureau.in/enquiry-form" target="_blank" rel="noopener noreferrer" className="flex justify-start items-center">
               <img
-                src="https://res.cloudinary.com/dtwcgfmar/image/upload/v1777199141/SB_LOGO_BLACK_PNG_iev5qz.png"
+                src="https://pub-64e0d07ec6d7406799f8e82cfe7c07f7.r2.dev/ajinorah/images/SB_LOGO_BLACK_PNG_iev5qz.png"
                 alt="SocialBureau"
                 className="h-8 md:h-12 w-auto"
               />
