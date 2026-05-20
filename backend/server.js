@@ -93,6 +93,10 @@ if (process.env.MONGO_URL) {
 // ── POST /api/contact ─────────────────────────────────────
 const { getDb } = require('./db');
 
+// Start connecting to MongoDB in background if configured to reduce request latency
+const { startConnecting } = require('./db');
+startConnecting();
+
 app.post("/api/contact", async (req, res) => {
   const { name, email, destination, message } = req.body || {};
 
