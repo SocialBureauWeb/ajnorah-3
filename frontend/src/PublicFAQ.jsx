@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { API_BASE_URL } from './api';
 import { motion } from 'framer-motion';
 
 export default function PublicFAQ() {
@@ -6,7 +7,7 @@ export default function PublicFAQ() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/faqs').then(r => r.json()).then(d => setFaqs(Array.isArray(d) ? d : [])).catch(() => setFaqs([])).finally(() => setLoading(false));
+    fetch(`${API_BASE_URL}/api/faqs`).then(r => r.json()).then(d => setFaqs(Array.isArray(d) ? d : [])).catch(() => setFaqs([])).finally(() => setLoading(false));
   }, []);
 
   const fadeInUp = {

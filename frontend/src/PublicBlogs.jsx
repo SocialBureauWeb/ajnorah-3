@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { API_BASE_URL } from './api';
 import { motion } from 'framer-motion';
 
 const fadeInUp = {
@@ -23,7 +24,7 @@ export default function PublicBlogs() {
   const [active, setActive] = useState(null);
 
   useEffect(() => {
-    fetch('/api/blogs').then(r => r.json()).then(d => { setPosts(Array.isArray(d) ? d : []); }).catch(() => setPosts([])).finally(() => setLoading(false));
+    fetch(`${API_BASE_URL}/api/blogs`).then(r => r.json()).then(d => { setPosts(Array.isArray(d) ? d : []); }).catch(() => setPosts([])).finally(() => setLoading(false));
   }, []);
 
   return (

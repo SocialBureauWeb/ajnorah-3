@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { API_BASE_URL } from "./api";
 
 export default function Auth({ open = true, onClose = () => {} }) {
   const [mode, setMode] = useState("login");
@@ -21,7 +22,7 @@ export default function Auth({ open = true, onClose = () => {} }) {
     e && e.preventDefault();
     setLoading(true); setError("");
     try {
-      const url = mode === "login" ? "/api/auth/login" : "/api/auth/register";
+      const url = mode === "login" ? `${API_BASE_URL}/api/auth/login` : `${API_BASE_URL}/api/auth/register`;
       const payload = mode === "login" ? { email: form.email, password: form.password } : { name: form.name, email: form.email, password: form.password };
       const res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       const data = await res.json();

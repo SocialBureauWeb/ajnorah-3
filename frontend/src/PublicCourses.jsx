@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { API_BASE_URL } from './api';
 import { motion } from 'framer-motion';
 
 export default function PublicCourses() {
@@ -6,7 +7,7 @@ export default function PublicCourses() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/courses').then(r => r.json()).then(d => setItems(Array.isArray(d) ? d : [])).catch(() => setItems([])).finally(() => setLoading(false));
+    fetch(`${API_BASE_URL}/api/courses`).then(r => r.json()).then(d => setItems(Array.isArray(d) ? d : [])).catch(() => setItems([])).finally(() => setLoading(false));
   }, []);
 
   const fadeInUp = {

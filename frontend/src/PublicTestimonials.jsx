@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { API_BASE_URL } from './api';
 import { motion } from 'framer-motion';
 
 const fadeInUp = {
@@ -14,7 +15,7 @@ export default function PublicTestimonials() {
   const scrollerRef = useRef(null);
 
   useEffect(() => {
-    fetch('/api/testimonials')
+    fetch(`${API_BASE_URL}/api/testimonials`)
       .then(r => r.json())
       .then(d => setItems(Array.isArray(d) ? d.filter(t => t.published) : []))
       .catch(() => setItems([]))

@@ -8,6 +8,7 @@ import PublicCourses from "./PublicCourses";
 import PublicFAQ from "./PublicFAQ";
 import PublicTestimonials from "./PublicTestimonials";
 import { apiFetch } from "./admin/useAdminApi";
+import { API_BASE_URL } from "./api";
 
 /* Ã¢â€â‚¬Ã¢â€â‚¬ Logo Icon Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 const socialLinks = [
@@ -804,7 +805,7 @@ function Blogs() {
 
   useEffect(() => {
     let mounted = true;
-    fetch('/api/blogs')
+    fetch(`${API_BASE_URL}/api/blogs`)
       .then((res) => res.ok ? res.json() : [])
       .then((data) => { if (mounted) setBlogs(Array.isArray(data) ? data : []); })
       .catch(() => { if (mounted) setBlogs([]); });
@@ -1423,7 +1424,7 @@ function Contact() {
     setSubmitting(true);
     setSubmitError("");
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch(`${API_BASE_URL}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -1666,7 +1667,7 @@ export default function App() {
     };
 
     // Warmup Render backend (wake it up from sleep)
-    fetch('/api/health').catch(() => {});
+    fetch(`${API_BASE_URL}/api/health`).catch(() => {});
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
